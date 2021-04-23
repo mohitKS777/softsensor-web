@@ -5,5 +5,5 @@
   
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "https://openslide-demo.s3.dualstack.us-east-1.amazonaws.com/:splat"
   status = 200
