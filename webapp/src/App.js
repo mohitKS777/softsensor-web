@@ -54,7 +54,7 @@ function App() {
         <OsdFabricWrapper>
           <SocketWrapper>
             <Switch>
-              <Route path="/:id">
+              <Route path="/slide/:id">
                 <LayoutApp />
               </Route>
             </Switch>
