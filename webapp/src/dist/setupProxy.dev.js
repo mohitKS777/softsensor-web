@@ -1,7 +1,9 @@
-const { createProxyMiddleware } = require('http-proxy-middleware');
+"use strict";
 
-module.exports = function(app) {
-  // app.use(
+var _require = require('http-proxy-middleware'),
+    createProxyMiddleware = _require.createProxyMiddleware;
+
+module.exports = function (app) {// app.use(
   //   '/slide/*',
   //   createProxyMiddleware({
   //     target: 'https://openslide-demo.s3.dualstack.us-east-1.amazonaws.com/',

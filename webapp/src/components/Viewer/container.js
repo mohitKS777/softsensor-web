@@ -68,7 +68,7 @@ export default function ViewerContainer() {
     const defaultId = Images[2].id;
     return (
       <div>
-        <Redirect to={`/${defaultId}`} />
+        <Redirect to={`/slide/${defaultId}`} />
       </div>
     );
   }
