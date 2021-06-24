@@ -4,6 +4,7 @@ import { Box, Divider, Wrap, WrapItem } from "@chakra-ui/react";
 import Text from "../Text/text";
 import Draw from "../Draw/draw";
 import Shape from "../Shape/shape";
+import Palette from "../Palette/palette";
 import RemoveComponents from "../removeComponents";
 import { useFabricOverlayState } from "../../context/fabric-overlay-context";
 import ToolbarPointer from "./pointerControl";
@@ -40,6 +41,10 @@ import "../../styles/styles.css";
 
         <WrapItem>
           <Shape isActive={activeTool === "SHAPE"} />
+        </WrapItem>
+
+        <WrapItem>
+          <Palette isActive={activeTool === "PALETTE"} />
         </WrapItem>
 
         <WrapItem>

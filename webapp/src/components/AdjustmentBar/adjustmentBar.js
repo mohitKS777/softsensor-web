@@ -35,10 +35,10 @@ const AdjustmentBar = (props) => {
             <Color />
           </Box>
           <HStack spacing={2}>
-            {/* <ShareAnnotation />
+            <ShareAnnotation />
             <Center height="20px">
               <Divider orientation="vertical" />
-            </Center> */}
+            </Center>
             <MyAnnotationsSave />
             <Center height="20px">
               <Divider orientation="vertical" />
