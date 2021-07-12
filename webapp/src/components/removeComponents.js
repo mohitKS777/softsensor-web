@@ -7,6 +7,9 @@ import ToolbarButton from "./Toolbar/button";
 const RemoveObject = () => {
   const { fabricOverlay } = useSelector((state) => state.fabricOverlayState);
   const [isActiveObject, setIsActiveObject] = useState();
+  const { username, roomName, socket } = useSelector(
+    (state) => state.socketState
+  );
 
   useEffect(() => {
     if (!fabricOverlay) return;
@@ -40,6 +43,10 @@ const RemoveObject = () => {
       }
     }
     canvas.remove(activeObject);
+    socket.emit(
+      "send_annotations",
+      JSON.stringify({ roomName, username, content: canvas })
+    );
   };
 
   return (
