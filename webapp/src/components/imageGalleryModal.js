@@ -45,7 +45,7 @@ const ImageGalleryModal = () => {
     clearCanvas();
     onClose();
     // history.push(`/${activeWork}`);
-    history.push(`/${activeWork.id}`);
+    history.push(`/slide/${activeWork.id}`);
   };
 
   return (
