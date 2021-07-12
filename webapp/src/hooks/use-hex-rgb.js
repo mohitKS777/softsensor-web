@@ -1,8 +1,8 @@
-export default function useHexRGB() {
+const useHexRGB = () => {
   // All functions pulled from
   // https://css-tricks.com/converting-color-spaces-in-javascript/
 
-  function hexToRGB(h) {
+  const hexToRGB = (h) => {
     if (!h) return;
     let r = 0,
       g = 0,
@@ -22,9 +22,9 @@ export default function useHexRGB() {
     }
 
     return "rgb(" + +r + "," + +g + "," + +b + ")";
-  }
+  };
 
-  function hexToRGBA(h, opacity = 1) {
+  const hexToRGBA = (h, opacity = 1) => {
     let rgb = hexToRGB(h);
     if (!rgb) return;
     if (opacity < 0 || opacity > 1) {
@@ -34,9 +34,9 @@ export default function useHexRGB() {
     let rgba = rgb.replace("rgb", "rgba");
     const indexPos = rgba.lastIndexOf(")");
     return `${rgba.slice(0, indexPos)},${opacity}${rgba.slice(indexPos)}`;
-  }
+  };
 
-  function RGBToHex(r, g, b) {
+  const RGBToHex = (r, g, b) => {
     r = r.toString(16);
     g = g.toString(16);
     b = b.toString(16);
@@ -46,11 +46,13 @@ export default function useHexRGB() {
     if (b.length == 1) b = "0" + b;
 
     return "#" + r + g + b;
-  }
+  };
 
   return {
     hexToRGB,
     hexToRGBA,
     RGBToHex,
   };
-}
+};
+
+export default useHexRGB;

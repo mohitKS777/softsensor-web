@@ -1,10 +1,14 @@
-import React from "react";
-import PropTypes from 'prop-types';
+import React, { memo } from "react";
+import PropTypes from "prop-types";
 import { IconButton, Tooltip } from "@chakra-ui/react";
 import { useWindowHeight } from "@react-hook/window-size";
 import { isMobile, isTablet } from "react-device-detect";
 
-const ToolbarButton = ({ label = "Toolbar button", isActive, ...restProps }) => {
+const ToolbarButton = ({
+  label = "Toolbar button",
+  isActive,
+  ...restProps
+}) => {
   const windowHeight = useWindowHeight();
 
   let iconSizes = { size: "lg", fontSize: "2xl" };
@@ -47,11 +51,11 @@ const ToolbarButton = ({ label = "Toolbar button", isActive, ...restProps }) => 
       />
     </Tooltip>
   );
-}
+};
 
 ToolbarButton.propTypes = {
   label: PropTypes.string,
   isActive: PropTypes.bool,
 };
 
-export default React.memo(ToolbarButton);
+export default memo(ToolbarButton);

@@ -9,10 +9,10 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { FiZoomIn, FiZoomOut } from "react-icons/fi";
-import { useFabricOverlayState } from "../../context/fabric-overlay-context";
+import { useSelector } from "react-redux";
 
-function ViewerControls() {
-  const { viewer } = useFabricOverlayState();
+const ViewerControls = () => {
+  const { viewer } = useSelector((state) => state.fabricOverlayState);
   const { zoomIn, zoomOut } = useZoom();
   // const buttonSize = useButtonSize();
 
@@ -76,6 +76,6 @@ function ViewerControls() {
       </ButtonGroup>
     </Box>
   );
-}
+};
 
 export default ViewerControls;

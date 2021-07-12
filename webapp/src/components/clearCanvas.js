@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import {
   AlertDialog,
   AlertDialogBody,
@@ -12,10 +12,10 @@ import { DeleteIcon } from "@chakra-ui/icons";
 import AltButton from "./altButton";
 import useFabricHelpers from "../hooks/use-fabric-helpers";
 
-function ClearCanvas() {
-  const [isOpen, setIsOpen] = React.useState(false);
+const ClearCanvas = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
-  const cancelRef = React.useRef();
+  const cancelRef = useRef();
   const { clearUserObjects } = useFabricHelpers();
 
   const handleClearCanvas = () => {
@@ -58,8 +58,6 @@ function ClearCanvas() {
       </AlertDialog>
     </>
   );
-}
-
-ClearCanvas.propTypes = {};
+};
 
 export default ClearCanvas;

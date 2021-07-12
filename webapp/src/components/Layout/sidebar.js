@@ -1,7 +1,8 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Flex } from "@chakra-ui/react";
 
-export default function LayoutAppSidebar({ children }) {
+const LayoutAppSidebar = ({ children }) => {
   return (
     <Flex
       as="section"
@@ -16,4 +17,10 @@ export default function LayoutAppSidebar({ children }) {
       {children}
     </Flex>
   );
-}
+};
+
+LayoutAppSidebar.propTypes = {
+  children: PropTypes.node,
+};
+
+export default LayoutAppSidebar;

@@ -1,11 +1,16 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { ViewerProvider } from "use-open-seadragon";
-import { FabricOverlayProvider } from "../context/fabric-overlay-context";
+import { useDispatch } from "react-redux";
+import { updateOverlay } from "../state/reducers/fabricOverlayReducer";
 
-export default function OsdFabricWrapper({ children }) {
-  return (
-    <ViewerProvider>
-      <FabricOverlayProvider>{children}</FabricOverlayProvider>
-    </ViewerProvider>
-  );
-}
+const OsdFabricWrapper = ({ children }) => {
+  useDispatch(updateOverlay(children));
+  return <ViewerProvider>{children}</ViewerProvider>;
+};
+
+OsdFabricWrapper.propTypes = {
+  children: PropTypes.node,
+};
+
+export default OsdFabricWrapper;

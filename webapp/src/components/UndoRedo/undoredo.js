@@ -1,24 +1,25 @@
-import React from 'react';
-import { IconButton, Tooltip } from '@chakra-ui/react';
-import { RiArrowGoBackFill, RiArrowGoForwardLine } from 'react-icons/ri';
-import useButtonSize from 'hooks/use-button-size';
-import { useFabricOverlayState } from 'context/fabric-overlay-context';
-import { useParams } from 'react-router-dom';
-import 'fabric-history/src/index';
-function UndoRedo() {
+import React, { useState, useEffect } from "react";
+import { IconButton, Tooltip } from "@chakra-ui/react";
+import { RiArrowGoBackFill, RiArrowGoForwardLine } from "react-icons/ri";
+import useButtonSize from "hooks/use-button-size";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import "fabric-history/src/index";
+
+const UndoRedo = () => {
   const buttonSize = useButtonSize();
-  const { fabricOverlay } = useFabricOverlayState();
-  const [canvas, setCanvas] = React.useState();
+  const { fabricOverlay } = useSelector((state) => state.fabricOverlayState);
+  const [canvas, setCanvas] = useState();
   const params = useParams();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!fabricOverlay) return;
     const canvasLocal = fabricOverlay.fabricCanvas();
     setCanvas(canvasLocal);
     canvasLocal.clearHistory();
   }, [fabricOverlay]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!params || !canvas) return;
     fabricOverlay.fabricCanvas().clearHistory();
     fabricOverlay.fabricCanvas().clear();
@@ -54,8 +55,6 @@ function UndoRedo() {
       </Tooltip>
     </>
   );
-}
-
-UndoRedo.propTypes = {};
+};
 
 export default UndoRedo;

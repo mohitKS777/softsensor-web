@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { OpenSeaDragonViewer } from "./openSeadragonViewer";
 
-export default function Test() {
+const Test = () => {
   const [images, setImages] = useState([]);
   const [manifest, setManifest] = useState();
 
@@ -62,4 +62,6 @@ export default function Test() {
       </div>
     </div>
   );
-}
+};
+
+export default Test;

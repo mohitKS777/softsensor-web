@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button } from "@chakra-ui/react";
 
-function AltButton({ children, ...restProps }) {
+const AltButton = ({ children, ...restProps }) => {
   return (
     <Button
       size="md"
@@ -21,7 +21,7 @@ function AltButton({ children, ...restProps }) {
       {children}
     </Button>
   );
-}
+};
 
 AltButton.propTypes = {
   children: PropTypes.node,

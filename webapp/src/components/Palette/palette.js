@@ -2,19 +2,22 @@ import React, { useEffect, useState } from "react";
 import { EditIcon } from "@chakra-ui/icons";
 import ToolbarButton from "../Toolbar/button";
 import PaletteOptions from "./paletteOptions";
-import { useFabricOverlayDispatch } from "../../context/fabric-overlay-context";
+import { useSelector, useDispatch } from "react-redux";
+import { updateTool } from "../../state/reducers/fabricOverlayReducer";
 import { useDisclosure } from "@chakra-ui/react";
 
-function Palette({ isActive }) {
-  const dispatch = useFabricOverlayDispatch();
+const Palette = () => {
+  const { activeTool } = useSelector((state) => state.fabricOverlayState);
+  const isActive = activeTool === "PALETTE";
+  const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleToolbarClick = () => {
-    dispatch({ type: "updateTool", tool: isActive ? "" : "PALETTE" });
+    dispatch(updateTool({ tool: isActive ? "" : "PALETTE" }));
   };
 
   const handleIsOpen = () => {
     onClose();
-    dispatch({ type: "updateTool", tool: null });
+    dispatch(updateTool({ tool: null }));
   };
 
   return (
@@ -34,6 +37,6 @@ function Palette({ isActive }) {
       )}
     </>
   );
-}
+};
 
 export default Palette;

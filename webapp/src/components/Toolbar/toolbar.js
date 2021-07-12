@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Box, Divider, Wrap, WrapItem } from "@chakra-ui/react";
 import Text from "../Text/text";
@@ -6,20 +6,20 @@ import Draw from "../Draw/draw";
 import Shape from "../Shape/shape";
 import Palette from "../Palette/palette";
 import RemoveComponents from "../removeComponents";
-import { useFabricOverlayState } from "../../context/fabric-overlay-context";
+import { useSelector } from "react-redux";
 import ToolbarPointer from "./pointerControl";
 import useFabricHelpers from "../../hooks/use-fabric-helpers";
 
 import "../../styles/styles.css";
 
- const Toolbar = () => {
-  const { activeTool } = useFabricOverlayState();
+const Toolbar = () => {
+  const { activeTool } = useSelector((state) => state.fabricOverlayState);
   const { deselectAll, updateCursor } = useFabricHelpers();
 
   /**
    * Deselect all Fabric objects when a new tool is selected
    */
-  React.useEffect(() => {
+  useEffect(() => {
     deselectAll();
     updateCursor();
   }, [activeTool]);
@@ -28,23 +28,23 @@ import "../../styles/styles.css";
     <Box pt={3} position="relative">
       <Wrap spacing="2" as="nav" direction="column" align="center">
         <WrapItem>
-          <ToolbarPointer isActive={activeTool === "POINTER"} />
+          <ToolbarPointer />
         </WrapItem>
 
         <WrapItem>
-          <Text isActive={activeTool === "TYPE"} />
+          <Text />
         </WrapItem>
 
         <WrapItem>
-          <Draw isActive={activeTool === "DRAW"} />
+          <Draw />
         </WrapItem>
 
         <WrapItem>
-          <Shape isActive={activeTool === "SHAPE"} />
+          <Shape />
         </WrapItem>
 
         <WrapItem>
-          <Palette isActive={activeTool === "PALETTE"} />
+          <Palette />
         </WrapItem>
 
         <WrapItem>
@@ -57,6 +57,6 @@ import "../../styles/styles.css";
       </Wrap>
     </Box>
   );
-}
+};
 
-export default React.memo(Toolbar);
+export default Toolbar;

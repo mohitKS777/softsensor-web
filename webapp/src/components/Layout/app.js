@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Flex } from "@chakra-ui/react";
-import { useFabricOverlayState } from "../../context/fabric-overlay-context";
+import { useSelector } from "react-redux";
 import AdjustmentBar from "../AdjustmentBar/adjustmentBar";
 import Toolbar from "../Toolbar/toolbar";
 import ViewerContainer from "../Viewer/container";
@@ -12,10 +12,12 @@ import Div100vh from "react-div-100vh";
 import useKeyboardEvents from "../../hooks/use-keyboard-events";
 
 const LayoutApp = () => {
-  const { fabricOverlay, isToolbarVisible } = useFabricOverlayState();
+  const { fabricOverlay, isToolbarVisible } = useSelector(
+    (state) => state.fabricOverlayState
+  );
   const { handleEvent } = useKeyboardEvents();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!fabricOverlay) return;
     fabricOverlay.fabricCanvas().hoverCursor = "move";
   }, [fabricOverlay]);
@@ -37,6 +39,6 @@ const LayoutApp = () => {
       <LayoutAppFooter />
     </Flex>
   );
-}
+};
 
-export default React.memo(LayoutApp);
+export default LayoutApp;

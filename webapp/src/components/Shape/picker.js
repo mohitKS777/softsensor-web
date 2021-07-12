@@ -1,16 +1,19 @@
 import React from "react";
-// import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { Box, Divider, IconButton, Text, VStack } from "@chakra-ui/react";
 import { BsCircle, BsSquare } from "react-icons/bs";
 import { useWindowHeight } from "@react-hook/window-size";
 import { isMobile, isTablet } from "react-device-detect";
+import { useSelector } from "react-redux";
 
 export const shapes = [
   { name: "square", icon: <BsSquare /> },
   { name: "circle", icon: <BsCircle /> },
 ];
 
-function ShapePicker({ activeShape, color, handleShapeSelect }) {
+const ShapePicker = ({ handleShapeSelect }) => {
+  const { activeShape } = useSelector((state) => state.shapeState);
+  const { color } = useSelector((state) => state.fabricOverlayState);
   const windowHeight = useWindowHeight();
   let btnSize = "lg";
 
@@ -41,14 +44,10 @@ function ShapePicker({ activeShape, color, handleShapeSelect }) {
       </VStack>
     </>
   );
-}
+};
 
-// ShapePicker.propTypes = {
-//   activeShape: PropTypes.object,
-//   color: PropTypes.object,
-//   handleFillSelect: PropTypes.func,
-//   handleShapeSelect: PropTypes.func,
-//   isFill: PropTypes.bool,
-// };
+ShapePicker.propTypes = {
+  handleShapeSelect: PropTypes.func,
+};
 
 export default ShapePicker;

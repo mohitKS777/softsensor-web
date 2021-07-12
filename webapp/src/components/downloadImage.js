@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -18,9 +18,9 @@ import { DownloadIcon } from "@chakra-ui/icons";
 import html2canvas from "html2canvas";
 import domtoimage from "dom-to-image";
 
-export default function Download() {
+const Download = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [img, setImg] = React.useState();
+  const [img, setImg] = useState();
 
   const handleClick = () => {
     // let canvas = document.querySelector(".openseadragon-canvas > canvas");
@@ -30,7 +30,7 @@ export default function Download() {
       logging: true,
       allowTaint: false,
       useCORS: true,
-      removeContainer: false
+      removeContainer: false,
     }).then((canvas) => {
       setImg(canvas.toDataURL("image/png"));
     });
@@ -59,7 +59,10 @@ export default function Download() {
           <ModalHeader>Download image</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Image crossOrigin="https://openslide-demo.s2.dualstack.us-east-1.amazonaws.com/" src={img} />
+            <Image
+              crossOrigin="https://openslide-demo.s2.dualstack.us-east-1.amazonaws.com/"
+              src={img}
+            />
           </ModalBody>
 
           <ModalFooter>
@@ -80,4 +83,6 @@ export default function Download() {
       </Modal>
     </>
   );
-}
+};
+
+export default Download;

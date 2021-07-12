@@ -1,8 +1,8 @@
 import React from "react";
-// import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { Box, useColorModeValue } from "@chakra-ui/react";
 
-function ToolbarOptionsPanel({ children }) {
+const ToolbarOptionsPanel = ({ children }) => {
   const bg = useColorModeValue("white", "gray.700");
 
   return (
@@ -17,10 +17,10 @@ function ToolbarOptionsPanel({ children }) {
       {children}
     </Box>
   );
-}
+};
 
-// ToolbarOptionsPanel.propTypes = {
-//   children: PropTypes.node,
-// };
+ToolbarOptionsPanel.propTypes = {
+  children: PropTypes.node,
+};
 
 export default ToolbarOptionsPanel;
