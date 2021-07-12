@@ -59,7 +59,7 @@ export default function Download() {
           <ModalHeader>Download image</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Image crossOrigin="https://openslide-demo.s2.dualstack.us-east-1.amazonaws.com/" src={img} />
+            <Image crossOrigin="https://openslide-demo.s3.dualstack.us-east-1.amazonaws.com/info.json" src={img} />
           </ModalBody>
 
           <ModalFooter>
