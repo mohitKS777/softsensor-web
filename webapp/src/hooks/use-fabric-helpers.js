@@ -5,6 +5,9 @@ const useCanvasHelpers = () => {
   const { activeTool, fabricOverlay } = useSelector(
     (state) => state.fabricOverlayState
   );
+  const { username, roomName, socket } = useSelector(
+    (state) => state.socketState
+  );
   const [canvas, setCanvas] = useState();
 
   useEffect(() => {
@@ -24,6 +27,10 @@ const useCanvasHelpers = () => {
     for (let i in userObjects) {
       canvas.remove(userObjects[i]);
     }
+    socket.emit(
+      "send_annotations",
+      JSON.stringify({ roomName, username, content: canvas })
+    );
   };
 
   // Deselect all Fabric canvas objects
