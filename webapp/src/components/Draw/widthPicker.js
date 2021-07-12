@@ -3,20 +3,15 @@ import PropTypes from "prop-types";
 import { VStack } from "@chakra-ui/react";
 import ToolbarBorderBox from "../Toolbar/borderBox";
 import ToolbarBorderBoxInner from "../Toolbar/borderBoxInner";
+import { useSelector, useDispatch } from "react-redux";
+import { updateWidth } from "../../state/reducers/drawReducer";
+import { widths } from "./width";
 
-export const widths = [
-  {
-    pixelWidth: 2,
-    size: "Sm",
-  },
-  {
-    pixelWidth: 12,
-    size: "Md",
-  },
-  { pixelWidth: 24, size: "Lg" },
-];
+const DrawWidthPicker = () => {
+  const { width } = useSelector((state) => state.drawState);
+  const { color } = useSelector((state) => state.fabricOverlayState);
+  const dispatch = useDispatch();
 
-function DrawWidthPicker({ color, handleWidthSelect, width }) {
   return (
     <VStack spacing={3} px={1}>
       {widths.map((widthObj) => {
@@ -30,18 +25,13 @@ function DrawWidthPicker({ color, handleWidthSelect, width }) {
               bgImage={`url(${imgSrc.default})`}
               bgSize="cover"
               display="block"
-              onClick={() => handleWidthSelect(widthObj)}
+              onClick={() => dispatch(updateWidth(widthObj))}
             />
           </ToolbarBorderBox>
         );
       })}
     </VStack>
   );
-}
-
-DrawWidthPicker.propTypes = {
-  color: PropTypes.object,
-  handleWidthSelect: PropTypes.func,
 };
 
 export default DrawWidthPicker;

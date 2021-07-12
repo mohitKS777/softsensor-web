@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useOpenSeadragon, OpenSeadragon } from "use-open-seadragon";
 import { fabric, initFabricJSOverlay } from "openseadragon-fabricjs-overlay";
-import { useFabricOverlayDispatch } from "../../context/fabric-overlay-context";
+import { useDispatch } from "react-redux";
+import { updateOverlay } from "../../state/reducers/fabricOverlayReducer";
 import { isBrowser } from "react-device-detect";
 import { Box } from "@chakra-ui/react";
 import ViewerControls from "./controls";
+import PropTypes from "prop-types";
 
 const minZoomLevel = isBrowser ? 0.4 : 0.8;
 
@@ -37,8 +39,8 @@ const osdOptions = {
   zoomPerClick: 1.0,
 };
 
-export default function Viewer({ tile }) {
-  const dispatch = useFabricOverlayDispatch();
+const Viewer = ({ tile }) => {
+  const dispatch = useDispatch();
 
   // Customize Fabric selection handles
   fabric.Object.prototype.set({
@@ -54,15 +56,16 @@ export default function Viewer({ tile }) {
   // Initialize our OpenSeadragon instance
   const [ref, { viewer }] = useOpenSeadragon(tile, osdOptions);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!viewer) return;
 
     // Create the fabric.js overlay, and set it on a sharable context
-    dispatch({
-      type: "updateOverlay",
-      fabricOverlay: viewer.fabricjsOverlay({ scale: 1 }),
-      viewer: viewer,
-    });
+    dispatch(
+      updateOverlay({
+        fabricOverlay: viewer.fabricjsOverlay({ scale: 1 }),
+        viewer: viewer,
+      })
+    );
   }, [dispatch, viewer]);
 
   return (
@@ -70,4 +73,10 @@ export default function Viewer({ tile }) {
       {isBrowser && <ViewerControls />}
     </Box>
   );
-}
+};
+
+Viewer.propTypes = {
+  tile: PropTypes.object,
+};
+
+export default Viewer;

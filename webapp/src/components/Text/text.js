@@ -1,48 +1,48 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 // import PropTypes from 'prop-types';
 import ToolbarButton from "../Toolbar/button";
 import { FiType } from "react-icons/fi";
 import { fabric } from "openseadragon-fabricjs-overlay";
-import {
-  useFabricOverlayDispatch,
-  useFabricOverlayState,
-} from "../../context/fabric-overlay-context";
+import { useSelector, useDispatch } from "react-redux";
+import { updateTool } from "../../state/reducers/fabricOverlayReducer";
 import TypeTextFontPicker from "./fontPicker";
 import ToolbarOptionsPanel from "../Toolbar/optionsPanel";
 import { fonts } from "./fontPicker";
 import FontFaceObserver from "fontfaceobserver";
 import useFabricHelpers from "../../hooks/use-fabric-helpers";
+import {
+  updateColorActive,
+  editing,
+  selectionCleared,
+  selected,
+  fontChange,
+} from "../../state/reducers/textReducer";
 
-function TypeText({ isActive }) {
-  const dispatch = useFabricOverlayDispatch();
-  const { color, fabricOverlay, viewer } = useFabricOverlayState();
+const TypeText = () => {
+  const dispatch = useDispatch();
+  const { color, fabricOverlay, viewer, activeTool } = useSelector(
+    (state) => state.fabricOverlayState
+  );
   const { deselectAll } = useFabricHelpers();
+  const isActive = activeTool === "TYPE";
 
-  const [myState, _setMyState] = React.useState({
-    activeFont: fonts[0],
-    color,
-    isActive, // Is the main Type tool active
-    isEditing: false,
-    // TODO: Remove selectedCoords?
-    selectedCoords: { top: 0, left: 0 },
-  });
-  const myStateRef = React.useRef(myState);
-  const setMyState = (data) => {
-    myStateRef.current = data;
-    _setMyState(data);
+  const myState = useSelector((state) => state.textState);
+  const myStateRef = useRef(myState);
+  const setMyState = (action, data) => {
+    myStateRef.current = { ...myState, ...data };
+    dispatch(action(data));
   };
-
   /**
    * Handle main tool change
    */
-  React.useEffect(() => {
-    setMyState({ ...myState, color, isActive });
+  useEffect(() => {
+    setMyState(updateColorActive, { color: color, isActive: isActive });
 
     if (!fabricOverlay) return;
     fabricOverlay.fabricCanvas().defaultCursor = isActive ? "text" : "auto";
   }, [color, isActive]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isActive) return;
     if (myState.isEditing) {
       fabricOverlay.fabricCanvas().defaultCursor = "auto";
@@ -56,7 +56,7 @@ function TypeText({ isActive }) {
   /**
    * Handle an individual font being selected
    */
-  React.useEffect(() => {
+  useEffect(() => {
     if (!fabricOverlay) return;
     const canvas = fabricOverlay.fabricCanvas();
 
@@ -77,7 +77,7 @@ function TypeText({ isActive }) {
   /**
    * Set up event handlers when Fabric is ready
    */
-  React.useEffect(() => {
+  useEffect(() => {
     if (!fabricOverlay) return;
     const canvas = fabricOverlay.fabricCanvas();
 
@@ -90,7 +90,7 @@ function TypeText({ isActive }) {
       // Was user previously editing text?
       if (myStateRef.current.isEditing) {
         deselectAll();
-        setMyState({ ...myStateRef.current, isEditing: false });
+        setMyState(editing, { ...myStateRef.current, isEditing: false });
         return;
       }
 
@@ -107,7 +107,7 @@ function TypeText({ isActive }) {
       canvas.setActiveObject(textbox);
       textbox.enterEditing();
 
-      setMyState({
+      setMyState(editing, {
         ...myStateRef.current,
         isEditing: true,
       });
@@ -116,7 +116,7 @@ function TypeText({ isActive }) {
     function handleSelectionCleared(options) {
       if (!myStateRef.current.isSelectedOnCanvas) return;
 
-      setMyState({
+      setMyState(selectionCleared, {
         ...myStateRef.current,
         selectedCoords: { top: 0, left: 0 },
       });
@@ -125,7 +125,7 @@ function TypeText({ isActive }) {
     function handleSelected(options) {
       if (options.target.get("type") !== "textbox") return;
 
-      setMyState({
+      setMyState(selected, {
         ...myStateRef.current,
       });
     }
@@ -146,12 +146,12 @@ function TypeText({ isActive }) {
   }, [fabricOverlay]);
 
   const handleFontChange = (font) => {
-    setMyState({ ...myState, activeFont: font });
+    setMyState(fontChange, { activeFont: font });
     //loadAndUse(font.fontFamily);
   };
 
   const handleToolbarButtonClick = (e) => {
-    dispatch({ type: "updateTool", tool: isActive ? "" : "TYPE" });
+    dispatch(updateTool({ tool: isActive ? "" : "TYPE" }));
   };
 
   const loadAndUse = (font) => {
@@ -186,18 +186,11 @@ function TypeText({ isActive }) {
       />
       {isActive && (
         <ToolbarOptionsPanel>
-          <TypeTextFontPicker
-            activeFont={myState.activeFont}
-            handleFontChange={handleFontChange}
-          />
+          <TypeTextFontPicker handleFontChange={handleFontChange} />
         </ToolbarOptionsPanel>
       )}
     </div>
   );
-}
-
-// TypeText.propTypes = {
-//   isActive: PropTypes.bool,
-// };
+};
 
 export default TypeText;

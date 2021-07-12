@@ -1,6 +1,6 @@
 import React from "react";
-// import PropTypes from 'prop-types';
-import { useFabricOverlayState } from "../../context/fabric-overlay-context";
+import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 import {
   Link,
   Heading,
@@ -26,8 +26,9 @@ export const fonts = [
   },
 ];
 
-function TypeTextFontPicker({ activeFont, handleFontChange }) {
-  const { fabricOverlay } = useFabricOverlayState();
+const TypeTextFontPicker = ({ handleFontChange }) => {
+  const { fabricOverlay } = useSelector((state) => state.fabricOverlayState);
+  const { activeFont } = useSelector((state) => state.textState);
 
   const activeClasses = {
     borderColor: useColorModeValue("gray.300", "white"),
@@ -91,12 +92,10 @@ function TypeTextFontPicker({ activeFont, handleFontChange }) {
       </VStack>
     </>
   );
-}
+};
 
-// TypeTextFontPicker.propTypes = {
-//   activeFont: PropTypes.object,
-//   handleFontChange: PropTypes.func,
-//   handlePreviewTextChange: PropTypes.func,
-// };
+TypeTextFontPicker.propTypes = {
+  handleFontChange: PropTypes.func,
+};
 
 export default TypeTextFontPicker;

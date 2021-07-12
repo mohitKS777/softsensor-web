@@ -1,56 +1,55 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import ToolbarButton from "../Toolbar/button";
 import ToolbarOptionsPanel from "../Toolbar/optionsPanel";
 import { FaShapes } from "react-icons/fa";
 import { fabric } from "openseadragon-fabricjs-overlay";
-import {
-  useFabricOverlayDispatch,
-  useFabricOverlayState,
-} from "../../context/fabric-overlay-context";
+import { useSelector, useDispatch } from "react-redux";
+import { updateTool } from "../../state/reducers/fabricOverlayReducer";
 import ShapePicker from "./picker";
 import useFabricHelpers from "../../hooks/use-fabric-helpers";
+import {
+  updateActive,
+  updateShapeColor,
+  updateShape,
+  updateActiveShape,
+} from "../../state/reducers/shapeReducer";
 
 const FABRIC_SHAPE_TYPES = ["circle", "rect"];
 
-function Shape({ isActive }) {
-  const dispatch = useFabricOverlayDispatch();
-  const { color, fabricOverlay, viewer } = useFabricOverlayState();
+const Shape = () => {
+  const dispatch = useDispatch();
+  const { color, fabricOverlay, viewer, activeTool } = useSelector(
+    (state) => state.fabricOverlayState
+  );
   const { deselectAll } = useFabricHelpers();
+  const isActive = activeTool === "SHAPE";
 
-  const [myState, _setMyState] = React.useState({
-    activeShape: null, // active shape in Options Panel
-    color,
-    currentDragShape: null,
-    isActive, // Is the Shape tool itself active
-    isMouseDown: false,
-    origX: null, // starting X point for drag creating an object
-    origY: null, // starting Y point for drag creating an object
-  });
-  const myStateRef = React.useRef(myState);
-  const setMyState = (data) => {
-    myStateRef.current = data;
-    _setMyState(data);
+  const myState = useSelector((state) => state.shapeState);
+  const myStateRef = useRef(myState);
+  const setMyState = (action, data) => {
+    myStateRef.current = { ...myState, ...data };
+    dispatch(action(data));
   };
 
   /**
    * Handle primary tool change
    */
-  React.useEffect(() => {
-    setMyState({ ...myState, activeShape: null, isActive });
+  useEffect(() => {
+    setMyState(updateActive, { activeShape: null, isActive: isActive });
   }, [isActive]);
 
   /**
    * Handle color change
    */
-  React.useEffect(() => {
-    setMyState({ ...myState, color });
+  useEffect(() => {
+    setMyState(updateShapeColor, { color: color });
   }, [color.hex]);
 
   /**
    * Handle an individual shape being selected
    */
-  React.useEffect(() => {
+  useEffect(() => {
     if (!fabricOverlay) return;
     const canvas = fabricOverlay.fabricCanvas();
 
@@ -75,7 +74,7 @@ function Shape({ isActive }) {
   /**
    * Add shapes and handle mouse events
    */
-  React.useEffect(() => {
+  useEffect(() => {
     if (!fabricOverlay) return;
     const canvas = fabricOverlay.fabricCanvas();
 
@@ -148,7 +147,7 @@ function Shape({ isActive }) {
           break;
       }
 
-      setMyState({
+      setMyState(updateShape, {
         ...myStateRef.current,
         currentDragShape: newShape,
         isMouseDown: true,
@@ -239,7 +238,7 @@ function Shape({ isActive }) {
 
       fabricOverlay.fabricCanvas().renderAll();
 
-      setMyState({
+      setMyState(updateShape, {
         ...myStateRef.current,
         currentDragShape: null,
         isMouseDown: false,
@@ -249,7 +248,7 @@ function Shape({ isActive }) {
     function handleSelectionCleared(options) {
       if (!myStateRef.current.isActive) return;
 
-      setMyState({
+      setMyState(updateShape, {
         ...myStateRef.current,
       });
     }
@@ -264,7 +263,7 @@ function Shape({ isActive }) {
       )
         return;
 
-      setMyState({
+      setMyState(updateShape, {
         ...myStateRef.current,
       });
     }
@@ -289,11 +288,11 @@ function Shape({ isActive }) {
   }, [fabricOverlay]);
 
   const handleShapeSelect = (shape) => {
-    setMyState({ ...myState, activeShape: shape });
+    setMyState(updateActiveShape, { activeShape: shape });
   };
 
   const handleToolbarClick = () => {
-    dispatch({ type: "updateTool", tool: isActive ? "" : "SHAPE" });
+    dispatch(updateTool({ tool: isActive ? "" : "SHAPE" }));
   };
 
   return (
@@ -307,17 +306,11 @@ function Shape({ isActive }) {
       />
       {isActive && (
         <ToolbarOptionsPanel>
-          <ShapePicker
-            activeShape={myState.activeShape}
-            color={color}
-            handleShapeSelect={handleShapeSelect}
-          />
+          <ShapePicker handleShapeSelect={handleShapeSelect} />
         </ToolbarOptionsPanel>
       )}
     </>
   );
-}
-
-Shape.propTypes = { isActive: PropTypes.bool };
+};
 
 export default Shape;

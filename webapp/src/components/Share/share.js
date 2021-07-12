@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import rug from "random-username-generator";
-import { useFabricOverlayState } from "../../context/fabric-overlay-context";
+import { useSelector, useDispatch } from "react-redux";
 import {
-  useSocketDispatch,
-  useSocketState,
-} from "../../context/socket-context";
+  updateSocketDetails,
+  updateAnnotations,
+  updateGuestDetails,
+} from "../../state/reducers/socketReducer";
 import AltButton from "../altButton";
 import {
   AlertDialog,
@@ -24,18 +25,21 @@ import {
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 
-function ShareAnnotation() {
+const ShareAnnotation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [_roomName, setRoomName] = useState("");
   const [alias, setAlias] = useState(rug.generate());
   const [sharing, setSharing] = useState(false);
   const cancelRef = useRef();
 
-  // const socket = useContext(SocketContext);
   const onClose = () => setIsOpen(false);
-  const { fabricOverlay, userCanvases } = useFabricOverlayState();
-  const { username, roomName, socket, guestList } = useSocketState();
-  const dispatch = useSocketDispatch();
+  const { fabricOverlay, userCanvases } = useSelector(
+    (state) => state.fabricOverlayState
+  );
+  const { username, roomName, socket, guestList } = useSelector(
+    (state) => state.socketState
+  );
+  const dispatch = useDispatch();
 
   const handleConnect = async () => {
     let _username = await uuidv4();
@@ -44,13 +48,13 @@ function ShareAnnotation() {
       guest: { username: _username, alias },
     });
     let user = { username, alias };
-    dispatch({
-      type: "updateSocketDetails",
-      username: _username,
-      roomName: _roomName,
-      alias,
-      // guestList: [...guestList, user]
-    });
+    dispatch(
+      updateSocketDetails({
+        username: _username,
+        roomName: _roomName,
+        alias: alias,
+      })
+    );
     onClose();
   };
 
@@ -69,11 +73,9 @@ function ShareAnnotation() {
   useEffect(() => {
     socket.on("receive_guest_list", (data) => {
       console.log(data);
-      dispatch({
-        type: "updateGuestDetails",
-        guestCount: data.length,
-        guestList: [...data],
-      });
+      dispatch(
+        updateGuestDetails({ guestCount: data.length, guestList: [...data] })
+      );
     });
   });
 
@@ -83,7 +85,6 @@ function ShareAnnotation() {
 
   useEffect(() => {
     socket.on("receive_annotations", (data) => {
-      // console.log('received data: ',data)
       if (fabricOverlay) {
         let annotations = {
           ...userCanvases,
@@ -92,10 +93,7 @@ function ShareAnnotation() {
             fabricCanvas: data.content,
           },
         };
-        dispatch({
-          type: "updateAnnotations",
-          annotations,
-        });
+        dispatch(updateAnnotations(annotations));
         let canvas = fabricOverlay.fabricCanvas();
         canvas.loadFromJSON(
           annotations[data.username]["fabricCanvas"],
@@ -166,6 +164,6 @@ function ShareAnnotation() {
       </AlertDialog>
     </>
   );
-}
+};
 
 export default ShareAnnotation;

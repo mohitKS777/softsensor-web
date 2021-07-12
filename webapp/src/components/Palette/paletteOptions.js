@@ -9,9 +9,9 @@ import {
   DrawerCloseButton,
   Button,
 } from "@chakra-ui/react";
+import PropTypes from "prop-types";
 
-export default function PaletteOptions({ isOpen, handleIsOpen }) {
-
+const PaletteOptions = ({ isOpen, handleIsOpen }) => {
   return (
     <>
       <Drawer isOpen={isOpen} placement="left" onClose={handleIsOpen}>
@@ -29,4 +29,11 @@ export default function PaletteOptions({ isOpen, handleIsOpen }) {
       </Drawer>
     </>
   );
-}
+};
+
+PaletteOptions.propTypes = {
+  isOpen: PropTypes.bool,
+  handleIsOpen: PropTypes.func,
+};
+
+export default PaletteOptions;

@@ -15,7 +15,7 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 import Logo from "../logo";
 import { Link as RRLink, useHistory } from "react-router-dom";
 
-function LayoutHeader() {
+const LayoutHeader = () => {
   const history = useHistory();
   const fontSizes = ["xs", "sm", "md"];
 
@@ -60,6 +60,6 @@ function LayoutHeader() {
       </Flex>
     </Box>
   );
-}
+};
 
 export default LayoutHeader;

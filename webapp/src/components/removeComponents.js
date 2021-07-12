@@ -1,22 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@chakra-ui/react";
-import { useFabricOverlayState } from "../context/fabric-overlay-context";
+import { useSelector } from "react-redux";
 import { DeleteIcon } from "@chakra-ui/icons";
 import ToolbarButton from "./Toolbar/button";
 
-export default function RemoveObject() {
-  const { fabricOverlay } = useFabricOverlayState();
-  const [isActiveObject, setIsActiveObject] = React.useState();
+const RemoveObject = () => {
+  const { fabricOverlay } = useSelector((state) => state.fabricOverlayState);
+  const [isActiveObject, setIsActiveObject] = useState();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!fabricOverlay) return;
 
-    function handleSelectionCleared(e) {
+    const handleSelectionCleared = (e) => {
       setIsActiveObject(false);
-    }
-    function handleSelectionCreated(e) {
+    };
+    const handleSelectionCreated = (e) => {
       setIsActiveObject(true);
-    }
+    };
 
     const canvas = fabricOverlay.fabricCanvas();
     canvas.on("selection:created", handleSelectionCreated);
@@ -51,4 +51,6 @@ export default function RemoveObject() {
       color="#fff"
     />
   );
-}
+};
+
+export default RemoveObject;

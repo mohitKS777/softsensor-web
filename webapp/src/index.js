@@ -4,15 +4,20 @@ import "./index.css";
 import App from "./App";
 import { Auth0Provider } from "@auth0/auth0-react";
 import reportWebVitals from "./reportWebVitals";
+import { Provider } from "react-redux";
+import store from "./state/store";
 
 ReactDOM.render(
   <React.StrictMode>
     <Auth0Provider
-      domain="dev-iwuou-7y.us.auth0.com"
-      clientId="SguS18Aj5g7fT5NuBB4uwp1udpyWf39p"
+      domain={process.env.REACT_APP_AUTH0_DOMAIN}
+      clientId={process.env.REACT_APP_AUTH0_CLIENTID}
       redirectUri={"http://localhost:3000/slide/*"}
     >
-      <App />
+      <Provider store={store}>
+        {console.log(process.env.REACT_APP_AUTH0_DOMAIN)}
+        <App />
+      </Provider>
     </Auth0Provider>
   </React.StrictMode>,
   document.getElementById("root")

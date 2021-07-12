@@ -1,11 +1,13 @@
-import React from "react";
-import { useFabricOverlayState } from "../context/fabric-overlay-context";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
-export default function useCanvasHelpers() {
-  const { activeTool, fabricOverlay } = useFabricOverlayState();
-  const [canvas, setCanvas] = React.useState();
+const useCanvasHelpers = () => {
+  const { activeTool, fabricOverlay } = useSelector(
+    (state) => state.fabricOverlayState
+  );
+  const [canvas, setCanvas] = useState();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!fabricOverlay) return;
     setCanvas(fabricOverlay.fabricCanvas());
   }, [fabricOverlay]);
@@ -71,4 +73,6 @@ export default function useCanvasHelpers() {
     makeObjectsVisible,
     updateCursor,
   };
-}
+};
+
+export default useCanvasHelpers;

@@ -1,17 +1,15 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { FaPaintBrush } from "react-icons/fa";
 import { Box, Divider, Flex } from "@chakra-ui/react";
-import {
-  useFabricOverlayDispatch,
-  useFabricOverlayState,
-} from "../../context/fabric-overlay-context";
-import { useSocketState } from "../../context/socket-context";
+import { updateTool } from "../../state/reducers/fabricOverlayReducer";
+import { useSelector, useDispatch } from "react-redux";
 import DrawWidthPicker from "./widthPicker";
 import ToolbarButton from "../Toolbar/button";
 import ToolbarOptionsPanel from "../Toolbar/optionsPanel";
 import { widths } from "./widthPicker";
 // import logo from '../.../images/logo.png';
 import useHexRGB from "../../hooks/use-hex-rgb";
+import { updateActive } from "../../state/reducers/drawReducer";
 
 const getDrawCursor = (brushSize, brushColor) => {
   brushSize = brushSize < 12 ? 8 : brushSize;
@@ -34,26 +32,28 @@ const getDrawCursor = (brushSize, brushColor) => {
   return `data:image/svg+xml;base64,${window.btoa(circle)}`;
 };
 
-function createFreeDrawingCursor(brushWidth, brushColor) {
+const createFreeDrawingCursor = (brushWidth, brushColor) => {
   return `url(${getDrawCursor(brushWidth, brushColor)}) ${brushWidth / 2} ${
     brushWidth / 2
   }, crosshair`;
-}
+};
 
-function Draw({ isActive }) {
-  const [width, setWidth] = useState(widths[0]);
-  const { color, fabricOverlay, viewer } = useFabricOverlayState();
-  const { username, roomName, alias, socket } = useSocketState();
-  const dispatch = useFabricOverlayDispatch();
+const Draw = () => {
+  const { color, fabricOverlay, viewer, activeTool } = useSelector(
+    (state) => state.fabricOverlayState
+  );
+  const { username, roomName, alias, socket } = useSelector(
+    (state) => state.socketState
+  );
+  const dispatch = useDispatch();
   const { hexToRGBA } = useHexRGB();
+  const isActive = activeTool === "DRAW";
 
-  const [myState, _setMyState] = useState({
-    isActive,
-  });
-  const myStateRef = useRef(myState);
+  const myState = useSelector((state) => state.drawState);
+  const myStateRef = useRef(myState.isActive);
   const setMyState = (data) => {
     myStateRef.current = data;
-    _setMyState(data);
+    dispatch(updateActive(data));
   };
 
   useEffect(() => {
@@ -61,7 +61,7 @@ function Draw({ isActive }) {
   }, [isActive]);
 
   useEffect(() => {
-    setMyState({ isActive });
+    setMyState(isActive);
   }, [isActive]);
 
   useEffect(() => {
@@ -86,7 +86,7 @@ function Draw({ isActive }) {
     if (!fabricOverlay) return;
     const canvas = fabricOverlay.fabricCanvas();
     if (isActive) {
-      const brushWidth = width.pixelWidth;
+      const brushWidth = myState.width.pixelWidth;
 
       // Enable Fabric drawing; disable OSD mouseclicks
       viewer.setMouseNavEnabled(false);
@@ -118,25 +118,22 @@ function Draw({ isActive }) {
     }
   }, [isActive]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Update brush color and size with Fabric
     if (!fabricOverlay || !isActive) return;
 
     const canvas = fabricOverlay.fabricCanvas();
-    const brushWidth = width.pixelWidth;
+    const brushWidth = myState.width.pixelWidth;
 
     canvas.freeDrawingBrush.color = color.hex;
     canvas.freeDrawingBrush.width = brushWidth;
     canvas.freeDrawingCursor = createFreeDrawingCursor(brushWidth, color.hex);
-  }, [color, width]);
+  }, [color, myState.width]);
 
   const handleToolbarClick = () => {
-    dispatch({ type: "updateTool", tool: isActive ? "" : "DRAW" });
+    // dispatch({ type: "updateTool", tool: isActive ? "" : "DRAW" });
+    dispatch(updateTool({ tool: isActive ? "" : "DRAW" }));
   };
-
-  function handleWidthSelect(width) {
-    setWidth({ ...width });
-  }
 
   return (
     <>
@@ -149,15 +146,11 @@ function Draw({ isActive }) {
       />
       {isActive && (
         <ToolbarOptionsPanel>
-          <DrawWidthPicker
-            color={color}
-            handleWidthSelect={handleWidthSelect}
-            width={width}
-          />
+          <DrawWidthPicker />
         </ToolbarOptionsPanel>
       )}
     </>
   );
-}
+};
 
 export default Draw;

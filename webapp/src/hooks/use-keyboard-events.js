@@ -1,11 +1,10 @@
-import React from "react";
-import { useFabricOverlayState } from "../context/fabric-overlay-context";
+import React, { useSelector } from "react-redux";
 
 // https://stackoverflow.com/questions/44320104/fabricjs-how-to-move-the-selected-object-by-keyboard
-export default function useKeyboardEvents() {
-  const { fabricOverlay } = useFabricOverlayState();
+const useKeyboardEvents = () => {
+  const { fabricOverlay } = useSelector((state) => state.fabricOverlayState);
 
-  function handleEvent(e) {
+  const handleEvent = (e) => {
     if (e.repeat) {
       return;
     }
@@ -19,7 +18,7 @@ export default function useKeyboardEvents() {
 
     const STEP = 10;
 
-    function moveSelected(direction) {
+    const moveSelected = (direction) => {
       if (activeObject) {
         switch (direction) {
           case "LEFT":
@@ -60,7 +59,7 @@ export default function useKeyboardEvents() {
       } else {
         console.log("no object selected");
       }
-    }
+    };
 
     if (key === "ArrowLeft") {
       // handle Left key
@@ -85,7 +84,9 @@ export default function useKeyboardEvents() {
       }
       canvas.remove(activeObject);
     }
-  }
+  };
 
   return { handleEvent };
-}
+};
+
+export default useKeyboardEvents;

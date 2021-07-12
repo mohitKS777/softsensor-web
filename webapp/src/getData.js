@@ -13,4 +13,4 @@
 
 // getdata();
 
-// export default getData; 
+// export default getData;

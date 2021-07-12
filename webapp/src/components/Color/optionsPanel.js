@@ -5,9 +5,17 @@ import { brandColors } from "../../styles/brandPalette";
 import ToolbarBorderBox from "../Toolbar/borderBox";
 import ToolbarBorderBoxInner from "../Toolbar/borderBoxInner";
 import { Fade, ScaleFade, Slide, SlideFade } from "@chakra-ui/react";
+import { useSelector, useDispatch } from "react-redux";
+import { updateColor } from "../../state/reducers/fabricOverlayReducer";
 
-const ColorOptionsPanel = ({ color, handleColorSelect, isVisible }) => {
+const ColorOptionsPanel = () => {
   // if (!isVisible) return null;
+  const { color } = useSelector((state) => state.fabricOverlayState);
+  const { isActiveTool, isObjectSelected } = useSelector(
+    (state) => state.colorState
+  );
+  const isVisible = isObjectSelected || isActiveTool;
+  const dispatch = useDispatch();
 
   return (
     <Fade in={isVisible}>
@@ -19,24 +27,13 @@ const ColorOptionsPanel = ({ color, handleColorSelect, isVisible }) => {
           >
             <ToolbarBorderBoxInner
               bg={brandColor.hex}
-              onClick={() => handleColorSelect(brandColor)}
+              onClick={() => dispatch(updateColor(brandColor))}
             ></ToolbarBorderBoxInner>
           </ToolbarBorderBox>
         ))}
       </HStack>
     </Fade>
   );
-}
-
-ColorOptionsPanel.propTypes = {
-  color: PropTypes.object,
-  handleColorSelect: PropTypes.func,
-  isVisible: PropTypes.bool,
 };
 
-export default React.memo(ColorOptionsPanel, (prevProps, currentProps) => {
-  if(prevProps.isVisible !== currentProps.isVisible){
-    return false;
-  }
-  return true;
-});
+export default ColorOptionsPanel;

@@ -1,5 +1,5 @@
 import React from "react";
-// import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { Box, IconButton, VStack } from "@chakra-ui/react";
 import { FiType } from "react-icons/fi";
 
@@ -24,7 +24,7 @@ const activeClasses = {
   borderColor: "brand.green.500",
 };
 
-function TypeTextSizePicker({ handleSizeChange, activeSize }) {
+const TypeTextSizePicker = ({ handleSizeChange, activeSize }) => {
   return (
     <VStack>
       {sizes.map((sizeObj) => (
@@ -39,11 +39,11 @@ function TypeTextSizePicker({ handleSizeChange, activeSize }) {
       ))}
     </VStack>
   );
-}
+};
 
-// TypeTextSizePicker.propTypes = {
-//   color: PropTypes.string,
-//   handleSizeChange: PropTypes.func,
-// };
+TypeTextSizePicker.PropTypes = {
+  handleSizeChange: PropTypes.func,
+  activeSize: PropTypes.object,
+};
 
 export default TypeTextSizePicker;

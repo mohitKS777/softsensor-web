@@ -6,8 +6,14 @@
 // export const SocketContext = createContext();
 
 import React from "react";
-import { SocketProvider } from "../context/socket-context";
+import PropTypes from "prop-types";
 
-export default function SocketWrapper({ children }) {
-  return <SocketProvider>{children}</SocketProvider>;
-}
+const SocketWrapper = ({ children }) => {
+  return <div>{children}</div>;
+};
+
+SocketWrapper.propTypes = {
+  children: PropTypes.node,
+};
+
+export default SocketWrapper;

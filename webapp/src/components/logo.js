@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Box, Image } from "@chakra-ui/react";
 import Logo from "../images/logo.png";
 
-function SALogo(props) {
+const SALogo = (props) => {
   return (
     <Box>
       <Image
@@ -16,7 +16,7 @@ function SALogo(props) {
       />
     </Box>
   );
-}
+};
 
 SALogo.propTypes = {};
 

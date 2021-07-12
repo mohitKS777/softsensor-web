@@ -17,7 +17,7 @@ const defaultState = {
   color: "",
 };
 
-function SocketReducer(state, action) {
+const SocketReducer = (state, action) => {
   switch (action.type) {
     case "updateSocketDetails": {
       return {
@@ -43,9 +43,9 @@ function SocketReducer(state, action) {
       throw new Error(`Unhandled action type ${action.type}`);
     }
   }
-}
+};
 
-function SocketProvider({ initialState = defaultState, children }) {
+const SocketProvider = ({ initialState = defaultState, children }) => {
   const [state, dispatch] = useReducer(SocketReducer, initialState);
   return (
     <SocketStateContext.Provider value={state}>
@@ -54,9 +54,9 @@ function SocketProvider({ initialState = defaultState, children }) {
       </SocketDispatchContext.Provider>
     </SocketStateContext.Provider>
   );
-}
+};
 
-function useSocketState() {
+const useSocketState = () => {
   const context = useContext(SocketStateContext);
   if (context === undefined) {
     throw new Error(
@@ -64,14 +64,14 @@ function useSocketState() {
     );
   }
   return context;
-}
+};
 
-function useSocketDispatch() {
+const useSocketDispatch = () => {
   const context = useContext(SocketDispatchContext);
   if (context === undefined) {
     throw new Error("useSocketDispatch must be used within SocketProvider");
   }
   return context;
-}
+};
 
 export { SocketProvider, useSocketState, useSocketDispatch };

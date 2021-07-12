@@ -8,9 +8,8 @@ import OsdFabricWrapper from "./components/osdFabricWrapper";
 import SocketWrapper from "./components/socketWrapper";
 import LayoutApp from "./components/Layout/app";
 import "./App.css";
-import getData from './getData';
-import React from 'react';
-
+import getData from "./getData";
+import React from "react";
 
 const theme = extendTheme({
   colors: {
@@ -40,12 +39,11 @@ const theme = extendTheme({
   },
 });
 
-function App() {
-  
+const App = () => {
   // React.useEffect(() => {
-  //   getData();    
+  //   getData();
   // }, []);
-  
+
   return (
     <Router>
       <ChakraProvider theme={theme} direction="rowReverse">
@@ -63,6 +61,6 @@ function App() {
       </ChakraProvider>
     </Router>
   );
-}
+};
 
 export default App;

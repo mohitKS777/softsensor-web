@@ -18,25 +18,21 @@ import { ColorModeSwitcher } from "../../colorModeSwitch";
 import ImageGalleryModal from "../imageGalleryModal";
 import AltButton from "../altButton";
 import { isBrowser, isTablet, isMobile } from "react-device-detect";
-import {
-  useSocketDispatch,
-  useSocketState,
-} from "../../context/socket-context";
+import { useSelector, useDispatch } from "react-redux";
+import { updateSocketDetails } from "../../state/reducers/socketReducer";
 
-function LayoutAppFooter() {
-  const { socket, roomName, username } = useSocketState();
-  const dispatch = useSocketDispatch();
+const LayoutAppFooter = () => {
+  const { socket, roomName, username } = useSelector(
+    (state) => state.socketState
+  );
+  const dispatch = useDispatch();
   const cancelRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
 
   const handleDisconnect = () => {
     socket.emit("leave_room", { roomName, username });
-    dispatch({
-      type: "updateSocketDetails",
-      username: "",
-      roomName: "",
-    });
+    dispatch(updateSocketDetails({ username: "", roomName: "" }));
   };
 
   return (
@@ -107,6 +103,6 @@ function LayoutAppFooter() {
       </AlertDialog>
     </Flex>
   );
-}
+};
 
 export default LayoutAppFooter;

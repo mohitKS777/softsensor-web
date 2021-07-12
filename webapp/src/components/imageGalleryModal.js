@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -32,7 +32,7 @@ const activeStyles = {
 
 const ImageGalleryModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [activeWork, setActiveWork] = React.useState();
+  const [activeWork, setActiveWork] = useState();
   const history = useHistory();
   const iconButtonSize = useBreakpointValue({ base: "md", md: "lg" });
   const { clearCanvas } = useFabricHelpers();
@@ -82,7 +82,7 @@ const ImageGalleryModal = () => {
                   </Link>
                 </WrapItem>
               ))} */}
-             {Images.map((image) => (
+              {Images.map((image) => (
                 <WrapItem key={image.id} w="auto" h="auto">
                   <Link
                     key={image.id}
@@ -91,14 +91,14 @@ const ImageGalleryModal = () => {
                   >
                     {/* {console.log(image["Image"].Url+'0_0/')} */}
                     <Image
-                      src={image["Image"].Url+'7/0_0.jpeg'}
+                      src={image["Image"].Url + "7/0_0.jpeg"}
                       // alt={`Slide: ${image}`}
                       {...(activeWork &&
                         activeWork.id === image.id && { ...activeStyles })}
                     />
                   </Link>
                 </WrapItem>
-             ))} 
+              ))}
             </Wrap>
           </ModalBody>
 
@@ -114,6 +114,6 @@ const ImageGalleryModal = () => {
       </Modal>
     </Box>
   );
-}
+};
 
-export default React.memo(ImageGalleryModal);
+export default ImageGalleryModal;

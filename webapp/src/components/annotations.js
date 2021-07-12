@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   FormControl,
@@ -15,25 +15,22 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { FaSave } from "react-icons/fa";
-import {
-  useFabricOverlayDispatch,
-  useFabricOverlayState,
-} from "../context/fabric-overlay-context";
+import { useSelector, useDispatch } from "react-redux";
+import { updateUserCanvases } from "../state/reducers/fabricOverlayReducer";
 import { useParams } from "react-router-dom";
 import AltButton from "./altButton";
 
-export default function MyAnnotationsSave() {
+const MyAnnotationsSave = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const params = useParams;
-  const [title, setTitle] = React.useState("");
-  const {
-    activeUserCanvas,
-    fabricOverlay,
-    userCanvases,
-  } = useFabricOverlayState();
-  const dispatch = useFabricOverlayDispatch();
+  const [title, setTitle] = useState("");
 
-  React.useEffect(() => {
+  const { activeUserCanvas, fabricOverlay, userCanvases } = useSelector(
+    (state) => state.fabricOverlayState
+  );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
     setTitle(activeUserCanvas);
   }, [activeUserCanvas]);
 
@@ -45,12 +42,13 @@ export default function MyAnnotationsSave() {
         fabricCanvas: fabricOverlay._fabricCanvas.toObject(),
       },
     };
-    console.log(newCanvases);
-    dispatch({
-      type: "updateUserCanvases",
-      userCanvases: newCanvases,
-      activeUserCanvas: title,
-    });
+
+    dispatch(
+      updateUserCanvases({
+        userCanvases: newCanvases,
+        activeUserCanvas: title,
+      })
+    );
     onClose();
   };
 
@@ -89,6 +87,6 @@ export default function MyAnnotationsSave() {
       </Modal>
     </>
   );
-}
+};
 
-MyAnnotationsSave.propTypes = {};
+export default MyAnnotationsSave;

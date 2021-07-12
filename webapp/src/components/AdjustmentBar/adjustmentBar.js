@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import {
   Box,
   Center,
@@ -22,10 +22,11 @@ import Download from "../downloadImage";
 import ShareAnnotation from "../Share/share";
 import MyAnnotationsSave from "../annotations";
 import Login from "../Authenticate/login";
-import { useSocketState } from "../../context/socket-context";
+import { useSelector } from "react-redux";
+import AltButton from "../altButton";
 
-const AdjustmentBar = (props) => {
-  const { roomName, guestList } = useSocketState();
+const AdjustmentBar = () => {
+  const { roomName, guestList } = useSelector((state) => state.socketState);
   const bg = "#4f545c";
 
   return (
@@ -36,7 +37,7 @@ const AdjustmentBar = (props) => {
             <Color />
           </Box>
           <HStack spacing={2}>
-            <Login />
+              <Login />
             <Center height="20px">
               <Divider orientation="vertical" />
             </Center>
@@ -167,6 +168,4 @@ const AdjustmentBar = (props) => {
   );
 };
 
-AdjustmentBar.propTypes = {};
-
-export default React.memo(AdjustmentBar);
+export default memo(AdjustmentBar);

@@ -1,32 +1,31 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import { FaPaintBrush } from "react-icons/fa";
 import { Box } from "@chakra-ui/react";
+import { useSelector, useDispatch } from "react-redux";
 import {
-  useFabricOverlayDispatch,
-  useFabricOverlayState,
-} from "../../context/fabric-overlay-context";
+  updateIsActiveTool,
+  updateIsObjectSelected,
+} from "../../state/reducers/colorReducer";
 import ColorOptionsPanel from "./optionsPanel";
 import ToolbarButton from "../Toolbar/button";
 import ToolbarOptionsPanel from "../Toolbar/optionsPanel";
 
-const Color = (props) => {
-  const dispatch = useFabricOverlayDispatch();
-  const { activeTool, color, fabricOverlay } = useFabricOverlayState();
+const Color = () => {
+  const dispatch = useDispatch();
+  const { activeTool, color, fabricOverlay } = useSelector(
+    (state) => state.fabricOverlayState
+  );
 
-  const [myState, _setMyState] = React.useState({
-    isObjectSelected: false,
-    isActiveTool: false,
-  });
-  const myStateRef = React.useRef(myState);
-  const setMyState = (data) => {
-    myStateRef.current = data;
-    _setMyState(data);
+  const myState = useSelector((state) => state.colorState);
+  const myStateRef = useRef(myState);
+  const setMyState = (action, data) => {
+    myStateRef.current = { ...myState, ...data };
+    dispatch(action(data));
   };
 
-  React.useEffect(() => {
-    setMyState({
-      ...myState,
+  useEffect(() => {
+    setMyState(updateIsActiveTool, {
       isActiveTool: Boolean(activeTool && activeTool !== "POINTER"),
     });
   }, [activeTool]);
@@ -34,16 +33,22 @@ const Color = (props) => {
   /**
    * Handle mouse events
    */
-  React.useEffect(() => {
+  useEffect(() => {
     if (!fabricOverlay) return;
 
-    function handleSelectionCleared(e) {
-      setMyState({ ...myStateRef.current, isObjectSelected: false });
-    }
-    function handleSelectionCreated(e) {
-      setMyState({ ...myStateRef.current, isObjectSelected: true });
-    }
-    function handleSelectionUpdated(e) {}
+    const handleSelectionCleared = (e) => {
+      setMyState(updateIsObjectSelected, {
+        ...myStateRef.current,
+        isObjectSelected: false,
+      });
+    };
+    const handleSelectionCreated = (e) => {
+      setMyState(updateIsObjectSelected, {
+        ...myStateRef.current,
+        isObjectSelected: true,
+      });
+    };
+    const handleSelectionUpdated = (e) => {};
 
     const canvas = fabricOverlay.fabricCanvas();
     canvas.on("selection:created", handleSelectionCreated);
@@ -57,21 +62,11 @@ const Color = (props) => {
     };
   }, [fabricOverlay]);
 
-  const handleColorSelect = (color) => {
-    dispatch({ type: "updateColor", color });
-  };
-
   return (
     <Box pl={3}>
-      <ColorOptionsPanel
-        color={color}
-        handleColorSelect={handleColorSelect}
-        isVisible={myState.isObjectSelected || myState.isActiveTool}
-      />
+      <ColorOptionsPanel />
     </Box>
   );
-}
+};
 
-Color.propTypes = {};
-
-export default React.memo(Color);
+export default Color;

@@ -4,7 +4,7 @@ import { brandColors } from "../styles/brandPalette";
 const FabricOverlayStateContext = React.createContext();
 const FabricOverlayDispatchContext = React.createContext();
 
-function getLocalUserCanvases() {
+const getLocalUserCanvases = () => {
   const userCanvases = window.localStorage.getItem("userCanvases");
   if (!userCanvases) {
     window.localStorage.setItem("userCanvases", JSON.stringify({}));
@@ -13,7 +13,7 @@ function getLocalUserCanvases() {
     // console.log(userCanvases)
     return JSON.parse(userCanvases);
   }
-}
+};
 
 const defaultState = {
   activeTool: null,
@@ -28,7 +28,7 @@ const defaultState = {
   roomName: "",
 };
 
-function fabricOverlayReducer(state, action) {
+const fabricOverlayReducer = (state, action) => {
   switch (action.type) {
     case "toggleToolbarVisible": {
       return {
@@ -92,9 +92,9 @@ function fabricOverlayReducer(state, action) {
       throw new Error(`Unhandled action type ${action.type}`);
     }
   }
-}
+};
 
-function FabricOverlayProvider({ initialState = defaultState, children }) {
+const FabricOverlayProvider = ({ initialState = defaultState, children }) => {
   const [state, dispatch] = React.useReducer(
     fabricOverlayReducer,
     initialState
@@ -106,9 +106,9 @@ function FabricOverlayProvider({ initialState = defaultState, children }) {
       </FabricOverlayDispatchContext.Provider>
     </FabricOverlayStateContext.Provider>
   );
-}
+};
 
-function useFabricOverlayState() {
+const useFabricOverlayState = () => {
   const context = React.useContext(FabricOverlayStateContext);
   if (context === undefined) {
     throw new Error(
@@ -116,9 +116,9 @@ function useFabricOverlayState() {
     );
   }
   return context;
-}
+};
 
-function useFabricOverlayDispatch() {
+const useFabricOverlayDispatch = () => {
   const context = React.useContext(FabricOverlayDispatchContext);
   if (context === undefined) {
     throw new Error(
@@ -126,7 +126,7 @@ function useFabricOverlayDispatch() {
     );
   }
   return context;
-}
+};
 
 export {
   FabricOverlayProvider,
