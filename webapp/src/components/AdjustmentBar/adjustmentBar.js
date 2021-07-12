@@ -21,6 +21,7 @@ import ClearCanvas from "../clearCanvas";
 import Download from "../downloadImage";
 import ShareAnnotation from "../Share/share";
 import MyAnnotationsSave from "../annotations";
+import Login from "../Authenticate/login";
 import { useSocketState } from "../../context/socket-context";
 
 const AdjustmentBar = (props) => {
@@ -35,6 +36,10 @@ const AdjustmentBar = (props) => {
             <Color />
           </Box>
           <HStack spacing={2}>
+            <Login />
+            <Center height="20px">
+              <Divider orientation="vertical" />
+            </Center>
             <ShareAnnotation />
             <Center height="20px">
               <Divider orientation="vertical" />
@@ -47,9 +52,7 @@ const AdjustmentBar = (props) => {
             <Center height="20px">
               <Divider orientation="vertical" />
             </Center>
-            {isBrowser && <Download />}:w
-            :w
-
+            {isBrowser && <Download />}:w :w
           </HStack>
         </Flex>
       ) : (
@@ -58,106 +61,111 @@ const AdjustmentBar = (props) => {
             <Box ml={2} py={2} width="85%">
               <Color />
             </Box>
-            <Box width="15%" display="flex" justifyContent="flex-end" alignItems="center">
-            <HStack spacing={2} margin="5px">
-              <AvatarGroup max={3} border="none">
-                {guestList.map((guest, id) => {
-                  return (
-                    <Avatar key={id} name={guest.alias} border="none">
-                      <AvatarBadge
-                        boxSize="1.25rem"
-                        bg="green.400"
-                        border="0.5px solid white"
-                      />
-                    </Avatar>
-                  );
-                })}
-              </AvatarGroup>
-            </HStack>
-            <Menu>
-              <MenuButton
-                as={Button}
-                aria-label="Options"
-                rightIcon={<ChevronDownIcon />}
-                size="md"
-                variant="outline"
-                transition="all 0.2s"
-                borderRadius="md"
-                margin="0px 5px"
-                borderWidth="2px"
-                bg="#fff"
-                color="#000"
-                _hover={{ bg: "gray.400" }}
-                _expanded={{ bg: "white.400" }}
-                _focus={{
-                  boxShadow: "outline",
-                  bg: "white.400",
-                }}
-              >
-                Actions
-              </MenuButton>
-              <MenuList position="relative" zIndex="10000" background={bg}>
-                <MenuItem
+            <Box
+              width="15%"
+              display="flex"
+              justifyContent="flex-end"
+              alignItems="center"
+            >
+              <HStack spacing={2} margin="5px">
+                <AvatarGroup max={3} border="none">
+                  {guestList.map((guest, id) => {
+                    return (
+                      <Avatar key={id} name={guest.alias} border="none">
+                        <AvatarBadge
+                          boxSize="1.25rem"
+                          bg="green.400"
+                          border="0.5px solid white"
+                        />
+                      </Avatar>
+                    );
+                  })}
+                </AvatarGroup>
+              </HStack>
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  aria-label="Options"
+                  rightIcon={<ChevronDownIcon />}
+                  size="md"
+                  variant="outline"
+                  transition="all 0.2s"
+                  borderRadius="md"
+                  margin="0px 5px"
+                  borderWidth="2px"
+                  bg="#fff"
+                  color="#000"
+                  _hover={{ bg: "gray.400" }}
+                  _expanded={{ bg: "white.400" }}
                   _focus={{
-                    bg: "white.300",
+                    boxShadow: "outline",
+                    bg: "white.400",
                   }}
                 >
-                  <Box
-                    width="100%"
-                    bg="white.400"
-                    justifyContent="flex-start"
-                    _hover={{
-                      bg: "none",
-                      border: "1px solid white",
+                  Actions
+                </MenuButton>
+                <MenuList position="relative" zIndex="10000" background={bg}>
+                  <MenuItem
+                    _focus={{
+                      bg: "white.300",
                     }}
                   >
-                    <MyAnnotationsSave />
-                  </Box>
-                </MenuItem>
-                <MenuItem
-                  _focus={{
-                    bg: "white.300",
-                  }}
-                >
-                  <Box
-                    width="100%"
-                    bg="white.400"
-                    justifyContent="left"
-                    _hover={{
-                      bg: "none",
-                      border: "1px solid white",
+                    <Box
+                      width="100%"
+                      bg="white.400"
+                      justifyContent="flex-start"
+                      _hover={{
+                        bg: "none",
+                        border: "1px solid white",
+                      }}
+                    >
+                      <MyAnnotationsSave />
+                    </Box>
+                  </MenuItem>
+                  <MenuItem
+                    _focus={{
+                      bg: "white.300",
                     }}
                   >
-                    <ClearCanvas />
-                  </Box>
-                </MenuItem>
-                <MenuItem
-                  color="#fff"
-                  _focus={{
-                    bg: "white.300",
-                  }}
-                >
-                  <Box
-                    width="100%"
-                    bg="white.400"
-                    justifyContent="left"
-                    _hover={{
-                      bg: "none",
-                      border: "1px solid white",
+                    <Box
+                      width="100%"
+                      bg="white.400"
+                      justifyContent="left"
+                      _hover={{
+                        bg: "none",
+                        border: "1px solid white",
+                      }}
+                    >
+                      <ClearCanvas />
+                    </Box>
+                  </MenuItem>
+                  <MenuItem
+                    color="#fff"
+                    _focus={{
+                      bg: "white.300",
                     }}
                   >
-                    {isBrowser && <Download />} Download
-                  </Box>
-                </MenuItem>
-              </MenuList>
-            </Menu>
-          </Box>
+                    <Box
+                      width="100%"
+                      bg="white.400"
+                      justifyContent="left"
+                      _hover={{
+                        bg: "none",
+                        border: "1px solid white",
+                      }}
+                    >
+                      {isBrowser && <Download />} Download
+                    </Box>
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </Box>
           </Flex>
         </>
       )}
     </>
   );
-}
+};
 
 AdjustmentBar.propTypes = {};
 
