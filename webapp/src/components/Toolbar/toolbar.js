@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Box, Divider, Wrap, WrapItem } from "@chakra-ui/react";
-import Text from "../Text/text";
 import Draw from "../Draw/draw";
 import Shape from "../Shape/shape";
 import Palette from "../Palette/palette";
@@ -29,10 +28,6 @@ const Toolbar = () => {
       <Wrap spacing="2" as="nav" direction="column" align="center">
         <WrapItem>
           <ToolbarPointer />
-        </WrapItem>
-
-        <WrapItem>
-          <Text />
         </WrapItem>
 
         <WrapItem>

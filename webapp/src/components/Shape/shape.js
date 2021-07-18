@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import ToolbarButton from "../Toolbar/button";
 import ToolbarOptionsPanel from "../Toolbar/optionsPanel";
@@ -14,6 +14,7 @@ import {
   updateShape,
   updateActiveShape,
 } from "../../state/reducers/shapeReducer";
+import { fonts } from "../Text/fontPicker";
 
 const FABRIC_SHAPE_TYPES = ["circle", "rect"];
 
@@ -22,8 +23,14 @@ const Shape = () => {
   const { color, fabricOverlay, viewer, activeTool } = useSelector(
     (state) => state.fabricOverlayState
   );
+  const { username, roomName, socket } = useSelector(
+    (state) => state.socketState
+  );
   const { deselectAll } = useFabricHelpers();
   const isActive = activeTool === "SHAPE";
+
+  const [shape, setShape] = useState(null);
+  const [textbox, setTextbox] = useState(null);
 
   const myState = useSelector((state) => state.shapeState);
   const myStateRef = useRef(myState);
@@ -221,6 +228,21 @@ const Shape = () => {
       fabricOverlay.fabricCanvas().renderAll();
     }
 
+    // Create new Textbox instance and add it to canvas
+    const createTextbox = ({ left, top, height }) => {
+      const tbox = new fabric.IText("", {
+        left: left,
+        top: top + height + 10,
+        fontFamily: fonts[0].fontFamily,
+        fontSize: 50,
+        selectionBackgroundColor: "rgba(255, 255, 255, 0.5)",
+      });
+
+      fabricOverlay.fabricCanvas().add(tbox);
+      canvas.setActiveObject(tbox);
+      tbox.enterEditing();
+    };
+
     /**
      * Mouse up
      */
@@ -238,6 +260,16 @@ const Shape = () => {
 
       fabricOverlay.fabricCanvas().renderAll();
 
+      const currShape = myStateRef.current.currentDragShape;
+
+      setShape(myStateRef.current.currentDragShape);
+
+      createTextbox({
+        left: currShape.left,
+        top: currShape.top,
+        height: currShape.height,
+      });
+
       setMyState(updateShape, {
         ...myStateRef.current,
         currentDragShape: null,
@@ -246,6 +278,14 @@ const Shape = () => {
     }
 
     function handleSelectionCleared(options) {
+      // hide text when no object is selected
+      if (options.deselected && options.deselected[0].type === "group")
+        options.deselected[0].item(1).set({ visible: false });
+
+      // set textbox when deselected
+      if (options.deselected && options.deselected[0].type === "i-text")
+        setTextbox(options.deselected[0]);
+
       if (!myStateRef.current.isActive) return;
 
       setMyState(updateShape, {
@@ -254,6 +294,16 @@ const Shape = () => {
     }
 
     function handleSelected(options) {
+      // make text visible on selected object
+      if (options && options.target.type === "group") {
+        options.target.item(1).set({ visible: true });
+      }
+
+      // hide text on previous selected object (or deselected object)
+      if (options.deselected && options.deselected[0].type === "group") {
+        options.deselected[0].item(1).set({ visible: false });
+      }
+
       if (!myStateRef.current.isActive) return;
 
       // Filter out any non-shape selections
@@ -286,6 +336,31 @@ const Shape = () => {
       canvas.off("selection:cleared", handleSelectionCleared);
     };
   }, [fabricOverlay]);
+
+  // group shape and textbox together
+  // first remove both from canvas then group them and then add group to canvas
+  useEffect(() => {
+    if (!shape || !textbox) return;
+    const canvas = fabricOverlay.fabricCanvas();
+    if (textbox.text !== "") {
+      canvas.remove(shape);
+      canvas.remove(textbox);
+      textbox.set({
+        visible: false,
+      });
+      const group = new fabric.Group([shape, textbox], {});
+      canvas.add(group);
+    }
+
+    setShape(null);
+    setTextbox(null);
+
+    // send annotation
+    socket.emit(
+      "send_annotations",
+      JSON.stringify({ roomName, username, content: canvas })
+    );
+  }, [textbox]);
 
   const handleShapeSelect = (shape) => {
     setMyState(updateActiveShape, { activeShape: shape });
