@@ -109,6 +109,8 @@ const ShareAnnotation = () => {
           onClick={() => {
             setIsOpen(true);
           }}
+          colorScheme="blue"
+          variant="solid"
         >
           Share Annotations
         </AltButton>
@@ -139,17 +141,20 @@ const ShareAnnotation = () => {
             />
           </AlertDialogBody>
           <AlertDialogFooter>
-            <Button
+            <AltButton
               ref={cancelRef}
               onClick={() => {
                 onClose();
                 setSharing(false);
               }}
+              colorScheme="red"
+              variant="solid"
             >
               Cancel
-            </Button>
-            <Button
+            </AltButton>
+            <AltButton
               colorScheme="blue"
+              variant="solid"
               ml={3}
               onClick={() => {
                 handleConnect();
@@ -158,7 +163,7 @@ const ShareAnnotation = () => {
               }}
             >
               Connect
-            </Button>
+            </AltButton>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

@@ -21,23 +21,25 @@ import ClearCanvas from "../clearCanvas";
 import Download from "../downloadImage";
 import ShareAnnotation from "../Share/share";
 import MyAnnotationsSave from "../annotations";
+import ImageGalleryModal from "../imageGalleryModal";
 import Login from "../Authenticate/login";
 import { useSelector } from "react-redux";
 import AltButton from "../altButton";
 
 const AdjustmentBar = () => {
   const { roomName, guestList } = useSelector((state) => state.socketState);
-  const bg = "#4f545c";
+  const bg = "#212121";
 
   return (
-    <>
+    <div className="adjustmentbar">
       {roomName === "" ? (
         <Flex bgColor={bg} justifyContent="space-between" alignItems="center">
           <Box ml={2} py={2}>
             <Color />
           </Box>
           <HStack spacing={2}>
-              <Login />
+            <ImageGalleryModal/>
+            {/* <Login />
             <Center height="20px">
               <Divider orientation="vertical" />
             </Center>
@@ -53,7 +55,7 @@ const AdjustmentBar = () => {
             <Center height="20px">
               <Divider orientation="vertical" />
             </Center>
-            {isBrowser && <Download />}:w :w
+            {isBrowser && <Download />}:w :w */}
           </HStack>
         </Flex>
       ) : (
@@ -94,7 +96,7 @@ const AdjustmentBar = () => {
                   borderRadius="md"
                   margin="0px 5px"
                   borderWidth="2px"
-                  bg="#fff"
+                  bg="black"
                   color="#000"
                   _hover={{ bg: "gray.400" }}
                   _expanded={{ bg: "white.400" }}
@@ -164,7 +166,7 @@ const AdjustmentBar = () => {
           </Flex>
         </>
       )}
-    </>
+    </div>
   );
 };
 

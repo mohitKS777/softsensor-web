@@ -2,16 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Flex } from "@chakra-ui/react";
 
-const LayoutAppBody = ({ children }) => {
+const LayoutOuterBody = ({ children }) => {
   return (
     <Flex flexGrow={1} as="main">
       {children}
     </Flex>
   );
-};
+}
 
-LayoutAppBody.propTypes = {
+LayoutOuterBody.propTypes = {
   children: PropTypes.node,
 };
 
-export default LayoutAppBody;
+export default LayoutOuterBody;

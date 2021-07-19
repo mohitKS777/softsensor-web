@@ -44,9 +44,9 @@ const LayoutAppFooter = () => {
       py={2}
       boxShadow="base"
       zIndex="1"
-      background="#4f545c"
+      background="#242424"
     >
-      <HStack>
+      {/* <HStack>
         <ImageGalleryModal />
         <Center height="20px">
           <Divider orientation="vertical" />
@@ -100,7 +100,7 @@ const LayoutAppFooter = () => {
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
-      </AlertDialog>
+      </AlertDialog> */}
     </Flex>
   );
 };

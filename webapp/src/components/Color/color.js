@@ -8,8 +8,8 @@ import {
   updateIsObjectSelected,
 } from "../../state/reducers/colorReducer";
 import ColorOptionsPanel from "./optionsPanel";
-import ToolbarButton from "../Toolbar/button";
-import ToolbarOptionsPanel from "../Toolbar/optionsPanel";
+import ToolbarButton from "../ViewerToolbar/button";
+import ToolbarOptionsPanel from "../ViewerToolbar/optionsPanel";
 
 const Color = () => {
   const dispatch = useDispatch();

@@ -2,11 +2,16 @@ import React, { useEffect } from "react";
 import { Box, Flex } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import AdjustmentBar from "../AdjustmentBar/adjustmentBar";
-import Toolbar from "../Toolbar/toolbar";
+import Toolbar from "../ViewerToolbar/toolbar";
+import SidebarTools from "../Sidebar/tools";
 import ViewerContainer from "../Viewer/container";
+import ExtendibleDrawer from "./extdrawer";
 import LayoutHeader from "./header";
 import LayoutAppBody from "./body";
+import LayoutInnerBody from "./innerbody";
+import LayoutOuterBody from "./outerbody";
 import LayoutAppFooter from "./footer";
+import ViewerToolbar from "./viewertoolbar";
 import LayoutAppSidebar from "./sidebar";
 import Div100vh from "react-div-100vh";
 import useKeyboardEvents from "../../hooks/use-keyboard-events";
@@ -25,17 +30,25 @@ const LayoutApp = () => {
   return (
     <Flex as={Div100vh} h="100vh" direction="column" onKeyDown={handleEvent}>
       <LayoutHeader />
-      <AdjustmentBar />
-      <LayoutAppBody>
+      <LayoutOuterBody>
         <LayoutAppSidebar>
-          {isToolbarVisible && (
-            <>
-              <Toolbar />
-            </>
-          )}
+          <SidebarTools />
         </LayoutAppSidebar>
-        <ViewerContainer />
-      </LayoutAppBody>
+        <ExtendibleDrawer/>
+        <LayoutInnerBody>
+          <AdjustmentBar />
+          <LayoutAppBody>
+            <ViewerToolbar>
+              {isToolbarVisible && (
+                <>
+                  <Toolbar />
+                </>
+              )}
+            </ViewerToolbar>
+            <ViewerContainer />
+          </LayoutAppBody>
+        </LayoutInnerBody>
+      </LayoutOuterBody>
       <LayoutAppFooter />
     </Flex>
   );

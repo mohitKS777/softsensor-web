@@ -37,10 +37,11 @@ const ToolbarButton = ({
     >
       <IconButton
         size={iconSizes.size}
+        marginTop="20px"
         fontSize={iconSizes.fontSize}
         variant={isActive ? "outline" : "ghost"}
         _hover={{
-          background: "#ddd",
+          background: "#999999",
           color: "#000",
         }}
         _focus={{

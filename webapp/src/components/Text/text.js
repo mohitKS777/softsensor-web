@@ -1,12 +1,12 @@
 import React, { useRef, useEffect } from "react";
 // import PropTypes from 'prop-types';
-import ToolbarButton from "../Toolbar/button";
+import ToolbarButton from "../ViewerToolbar/button";
 import { FiType } from "react-icons/fi";
 import { fabric } from "openseadragon-fabricjs-overlay";
 import { useSelector, useDispatch } from "react-redux";
 import { updateTool } from "../../state/reducers/fabricOverlayReducer";
 import TypeTextFontPicker from "./fontPicker";
-import ToolbarOptionsPanel from "../Toolbar/optionsPanel";
+import ToolbarOptionsPanel from "../ViewerToolbar/optionsPanel";
 import { fonts } from "./fontPicker";
 import FontFaceObserver from "fontfaceobserver";
 import useFabricHelpers from "../../hooks/use-fabric-helpers";
@@ -99,7 +99,7 @@ const TypeText = () => {
         left: options.absolutePointer.x,
         top: options.absolutePointer.y,
         fontFamily: myStateRef.current.activeFont.fontFamily,
-        fontSize: 100,
+        fontSize: 15,
         selectionBackgroundColor: "rgba(255, 255, 255, 0.5)",
       });
       fabricOverlay.fabricCanvas().add(textbox);
@@ -182,7 +182,7 @@ const TypeText = () => {
         icon={<FiType />}
         isActive={isActive}
         label="Type Text"
-        color="#fff"
+        color="#999999"
       />
       {isActive && (
         <ToolbarOptionsPanel>

@@ -50,7 +50,12 @@ const ImageGalleryModal = () => {
 
   return (
     <Box>
-      <AltButton onClick={() => onOpen()} leftIcon={<RepeatIcon />}>
+      <AltButton
+        onClick={() => onOpen()}
+        leftIcon={<RepeatIcon />}
+        colorScheme="black"
+        variant="solid"
+        _hover={{ background: "grey" }}>
         Change Slide
       </AltButton>
 
@@ -103,12 +108,20 @@ const ImageGalleryModal = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button mr={3} onClick={handleSelectItem} disabled={!activeWork}>
+            <AltButton
+              colorScheme="blue"
+              variant="solid"
+              margin="10px"
+              onClick={handleSelectItem}
+              disabled={!activeWork}>
               Select Item
-            </Button>
-            <Button onClick={onClose} variant="ghost">
+            </AltButton>
+            <AltButton
+              colorScheme="red"
+              variant="solid"
+              onClick={onClose}>
               Close
-            </Button>
+            </AltButton>
           </ModalFooter>
         </ModalContent>
       </Modal>

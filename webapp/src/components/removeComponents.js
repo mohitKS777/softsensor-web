@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { DeleteIcon } from "@chakra-ui/icons";
-import ToolbarButton from "./Toolbar/button";
+import ToolbarButton from "./ViewerToolbar/button";
 
 const RemoveObject = () => {
   const { fabricOverlay } = useSelector((state) => state.fabricOverlayState);

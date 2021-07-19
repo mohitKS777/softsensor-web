@@ -13,16 +13,28 @@ import FontFaceObserver from "fontfaceobserver";
 
 export const fonts = [
   {
-    id: "reenieBeanie",
-    fontFamily: "Reenie Beanie",
+    id: "timesNewRoman",
+    fontFamily: "Times New Roman",
   },
   {
-    id: "courierPrime",
-    fontFamily: "Courier Prime",
+    id: "verdana",
+    fontFamily: "Verdana",
   },
   {
-    id: "openSans",
-    fontFamily: "Open Sans",
+    id: "georgia",
+    fontFamily: "Georgia",
+  },
+  {
+    id:"courierNew",
+    fontFamily: "Courier New",
+  },
+  {
+    id: "brushScript",
+    fontFamily: "Brush Script MT",
+  },
+  {
+    id: "garamond",
+    fontFamily: "Garamond",
   },
 ];
 
@@ -63,7 +75,7 @@ const TypeTextFontPicker = ({ handleFontChange }) => {
   return (
     <>
       <Heading as="h2" size="sm" mb={3}>
-        Text
+        Fonts
       </Heading>
       <VStack spacing={3}>
         <Wrap direction="column" justify="flex-start">
@@ -73,7 +85,7 @@ const TypeTextFontPicker = ({ handleFontChange }) => {
                 fontFamily={font.fontFamily}
                 id={font.id}
                 onClick={() => handleFontClick(font)}
-                fontSize="24px"
+                fontSize="15px"
                 w="250px"
                 whiteSpace="nowrap"
                 overflow="hidden"

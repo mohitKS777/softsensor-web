@@ -38,9 +38,9 @@ const Toolbar = () => {
           <Shape />
         </WrapItem>
 
-        <WrapItem>
+        {/* <WrapItem>
           <Palette />
-        </WrapItem>
+        </WrapItem> */}
 
         <WrapItem>
           <RemoveComponents />

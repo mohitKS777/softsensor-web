@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { VStack } from "@chakra-ui/react";
-import ToolbarBorderBox from "../Toolbar/borderBox";
-import ToolbarBorderBoxInner from "../Toolbar/borderBoxInner";
+import ToolbarBorderBox from "../ViewerToolbar/borderBox";
+import ToolbarBorderBoxInner from "../ViewerToolbar/borderBoxInner";
 import { useSelector, useDispatch } from "react-redux";
 import { updateWidth } from "../../state/reducers/drawReducer";
 import { widths } from "./width";

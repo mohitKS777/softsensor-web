@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Flex } from "@chakra-ui/react";
 
-const LayoutAppSidebar = ({children}) => {
+const ViewerToolbar = ({ children }) => {
   return (
     <Flex
       as="section"
@@ -12,17 +12,17 @@ const LayoutAppSidebar = ({children}) => {
       alignItems="center"
       boxShadow="base"
       zIndex="1"
-      bg="#151515"
-      borderRight="0.5px solid #ffffff"
+      bg="#252525"
       borderBottom="0.5px solid #ffffff"
+      borderTop="0.5px solid #ffffff"
     >
-        {children}
+      {children}
     </Flex>
   );
-}
+};
 
-LayoutAppSidebar.propTypes = {
+ViewerToolbar.propTypes = {
   children: PropTypes.node,
 };
 
-export default LayoutAppSidebar;
+export default ViewerToolbar;

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
-import ToolbarButton from "../Toolbar/button";
-import ToolbarOptionsPanel from "../Toolbar/optionsPanel";
+import ToolbarButton from "../ViewerToolbar/button";
+import ToolbarOptionsPanel from "../ViewerToolbar/optionsPanel";
 import { FaShapes } from "react-icons/fa";
 import { fabric } from "openseadragon-fabricjs-overlay";
 import { useSelector, useDispatch } from "react-redux";
@@ -116,7 +116,7 @@ const Shape = () => {
       let fillProps = {
         fill: "rgba(0,0,0,0)",
         stroke: shapeOptions.color,
-        strokeWidth: 10,
+        strokeWidth: 2,
       };
 
       // Shape options
