@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { Flex } from "@chakra-ui/react";
+import PaletteOptions from "../Palette/paletteOptions";
 
 const ExtendibleDrawer = ({ children }) => {
   const { activeDrawerTool } = useSelector((state) => state.drawerState);
@@ -21,16 +22,13 @@ const ExtendibleDrawer = ({ children }) => {
         borderRight="0.5px solid #ffffff"
       >
         {children}
+        <PaletteOptions />
       </Flex>
     );
+  } else {
+    return <></>;
   }
-  else {
-    return (
-      <>
-      </>
-    );
-  }
-}
+};
 
 ExtendibleDrawer.propTypes = {
   children: PropTypes.node,
