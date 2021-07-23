@@ -1,18 +1,11 @@
 version: '3'
 services:
-  fleet-backend:
+  ssl-portal:
     image: $IMAGE
     restart: always
     ports:
-      - 4000:4000
+      - 8080:8080
+      - 5000:5000
+      - 8000:8000
     environment:
-      - EMAIL_PORT=25
-      - EMAIL_HOST=smtp.mailtrap.io
-      - EMAIL_PASSWORD=$EMAIL_PASS
-      - EMAIL_USERNAME=$EMAIL_USER
-      - JWT_COOKIE_EXPIRES_IN=90
-      - JWT_EXPIRES_IN=90d
-      - JWT_SECRET=$JWT
-      - DATABASE=$MONGO_URI
-      - PORT=4000
       - NODE_ENV=production
