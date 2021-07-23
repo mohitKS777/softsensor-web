@@ -15,7 +15,8 @@ RUN npm_config_unsafe_perm=true npm install -g yarn
 # Setup Python Server
 WORKDIR /usr/src/python
 COPY ./server .
-RUN python3 -m pip install --upgrade pip setuptools wheel tensorflow
+RUN python3 -m pip install --upgrade pip setuptools wheel
+RUN python3 -m pip install --upgrade tensorflow
 RUN python3 -m pip install --upgrade -r requirements.txt
 
 # Setup Node Server
