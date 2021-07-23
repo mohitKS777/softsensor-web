@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:8080",
+  "config": { 
+    "unsafe-perm": true 
+  },
   "dependencies": {
     "@auth0/auth0-react": "^1.5.0",
     "@chakra-ui/icons": "^1.0.7",

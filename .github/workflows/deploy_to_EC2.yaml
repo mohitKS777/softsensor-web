@@ -1,0 +1,58 @@
+name: Deployment
+on:
+  push:
+    branches: [develop]
+  workflow_dispatch:
+
+env:
+  SERVICE_NAME: fleet-backend
+
+jobs:
+  deploy-to-eks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Extract branch name
+        shell: bash
+        id: extract-branch
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-docker
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{env.SERVICE_NAME}}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "##[set-output name=image;]$(echo $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG)"
+      - name: Execute SSH commmands on remote server
+        uses: JimCronqvist/action-ssh@master
+        with:
+          hosts: 'ubuntu@44.194.39.116'
+          privateKey: ${{ secrets.SSH_PEM }}
+          command: |
+            export BRANCH_NAME=${{ steps.extract-branch.outputs.branch }}
+            export IMAGE=${{ steps.build-docker.outputs.image }}
+            export AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
+            export AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            source /home/ubuntu/.bashrc
+            cd /home/ubuntu/applications/${{env.SERVICE_NAME}}
+            git stash
+            git checkout $BRANCH_NAME
+            git pull origin $BRANCH_NAME
+            sed -i "s|\$IMAGE|$IMAGE|g" docker-compose.yml
+            sed -i "s|\$JWT|${{secrets.JWT_SECRET}}|g" docker-compose.yml
+            sed -i "s|\$MONGO_URI|${{secrets.DATABASE}}|g" docker-compose.yml
+            /usr/bin/aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}
+            /usr/bin/docker pull $IMAGE
+            /snap/bin/docker-compose up -d

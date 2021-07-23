@@ -1,6 +1,6 @@
-import Home from "./components/home";
-import Test from "./components/test";
-import { ChatSetup } from "./components/chatSetup";
+// import Home from "./components/home";
+// import Test from "./components/test";
+// import { ChatSetup } from "./components/chatSetup";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import brandPalette from "./styles/brandPalette";
@@ -8,7 +8,7 @@ import OsdFabricWrapper from "./components/osdFabricWrapper";
 import SocketWrapper from "./components/socketWrapper";
 import LayoutApp from "./components/Layout/app";
 import "./App.css";
-import getData from "./getData";
+// import getData from "./getData";
 import React from "react";
 
 const theme = extendTheme({
