@@ -40,5 +40,6 @@ jobs:
         with:
           hosts: 'ubuntu@44.194.39.116'
           privateKey: ${{ secrets.SSH_PEM }}
+          port: 22
           debug: true
           command: ls -lah
