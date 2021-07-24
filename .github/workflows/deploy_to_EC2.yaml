@@ -40,6 +40,7 @@ jobs:
         with:
           hosts: 'ubuntu@44.194.39.116'
           privateKey: ${{ secrets.SSH_PEM }}
+          debug: true
           command: |
             export BRANCH_NAME=${{ steps.extract-branch.outputs.branch }}
             export IMAGE=${{ steps.build-docker.outputs.image }}
