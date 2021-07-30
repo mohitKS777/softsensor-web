@@ -3,8 +3,11 @@ import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { Flex } from "@chakra-ui/react";
 import PaletteOptions from "../Palette/paletteOptions";
+import ActivityFeed from "../Feed/activityFeed";
+import ShareAnnotation from "../Share/share";
+import UserOptions from "../UserSettings/userOptions";
 
-const ExtendibleDrawer = ({ children }) => {
+const ExtendibleDrawer = () => {
   const { activeDrawerTool } = useSelector((state) => state.drawerState);
 
   if (activeDrawerTool) {
@@ -20,9 +23,12 @@ const ExtendibleDrawer = ({ children }) => {
         bg="#181818"
         borderBottom="0.5px solid #ffffff"
         borderRight="0.5px solid #ffffff"
+        h="89vh"
+        overflow="hidden"
       >
-        {children}
-        <PaletteOptions />
+        {activeDrawerTool === "PALETTE" && <PaletteOptions />}
+        {activeDrawerTool === "FEED" && <ActivityFeed />}
+        {activeDrawerTool === "SETTINGS" && <UserOptions />}
       </Flex>
     );
   } else {

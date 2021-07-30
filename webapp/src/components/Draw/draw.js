@@ -12,6 +12,8 @@ import useHexRGB from "../../hooks/use-hex-rgb";
 import { updateActive } from "../../state/reducers/drawReducer";
 import { fabric } from "openseadragon-fabricjs-overlay";
 import { fonts } from "../Text/fontPicker";
+import { updateActivityFeed } from "../../state/reducers/feedReducer";
+import { getTimestamp } from "../../hooks/utility";
 
 const getDrawCursor = (brushSize, brushColor) => {
   brushSize = brushSize < 12 ? 8 : brushSize;
@@ -47,6 +49,8 @@ const Draw = () => {
   const { username, roomName, alias, socket } = useSelector(
     (state) => state.socketState
   );
+  const { activityFeed } = useSelector((state) => state.feedState);
+
   const dispatch = useDispatch();
   const { hexToRGBA } = useHexRGB();
   const isActive = activeTool === "DRAW";
@@ -61,9 +65,9 @@ const Draw = () => {
     dispatch(updateActive(data));
   };
 
-  useEffect(() => {
-    socket.emit("send_guest_list", { roomName, alias });
-  }, [isActive]);
+  // useEffect(() => {
+  //   socket.emit("send_guest_list", { roomName, alias });
+  // }, [isActive]);
 
   useEffect(() => {
     setMyState(isActive);
@@ -196,6 +200,14 @@ const Draw = () => {
     if (!path || !textbox) return;
     const canvas = fabricOverlay.fabricCanvas();
 
+    let message = {
+      username: alias,
+      color: path.stroke,
+      action: "added",
+      text: "",
+      timeStamp: getTimestamp(),
+    };
+
     if (textbox.text !== "") {
       canvas.remove(path);
       canvas.remove(textbox);
@@ -204,15 +216,23 @@ const Draw = () => {
       });
       const group = new fabric.Group([path, textbox], {});
       canvas.add(group);
+      message.text = textbox.text;
     }
 
     setPath(null);
     setTextbox(null);
 
+    dispatch(updateActivityFeed([...activityFeed, message]));
+
     // send annotation
     socket.emit(
       "send_annotations",
-      JSON.stringify({ roomName, username, content: canvas })
+      JSON.stringify({
+        roomName,
+        username,
+        content: canvas,
+        feed: [...activityFeed, message],
+      })
     );
   }, [textbox]);
 

@@ -6,6 +6,8 @@ import drawReducer from "./reducers/drawReducer";
 import shapeReducer from "./reducers/shapeReducer";
 import colorReducer from "./reducers/colorReducer";
 import drawerReducer from "./reducers/drawerReducer";
+import feedReducer from "./reducers/feedReducer";
+import shareReducer from "./reducers/shareReducer";
 
 const store = configureStore({
   reducer: {
@@ -16,6 +18,8 @@ const store = configureStore({
     shapeState: shapeReducer,
     colorState: colorReducer,
     drawerState: drawerReducer,
+    feedState: feedReducer,
+    shareState: shareReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

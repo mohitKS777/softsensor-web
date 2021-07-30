@@ -19,7 +19,7 @@ const SlideUser = () => {
       onClick={handleToolbarClick}
       icon={<BsFillPeopleFill />}
       label="User Settings"
-      color="#999999"
+      color={isActive ? "white" : "#999999"}
     />
   );
 };

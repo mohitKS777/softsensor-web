@@ -15,6 +15,8 @@ import {
   updateActiveShape,
 } from "../../state/reducers/shapeReducer";
 import { fonts } from "../Text/fontPicker";
+import { updateActivityFeed } from "../../state/reducers/feedReducer";
+import { getTimestamp } from "../../hooks/utility";
 
 const FABRIC_SHAPE_TYPES = ["circle", "rect"];
 
@@ -23,9 +25,11 @@ const Shape = () => {
   const { color, fabricOverlay, viewer, activeTool } = useSelector(
     (state) => state.fabricOverlayState
   );
-  const { username, roomName, socket } = useSelector(
+  const { username, roomName, alias, socket } = useSelector(
     (state) => state.socketState
   );
+  const { activityFeed } = useSelector((state) => state.feedState);
+
   const { deselectAll } = useFabricHelpers();
   const isActive = activeTool === "SHAPE";
 
@@ -342,6 +346,15 @@ const Shape = () => {
   useEffect(() => {
     if (!shape || !textbox) return;
     const canvas = fabricOverlay.fabricCanvas();
+
+    let message = {
+      username: alias,
+      color: shape.stroke,
+      action: "added",
+      text: "",
+      timeStamp: getTimestamp(),
+    };
+
     if (textbox.text !== "") {
       canvas.remove(shape);
       canvas.remove(textbox);
@@ -350,15 +363,23 @@ const Shape = () => {
       });
       const group = new fabric.Group([shape, textbox], {});
       canvas.add(group);
+      message.text = textbox.text;
     }
 
     setShape(null);
     setTextbox(null);
 
+    dispatch(updateActivityFeed([...activityFeed, message]));
+
     // send annotation
     socket.emit(
       "send_annotations",
-      JSON.stringify({ roomName, username, content: canvas })
+      JSON.stringify({
+        roomName,
+        username,
+        content: canvas,
+        feed: [...activityFeed, message],
+      })
     );
   }, [textbox]);
 

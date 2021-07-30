@@ -14,13 +14,12 @@ const SlideInfo = () => {
     dispatch(updateActiveDrawerTool({ tool: isActive ? "" : "INFO" }));
   };
 
-
   return (
     <ToolbarButton
       onClick={handleToolbarClick}
       icon={<InfoIcon />}
       label="Info"
-      color="#999999"
+      color={isActive ? "white" : "#999999"}
     />
   );
 };

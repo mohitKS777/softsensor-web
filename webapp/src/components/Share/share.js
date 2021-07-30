@@ -24,6 +24,7 @@ import {
   MenuItem,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
+import { updateActivityFeed } from "../../state/reducers/feedReducer";
 
 const ShareAnnotation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -72,7 +73,6 @@ const ShareAnnotation = () => {
 
   useEffect(() => {
     socket.on("receive_guest_list", (data) => {
-      console.log(data);
       dispatch(
         updateGuestDetails({ guestCount: data.length, guestList: [...data] })
       );
@@ -94,6 +94,7 @@ const ShareAnnotation = () => {
           },
         };
         dispatch(updateAnnotations(annotations));
+        dispatch(updateActivityFeed(data.feed));
         let canvas = fabricOverlay.fabricCanvas();
         canvas.loadFromJSON(
           annotations[data.username]["fabricCanvas"],

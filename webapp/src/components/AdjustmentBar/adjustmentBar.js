@@ -38,7 +38,7 @@ const AdjustmentBar = () => {
             <Color />
           </Box>
           <HStack spacing={2}>
-            <ImageGalleryModal/>
+            <ImageGalleryModal />
             {/* <Login />
             <Center height="20px">
               <Divider orientation="vertical" />
@@ -61,11 +61,11 @@ const AdjustmentBar = () => {
       ) : (
         <>
           <Flex bgColor={bg} justifyContent="left" alignItems="center">
-            <Box ml={2} py={2} width="85%">
+            <Box ml={2} py={2} width="70%">
               <Color />
             </Box>
             <Box
-              width="15%"
+              width="30%"
               display="flex"
               justifyContent="flex-end"
               alignItems="center"
@@ -97,7 +97,7 @@ const AdjustmentBar = () => {
                   margin="0px 5px"
                   borderWidth="2px"
                   bg="black"
-                  color="#000"
+                  color="#FFF"
                   _hover={{ bg: "gray.400" }}
                   _expanded={{ bg: "white.400" }}
                   _focus={{

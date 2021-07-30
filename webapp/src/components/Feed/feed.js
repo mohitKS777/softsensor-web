@@ -19,7 +19,7 @@ const SlideFeed = () => {
       onClick={handleToolbarClick}
       icon={<FaClipboardList />}
       label="Feed"
-      color="#999999"
+      color={isActive ? "white" : "#999999"}
     />
   );
 };

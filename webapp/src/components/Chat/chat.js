@@ -19,7 +19,7 @@ const SlideChat = () => {
       onClick={handleToolbarClick}
       icon={<ChatIcon />}
       label="Chat"
-      color="#999999"
+      color={isActive ? "white" : "#999999"}
     />
   );
 };

@@ -19,7 +19,7 @@ const SlideSearch = () => {
       onClick={handleToolbarClick}
       icon={<SearchIcon />}
       label="Search"
-      color="#999999"
+      color={isActive ? "white" : "#999999"}
     />
   );
 };

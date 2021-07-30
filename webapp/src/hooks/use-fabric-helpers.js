@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateActivityFeed } from "../state/reducers/feedReducer";
+import { getTimestamp } from "./utility";
 
 const useCanvasHelpers = () => {
   const { activeTool, fabricOverlay } = useSelector(
     (state) => state.fabricOverlayState
   );
-  const { username, roomName, socket } = useSelector(
+  const { username, roomName, socket, alias } = useSelector(
     (state) => state.socketState
   );
+  const { activityFeed } = useSelector((state) => state.feedState);
+  const dispatch = useDispatch();
   const [canvas, setCanvas] = useState();
 
   useEffect(() => {
@@ -27,9 +31,25 @@ const useCanvasHelpers = () => {
     for (let i in userObjects) {
       canvas.remove(userObjects[i]);
     }
+
+    let message = {
+      username: alias,
+      color: "",
+      action: "deleted all annotations",
+      text: "",
+      timeStamp: getTimestamp(),
+    };
+
+    dispatch(updateActivityFeed([...activityFeed, message]));
+
     socket.emit(
       "send_annotations",
-      JSON.stringify({ roomName, username, content: canvas })
+      JSON.stringify({
+        roomName,
+        username,
+        content: canvas,
+        feed: [...activityFeed, message],
+      })
     );
   };
 

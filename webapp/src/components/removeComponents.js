@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { DeleteIcon } from "@chakra-ui/icons";
 import ToolbarButton from "./ViewerToolbar/button";
+import { updateActivityFeed } from "../state/reducers/feedReducer";
+import { getTimestamp } from "../hooks/utility";
 
 const RemoveObject = () => {
   const { fabricOverlay } = useSelector((state) => state.fabricOverlayState);
+  const { activityFeed } = useSelector((state) => state.feedState);
   const [isActiveObject, setIsActiveObject] = useState();
-  const { username, roomName, socket } = useSelector(
+  const dispatch = useDispatch();
+  const { username, roomName, socket, alias } = useSelector(
     (state) => state.socketState
   );
 
@@ -42,10 +46,29 @@ const RemoveObject = () => {
         canvas.remove(objs[i]);
       }
     }
+
+    let message = {
+      username: alias,
+      color: activeObject._objects
+        ? activeObject._objects[0].stroke
+        : activeObject.stroke,
+      action: "deleted",
+      text: activeObject._objects ? activeObject._objects[1].text : "",
+      timeStamp: getTimestamp(),
+    };
+
     canvas.remove(activeObject);
+
+    dispatch(updateActivityFeed([...activityFeed, message]));
+
     socket.emit(
       "send_annotations",
-      JSON.stringify({ roomName, username, content: canvas })
+      JSON.stringify({
+        roomName,
+        username,
+        content: canvas,
+        feed: [...activityFeed, message],
+      })
     );
   };
 

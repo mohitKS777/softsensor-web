@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:8080",
-  "config": { 
-    "unsafe-perm": true 
+  "config": {
+    "unsafe-perm": true
   },
   "dependencies": {
     "@auth0/auth0-react": "^1.5.0",
@@ -33,6 +33,7 @@
     "prop-types": "^15.7.2",
     "random-username-generator": "^1.0.4",
     "react": "^17.0.1",
+    "react-custom-scrollbars": "^4.2.1",
     "react-device-detect": "^1.17.0",
     "react-div-100vh": "^0.5.6",
     "react-dom": "^17.0.1",
