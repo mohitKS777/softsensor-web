@@ -36,9 +36,11 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "##[set-output name=image;]$(echo $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG)"
       - name: Execute SSH commmands on remote server
-        uses: JimCronqvist/action-ssh@master
+        uses: appleboy/ssh-action@master
         with:
-          hosts: 'ubuntu@44.194.39.116'
-          privateKey: ${{ secrets.SSH_PEM }}
-          port: 22
-          command: ls -lah
+          host: '44.194.39.116'
+          username: 'ubuntu'
+          key: ${{ secrets.SSH_PEM }}
+          script: |
+            whoami
+            ls -al
