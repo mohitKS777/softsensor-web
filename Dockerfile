@@ -4,7 +4,7 @@ ENV LANG="C.UTF-8"
 
 # Setup Python3.7
 RUN apt purge -y python3.6*
-RUN apt update -y && apt install -y git python3.7 python3-pip python3-distutils python3-apt build-essential nginx 
+RUN apt update -y && apt install -y git python3.7 python3-pip python3-distutils python3-apt build-essential nginx ffmpeg libsm6 libxext6
 RUN rm -rf /usr/bin/python3 && ln -s /usr/bin/python3.7 /usr/bin/python3
 
 # Setup NodeJS14
@@ -23,6 +23,7 @@ RUN python3 -m pip install --upgrade -r requirements.txt
 WORKDIR /usr/src/node
 COPY . .
 RUN rm -rf server webapp
+RUN npm install -g pm2
 RUN npm install
 
 # Setup React Server
