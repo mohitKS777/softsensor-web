@@ -1,7 +1,7 @@
 #! /bin/bash
-echo "nginx"
-nginx -d
-echo "app.js"
+echo "starting nginx server"
+nginx
+echo "starting node js server"
 pm2 start /usr/src/node/app.js
-echo "flask"
+echo "starting flask server"
 cd /usr/src/python && flask run

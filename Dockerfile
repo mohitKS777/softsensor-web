@@ -32,6 +32,8 @@ COPY ./webapp ./
 RUN yarn install
 RUN yarn run build
 
+WORKDIR /usr/src
+
 COPY ./scripts/webapp.conf /etc/nginx/conf.d/webapp.conf
 COPY ./scripts/run.sh /usr/src/run.sh
 
