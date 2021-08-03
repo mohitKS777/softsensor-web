@@ -416,4 +416,49 @@ export const Images = [
         "https://openslide-demo.s3.dualstack.us-east-1.amazonaws.com/ventana/os-2/slide_files/",
     },
   },
+  {
+    id: 29,
+    Image: {
+      Format: "jpeg",
+      Overlap: "1",
+      TileSize: "254",
+      xmlns: "http://schemas.microsoft.com/deepzoom/2008",
+      Size: {
+        Height: "14506",
+        Width: "14593",
+      },
+      Url:
+        "https://med-ai-data.s3.amazonaws.com/b_cell_nh/ng-1/slide_files/",
+    },
+  },
+  {
+    id: 30,
+    Image: {
+      Format: "jpeg",
+      Overlap: "1",
+      TileSize: "254",
+      xmlns: "http://schemas.microsoft.com/deepzoom/2008",
+      Size: {
+        Height: "14853",
+        Width: "23298",
+      },
+      Url:
+        "https://med-ai-data.s3.amazonaws.com/b_cell_nh/g-1/slide_files/",
+    },
+  },
+  {
+    id: 31,
+    Image: {
+      Format: "jpeg",
+      Overlap: "1",
+      TileSize: "254",
+      xmlns: "http://schemas.microsoft.com/deepzoom/2008",
+      Size: {
+        Height: "14398",
+        Width: "6242",
+      },
+      Url:
+        "https://med-ai-data.s3.amazonaws.com/burkitt/b-2/slide_files/",
+    },
+  },
 ];
