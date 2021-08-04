@@ -21,7 +21,7 @@ const PaletteOptions = () => {
 
   const handleClick = async () => {
     const imgUrl = viewer.world.getItemAt(0).lastDrawn[0].cacheKey;
-    const resp = await axios.post("http://127.0.0.1:5000/process", {
+    const resp = await axios.post("/process", {
       url: imgUrl,
     });
     setResult(resp.data);
