@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import socketClient from "socket.io-client";
 
-const SERVER = "http://127.0.0.1:8080";
+const SERVER = "wss://path.prr.ai/ws";
 
 const socket = socketClient(SERVER, { transports: ["websocket"] });
 
