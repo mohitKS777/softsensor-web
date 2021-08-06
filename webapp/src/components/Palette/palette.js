@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { EditIcon } from "@chakra-ui/icons";
+import { IoIosColorPalette } from "react-icons/io";
 import ToolbarButton from "../ViewerToolbar/button";
 import { useSelector, useDispatch } from "react-redux";
 import { useDisclosure } from "@chakra-ui/react";
@@ -21,7 +21,7 @@ const Palette = () => {
           handleToolbarClick();
           // onOpen();
         }}
-        icon={<EditIcon />}
+        icon={<IoIosColorPalette size={24}/>}
         // isActive={isActive}
         label="Palette"
         color={isActive ? "white" : "#999999"}
