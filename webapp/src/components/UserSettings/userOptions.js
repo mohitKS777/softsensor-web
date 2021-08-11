@@ -39,14 +39,12 @@ const UserOptions = () => {
 
   useEffect(() => {
     const receiveGuestList = (data) => {
-      console.log("guest list");
       dispatch(
         updateGuestDetails({ guestCount: data.length, guestList: [...data] })
       );
     };
 
     const receiveAnnotations = (data) => {
-      console.log("annotations");
       if (fabricOverlay) {
         let annotations = {
           ...userCanvases,
@@ -108,12 +106,16 @@ const UserOptions = () => {
             margin="10px 0"
             placeholder="Enter Room Name"
             value={_roomName}
+            color="white"
+            _placeholder={{ color: "grey" }}
             onChange={(e) => handleInputChange(e)}
           />
           <Input
             mt="10px"
             placeholder={_alias}
             value={_alias}
+            color="white"
+            _placeholder={{ color: "grey" }}
             onChange={(e) => handleAliasChange(e)}
           />
           <Button

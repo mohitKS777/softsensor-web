@@ -52,6 +52,7 @@ def process_data(predicted_image):
     a=0
     area=[]
     radius_ = []
+    location = []
     for c in contours:
         n=n+1
         M = cv2.moments(c)
@@ -63,18 +64,28 @@ def process_data(predicted_image):
         area.append(x)
         a=a+cv2.contourArea(c)
         (x,y),radius = cv2.minEnclosingCircle(c)
+        location.append([x, y, radius])
         radius_.append(radius)
     data['total_nuclei'] = str(n)
-    data['average_area'] = format(a/n, '.4f').rstrip('0').rstrip('.')
-    res_min = min(area,key=lambda x:float(x))
-    res_max = max(area,key=lambda x:float(x))
-    data['minimum_area'] = format(res_min, '.4f').rstrip('0').rstrip('.')
-    data['maximum_area'] = format(res_max, '.4f').rstrip('0').rstrip('.')
-    res_min = min(radius_,key=lambda x:float(x))
-    res_max = max(radius_,key=lambda x:float(x))
-    data['minimum_radius'] = format(res_min, '.4f').rstrip('0').rstrip('.')
-    data['maximum_radius'] = format(res_max, '.4f').rstrip('0').rstrip('.')
-    
+    try:
+        data['average_area'] = format(a/n, '.4f').rstrip('0').rstrip('.')
+        res_min = min(area,key=lambda x:float(x))
+        res_max = max(area,key=lambda x:float(x))
+        data['minimum_area'] = format(res_min, '.4f').rstrip('0').rstrip('.')
+        data['maximum_area'] = format(res_max, '.4f').rstrip('0').rstrip('.')
+        res_min = min(radius_,key=lambda x:float(x))
+        res_max = max(radius_,key=lambda x:float(x))
+        data['minimum_radius'] = format(res_min, '.4f').rstrip('0').rstrip('.')
+        data['maximum_radius'] = format(res_max, '.4f').rstrip('0').rstrip('.')
+        data['location'] = location
+    except ZeroDivisionError:
+        data['location'] = []
+    return data
+
+def getNucleiCoodrniates(location):
+    data = []
+    data.append( min(location, key=lambda x: float(x[2])))
+    data.append( max(location, key=lambda x: float(x[2])))
     return data
 
 
