@@ -13,7 +13,7 @@ import { updateActive } from "../../state/reducers/drawReducer";
 import { fabric } from "openseadragon-fabricjs-overlay";
 import { fonts } from "../Text/fontPicker";
 import { updateActivityFeed } from "../../state/reducers/feedReducer";
-import { getTimestamp } from "../../hooks/utility";
+import { getFontSize, getTimestamp } from "../../hooks/utility";
 
 const getDrawCursor = (brushSize, brushColor) => {
   brushSize = brushSize < 12 ? 8 : brushSize;
@@ -95,14 +95,16 @@ const Draw = () => {
   useEffect(() => {
     if (!fabricOverlay) return;
     const canvas = fabricOverlay.fabricCanvas();
-
+    const zoomLevel = viewer.viewport.getZoom();
+    const fontSize = getFontSize(zoomLevel);
+    console.log(zoomLevel);
     // Create new Textbox instance and add it to canvas
     const createTextbox = ({ left, top, height }) => {
       const tbox = new fabric.IText("", {
         left: left,
         top: top + height + 10,
         fontFamily: fonts[0].fontFamily,
-        fontSize: 50,
+        fontSize: fontSize,
         selectionBackgroundColor: "rgba(255, 255, 255, 0.5)",
       });
 
@@ -150,7 +152,8 @@ const Draw = () => {
       viewer.outerTracker.setTracking(false);
       canvas.isDrawingMode = true;
       canvas.freeDrawingBrush.color = color.hex;
-      canvas.freeDrawingBrush.width = brushWidth;
+      canvas.freeDrawingBrush.width =
+        zoomLevel <= 1 ? brushWidth : brushWidth / zoomLevel;
 
       canvas.renderAll();
 
@@ -188,9 +191,11 @@ const Draw = () => {
 
     const canvas = fabricOverlay.fabricCanvas();
     const brushWidth = myState.width.pixelWidth;
+    const zoomLevel = viewer.viewport.getZoom();
 
     canvas.freeDrawingBrush.color = color.hex;
-    canvas.freeDrawingBrush.width = brushWidth;
+    canvas.freeDrawingBrush.width =
+      zoomLevel <= 1 ? brushWidth : brushWidth / zoomLevel;
     canvas.freeDrawingCursor = createFreeDrawingCursor(brushWidth, color.hex);
   }, [color, myState.width]);
 

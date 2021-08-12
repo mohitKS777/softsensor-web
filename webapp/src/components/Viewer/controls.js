@@ -1,5 +1,6 @@
-import React from "react";
-import { useZoom } from "use-open-seadragon";
+import { React, useState, useEffect } from "react";
+import { useZoom, OpenSeadragon } from "use-open-seadragon";
+import "./openseadragon-scalebar";
 import {
   Box,
   Button,
@@ -14,8 +15,11 @@ import { useSelector } from "react-redux";
 const ViewerControls = () => {
   const { viewer } = useSelector((state) => state.fabricOverlayState);
   const { zoomIn, zoomOut } = useZoom();
+  const [scalebar, setScalebar] = useState(null);
+
   // const buttonSize = useButtonSize();
 
+  // viewer = new OpenSeadragon({id: "viewer1"});
   const handleZoomIn = (e) => {
     try {
       if (viewer.viewport.getMaxZoom() > viewer.viewport.getZoom()) {
@@ -36,9 +40,30 @@ const ViewerControls = () => {
     }
   };
 
+  useEffect(() => {
+    if (viewer) {
+      const scalebarInit = viewer.scalebar({
+        type: 1,
+        pixelsPerMeter: 50,
+        minWidth: "75px",
+        location: 2,
+        xOffset: 5,
+        yOffset: 10,
+        stayInsideImage: true,
+        color: "white",
+        fontColor: "white",
+        backgroundColor: "black",
+        fontSize: "14px",
+        barThickness: 2,
+      });
+
+      setScalebar(scalebarInit);
+    }
+  }, [viewer]);
+
   return (
     <Box position="absolute" right="20px" top="20px" zIndex="1">
-      <ButtonGroup spacing="3" size="lg">
+      {/* <ButtonGroup spacing="3" size="lg">
         <Tooltip label="Zoom in" aria-label="Zoom in">
           <IconButton
             icon={<FiZoomIn />}
@@ -72,8 +97,8 @@ const ViewerControls = () => {
               size={buttonSize}
               disabled
             />
-          </Tooltip> */}
-      </ButtonGroup>
+          </Tooltip> 
+      </ButtonGroup> */}
     </Box>
   );
 };

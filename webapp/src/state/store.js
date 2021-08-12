@@ -8,6 +8,7 @@ import colorReducer from "./reducers/colorReducer";
 import drawerReducer from "./reducers/drawerReducer";
 import feedReducer from "./reducers/feedReducer";
 import shareReducer from "./reducers/shareReducer";
+import paletteReducer from "./reducers/paletteReducer";
 
 const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ const store = configureStore({
     drawerState: drawerReducer,
     feedState: feedReducer,
     shareState: shareReducer,
+    paletteState: paletteReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
