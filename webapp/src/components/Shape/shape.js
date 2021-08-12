@@ -16,7 +16,7 @@ import {
 } from "../../state/reducers/shapeReducer";
 import { fonts } from "../Text/fontPicker";
 import { updateActivityFeed } from "../../state/reducers/feedReducer";
-import { getTimestamp } from "../../hooks/utility";
+import { getFontSize, getTimestamp } from "../../hooks/utility";
 
 const FABRIC_SHAPE_TYPES = ["circle", "rect"];
 
@@ -101,6 +101,8 @@ const Shape = () => {
         return;
       }
 
+      const zoomLevel = viewer.viewport.getZoom();
+
       // Save starting mouse down coordinates
       let pointer = canvas.getPointer(options.e);
       let origX = pointer.x;
@@ -120,7 +122,7 @@ const Shape = () => {
       let fillProps = {
         fill: "rgba(0,0,0,0)",
         stroke: shapeOptions.color,
-        strokeWidth: 2,
+        strokeWidth: zoomLevel <= 1 ? 2 : 2 / zoomLevel,
       };
 
       // Shape options
@@ -234,11 +236,13 @@ const Shape = () => {
 
     // Create new Textbox instance and add it to canvas
     const createTextbox = ({ left, top, height }) => {
+      const fontSize = getFontSize(viewer.viewport.getZoom());
+
       const tbox = new fabric.IText("", {
         left: left,
-        top: top + height + 10,
+        top: top + height + 2,
         fontFamily: fonts[0].fontFamily,
-        fontSize: 50,
+        fontSize: fontSize,
         selectionBackgroundColor: "rgba(255, 255, 255, 0.5)",
       });
 

@@ -11,7 +11,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  Spacer
+  Spacer,
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { RiShareForwardLine } from "react-icons/ri";
@@ -22,7 +22,7 @@ const LayoutHeader = () => {
   const history = useHistory();
   const fontSizes = ["xs", "sm", "md"];
   const [_channelName, setChannelName] = useState("");
-  
+
   const inputChannelName = (e) => {
     setChannelName(e.target.value);
   };
@@ -55,12 +55,11 @@ const LayoutHeader = () => {
                 icon={<HamburgerIcon />}
                 size="md"
                 variant="unstyled"
-                _focus={{border: "none"}}
+                _focus={{ border: "none" }}
                 // _hover={{ bg: "gray.400" }}
                 // _expanded={{ bg: "gray.700" }}
                 // _focus={{ boxShadow: "outline" }}
-              >
-              </MenuButton>
+              ></MenuButton>
               {/* <MenuList>
                 <MenuItem>
                   <Link as={RRLink} to="/about">
@@ -73,12 +72,10 @@ const LayoutHeader = () => {
           <p className="text-white">username</p>
           <Spacer />
           <Box className="bg-dark" as="header">
-            <p style={{color: "#c6c6c6"}}>
-              Repository
-            </p>
+            <p style={{ color: "#c6c6c6" }}>Repository</p>
           </Box>
           <Box className="bg-dark" as="header">
-            <p className="text-white" style={{margin: "10px"}}>
+            <p className="text-white" style={{ margin: "10px" }}>
               /
             </p>
           </Box>
@@ -97,11 +94,12 @@ const LayoutHeader = () => {
               margin="10px"
               leftIcon={<RiShareForwardLine />}
               colorScheme="blue"
+              color="white"
               border="none"
               variant="solid"
               size="sm"
-              _focus={{border: "none"}}
-              _hover={{background: "blue.200"}}
+              _focus={{ border: "none" }}
+              _hover={{ background: "blue.200" }}
             >
               Share
             </Button>
@@ -109,10 +107,11 @@ const LayoutHeader = () => {
               borderWidth="thin"
               leftIcon={<GoRepoForked />}
               colorScheme="black"
+              color="white"
               variant="solid"
               size="sm"
-              _focus={{border: "none"}}
-              _hover={{background: "grey"}}
+              _focus={{ border: "none" }}
+              _hover={{ background: "grey" }}
             >
               Fork
             </Button>
