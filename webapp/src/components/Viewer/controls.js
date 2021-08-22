@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
-import { useZoom, OpenSeadragon } from "use-open-seadragon";
+import { useZoom, OpenSeadragno } from "use-open-seadragon";
+import "./zoom-levels";
 import "./openseadragon-scalebar";
 import {
   Box,
@@ -44,9 +45,10 @@ const ViewerControls = () => {
     if (viewer) {
       const scalebarInit = viewer.scalebar({
         type: 1,
-        pixelsPerMeter: 50,
+        pixelsPerMeter: 250000,
         minWidth: "75px",
-        location: 2,
+        maxWidth: "75px",
+        location: 4,
         xOffset: 5,
         yOffset: 10,
         stayInsideImage: true,
@@ -55,6 +57,7 @@ const ViewerControls = () => {
         backgroundColor: "black",
         fontSize: "14px",
         barThickness: 2,
+        stayInsideImage: false
       });
 
       setScalebar(scalebarInit);
@@ -63,7 +66,7 @@ const ViewerControls = () => {
 
   return (
     <Box position="absolute" right="20px" top="20px" zIndex="1">
-      {/* <ButtonGroup spacing="3" size="lg">
+      <ButtonGroup spacing="3" size="lg">
         <Tooltip label="Zoom in" aria-label="Zoom in">
           <IconButton
             icon={<FiZoomIn />}
@@ -82,7 +85,7 @@ const ViewerControls = () => {
             borderRadius="25px"
           />
         </Tooltip>
-        {/* <Tooltip label="Undo" aria-label="Undo">
+         {/* <Tooltip label="Undo" aria-label="Undo">
             <IconButton
               icon={<RiArrowGoBackFill />}
               aria-label="Undo"
@@ -97,8 +100,8 @@ const ViewerControls = () => {
               size={buttonSize}
               disabled
             />
-          </Tooltip> 
-      </ButtonGroup> */}
+          </Tooltip>  */}
+      </ButtonGroup> 
     </Box>
   );
 };

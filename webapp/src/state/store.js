@@ -9,6 +9,7 @@ import drawerReducer from "./reducers/drawerReducer";
 import feedReducer from "./reducers/feedReducer";
 import shareReducer from "./reducers/shareReducer";
 import paletteReducer from "./reducers/paletteReducer";
+import zoomReducer from "./reducers/zoomReducer";
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     feedState: feedReducer,
     shareState: shareReducer,
     paletteState: paletteReducer,
+    zoomState: zoomReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

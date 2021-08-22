@@ -13,6 +13,7 @@ import {
   MenuList,
   Spacer,
 } from "@chakra-ui/react";
+import ZoomLevels from "../ZoomDropDown/viewerZoomLevels"
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { RiShareForwardLine } from "react-icons/ri";
 import { GoRepoForked } from "react-icons/go";
@@ -71,6 +72,7 @@ const LayoutHeader = () => {
           </Box>
           <p className="text-white">username</p>
           <Spacer />
+          <Spacer/>
           <Box className="bg-dark" as="header">
             <p style={{ color: "#c6c6c6" }}>Repository</p>
           </Box>
@@ -110,11 +112,12 @@ const LayoutHeader = () => {
               color="white"
               variant="solid"
               size="sm"
-              _focus={{ border: "none" }}
+              _focus={{borderWidth: "thin"}}
               _hover={{ background: "grey" }}
             >
               Fork
             </Button>
+            <ZoomLevels/>
           </Box>
         </Flex>
       </Box>
