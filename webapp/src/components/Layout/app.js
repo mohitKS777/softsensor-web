@@ -15,12 +15,19 @@ import ViewerToolbar from "./viewertoolbar";
 import LayoutAppSidebar from "./sidebar";
 import Div100vh from "react-div-100vh";
 import useKeyboardEvents from "../../hooks/use-keyboard-events";
+import { fabric } from "openseadragon-fabricjs-overlay";
 
 const LayoutApp = () => {
   const { fabricOverlay, isToolbarVisible } = useSelector(
     (state) => state.fabricOverlayState
   );
   const { handleEvent } = useKeyboardEvents();
+
+  fabric.IText.prototype.onKeyDown = (e) => {
+    if (e.ctrlKey === true && e.key === "Enter") {
+      fabricOverlay.fabricCanvas().discardActiveObject();
+    }
+  };
 
   useEffect(() => {
     if (!fabricOverlay) return;
@@ -34,7 +41,7 @@ const LayoutApp = () => {
         <LayoutAppSidebar>
           <SidebarTools />
         </LayoutAppSidebar>
-        <ExtendibleDrawer/>
+        <ExtendibleDrawer />
         <LayoutInnerBody>
           <AdjustmentBar />
           <LayoutAppBody>

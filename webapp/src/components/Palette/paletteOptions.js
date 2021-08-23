@@ -28,6 +28,7 @@ const PaletteOptions = () => {
   // const [password, setPassword] = useState("");
   // const [message, setMessage] = useState("");
 
+
   const { viewer, fabricOverlay } = useSelector(
     (state) => state.fabricOverlayState
   );
@@ -35,9 +36,11 @@ const PaletteOptions = () => {
   const dispatch = useDispatch();
 
   const handleClick = async () => {
+
     // if (password === process.env.REACT_APP_BASIC_PALETTE_PASSWORD) {
       const imgUrl = viewer.world.getItemAt(0).lastDrawn[0].cacheKey;
 //       try {
+
         const resp = await axios.post("/process", {
           url: imgUrl,
         });
@@ -81,6 +84,7 @@ const PaletteOptions = () => {
           );
         }
         runtimeCanvas.add(...c).renderAll();
+
       // } catch (err) {
       //   setMessage("Server Not Available");
       // } finally {

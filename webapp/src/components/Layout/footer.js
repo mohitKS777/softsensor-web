@@ -12,11 +12,14 @@ import {
   AlertDialogContent,
   AlertDialogCloseButton,
   Button,
+  Box,
   Input,
+  Spacer
 } from "@chakra-ui/react";
 import { ColorModeSwitcher } from "../../colorModeSwitch";
 import ImageGalleryModal from "../imageGalleryModal";
 import AltButton from "../altButton";
+import ZoomSlider from "../ZoomSlider/slider";
 import { isBrowser, isTablet, isMobile } from "react-device-detect";
 import { useSelector, useDispatch } from "react-redux";
 import { updateSocketDetails } from "../../state/reducers/socketReducer";
@@ -41,11 +44,16 @@ const LayoutAppFooter = () => {
       justifyContent="space-between"
       alignItems="center"
       px={isBrowser || isTablet ? 3 : "2px"}
-      py={2}
+      py={4}
       boxShadow="base"
       zIndex="1"
-      background="#242424"
-    >
+      backgroundColor="#242424"
+    > 
+      <Box/>
+      <Spacer/>
+      <ZoomSlider/>
+      <Spacer/>
+      <Box/>
       {/* <HStack>
         <ImageGalleryModal />
         <Center height="20px">

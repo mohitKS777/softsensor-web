@@ -13,7 +13,9 @@ import { updateActive } from "../../state/reducers/drawReducer";
 import { fabric } from "openseadragon-fabricjs-overlay";
 import { fonts } from "../Text/fontPicker";
 import { updateActivityFeed } from "../../state/reducers/feedReducer";
-import { getFontSize, getTimestamp } from "../../hooks/utility";
+import { getCanvasImage, getFontSize, getTimestamp } from "../../hooks/utility";
+import { useMediaQuery } from "@chakra-ui/media-query";
+
 
 const getDrawCursor = (brushSize, brushColor) => {
   brushSize = brushSize < 12 ? 8 : brushSize;
@@ -65,6 +67,13 @@ const Draw = () => {
     dispatch(updateActive(data));
   };
 
+  const screenSize = useMediaQuery([
+    "(max-width: 1280px)",
+    "(max-width: 1440px)",
+    "(max-width: 1920px)",
+    "(max-width: 2560px)",
+  ]);
+
   // useEffect(() => {
   //   socket.emit("send_guest_list", { roomName, alias });
   // }, [isActive]);
@@ -96,15 +105,16 @@ const Draw = () => {
     if (!fabricOverlay) return;
     const canvas = fabricOverlay.fabricCanvas();
     const zoomLevel = viewer.viewport.getZoom();
-    const fontSize = getFontSize(zoomLevel);
-    console.log(zoomLevel);
+
+    const fontSize = getFontSize(screenSize, zoomLevel);
+
     // Create new Textbox instance and add it to canvas
     const createTextbox = ({ left, top, height }) => {
       const tbox = new fabric.IText("", {
         left: left,
         top: top + height + 10,
         fontFamily: fonts[0].fontFamily,
-        fontSize: fontSize,
+        fontSize: fontSize,        
         selectionBackgroundColor: "rgba(255, 255, 255, 0.5)",
       });
 
@@ -201,7 +211,7 @@ const Draw = () => {
 
   // group drawing (path) and textbox together
   // first remove both from canvas then group them and then add group to canvas
-  useEffect(() => {
+  useEffect(async () => {
     if (!path || !textbox) return;
     const canvas = fabricOverlay.fabricCanvas();
 
@@ -211,6 +221,9 @@ const Draw = () => {
       action: "added",
       text: "",
       timeStamp: getTimestamp(),
+      type: path.type,
+      object: path,
+      image: null,
     };
 
     if (textbox.text !== "") {
@@ -219,10 +232,15 @@ const Draw = () => {
       textbox.set({
         visible: false,
       });
-      const group = new fabric.Group([path, textbox], {});
+      const group = new fabric.Group([path, textbox], { isExist: true });
       canvas.add(group);
       message.text = textbox.text;
+      message.object = group;
+    } else {
+      path.set({ isExist: true });
     }
+
+    message.image = await getCanvasImage();
 
     setPath(null);
     setTextbox(null);

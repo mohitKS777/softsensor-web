@@ -14,7 +14,7 @@ const ExtendibleDrawer = () => {
     return (
       <Flex
         as="section"
-        w="275px"
+        w="20em"
         direction="column"
         justifyContent="space-between"
         alignItems="center"
@@ -23,7 +23,6 @@ const ExtendibleDrawer = () => {
         bg="#181818"
         borderBottom="0.5px solid #ffffff"
         borderRight="0.5px solid #ffffff"
-        h="89vh"
         overflow="hidden"
       >
         {activeDrawerTool === "PALETTE" && <PaletteOptions />}
