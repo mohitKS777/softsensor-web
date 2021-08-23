@@ -25,8 +25,9 @@ import {
 
 const PaletteOptions = () => {
   const { isVisual, basicInfo } = useSelector((state) => state.paletteState);
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [message, setMessage] = useState("");
+
 
   const { viewer, fabricOverlay } = useSelector(
     (state) => state.fabricOverlayState
@@ -35,9 +36,11 @@ const PaletteOptions = () => {
   const dispatch = useDispatch();
 
   const handleClick = async () => {
-    if (password === process.env.REACT_APP_BASIC_PALETTE_PASSWORD) {
+
+    // if (password === process.env.REACT_APP_BASIC_PALETTE_PASSWORD) {
       const imgUrl = viewer.world.getItemAt(0).lastDrawn[0].cacheKey;
-      try {
+//       try {
+
         const resp = await axios.post("/process", {
           url: imgUrl,
         });
@@ -81,17 +84,18 @@ const PaletteOptions = () => {
           );
         }
         runtimeCanvas.add(...c).renderAll();
-      } catch (err) {
-        setMessage("Server Not Available");
-      } finally {
-        setPassword("");
-      }
-    } else {
-      setMessage("Wrong Password");
-      canvas.forEachObject((object) => (object.visible = false));
-      canvas.renderAll();
-      viewer.setControlsEnabled(false);
-    }
+
+      // } catch (err) {
+      //   setMessage("Server Not Available");
+      // } finally {
+      //   setPassword("");
+      // }
+    // } else {
+    //   setMessage("Wrong Password");
+    //   canvas.forEachObject((object) => (object.visible = false));
+    //   canvas.renderAll();
+    //   viewer.setControlsEnabled(false);
+    // }
   };
 
   // to lock the viewer (disable zoom nad pan)
@@ -119,10 +123,6 @@ const PaletteOptions = () => {
     lockViewer(false);
   };
 
-  const handleInputChange = (e) => {
-    setPassword(e.target.value);
-  };
-
   return (
     <Flex w="95%" mt="20px" direction="column" align="center">
       {!isVisual ? (
@@ -130,17 +130,6 @@ const PaletteOptions = () => {
           <Text fontSize="2xl" color="white">
             Analyse this area
           </Text>
-          <Input
-            margin="10px 0px"
-            w="90%"
-            placeholder="Enter password"
-            value={password}
-            type="password"
-            color="white"
-            _placeholder={{ color: "grey" }}
-            onChange={(e) => handleInputChange(e)}
-            onFocus={() => setMessage("")}
-          />
           <Button
             mt="8px"
             colorScheme="blue"
@@ -162,11 +151,11 @@ const PaletteOptions = () => {
           Remove Palette
         </Button>
       )}
-      {message && (
+      {/* {message && (
         <Text mt="20px" color="white">
           {message}
         </Text>
-      )}
+      )} */}
       {basicInfo && (
         <Box mt="15px" w="100%" color="white">
           <p>Total nuclei: {basicInfo["total_nuclei"]} </p>

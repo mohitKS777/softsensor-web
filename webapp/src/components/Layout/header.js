@@ -112,7 +112,7 @@ const LayoutHeader = () => {
               color="white"
               variant="solid"
               size="sm"
-              _focus={{borderWidth: "thin"}}
+              _focus={{ borderWidth: "thin", border: "none" }}
               _hover={{ background: "grey" }}
             >
               Fork

@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { useZoom, OpenSeadragno } from "use-open-seadragon";
+import { useZoom, OpenSeadragon } from "use-open-seadragon";
 import "./zoom-levels";
 import "./openseadragon-scalebar";
 import {
@@ -66,7 +66,7 @@ const ViewerControls = () => {
 
   return (
     <Box position="absolute" right="20px" top="20px" zIndex="1">
-      <ButtonGroup spacing="3" size="lg">
+      {/* <ButtonGroup spacing="3" size="lg">
         <Tooltip label="Zoom in" aria-label="Zoom in">
           <IconButton
             icon={<FiZoomIn />}

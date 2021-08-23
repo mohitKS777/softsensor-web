@@ -16,6 +16,7 @@ import {
 } from "../../state/reducers/shapeReducer";
 import { fonts } from "../Text/fontPicker";
 import { updateActivityFeed } from "../../state/reducers/feedReducer";
+
 import { getCanvasImage, getFontSize, getTimestamp } from "../../hooks/utility";
 import { useMediaQuery } from "@chakra-ui/media-query";
 
@@ -244,6 +245,7 @@ const Shape = () => {
 
     // Create new Textbox instance and add it to canvas
     const createTextbox = ({ left, top, height }) => {
+
       const fontSize = getFontSize(screenSize, viewer.viewport.getZoom());
 
       const tbox = new fabric.IText("", {
@@ -251,7 +253,6 @@ const Shape = () => {
         top: top + height + 2,
         fontFamily: fonts[0].fontFamily,
         fontSize: fontSize,
-        fontWeight: "bold",
         selectionBackgroundColor: "rgba(255, 255, 255, 0.5)",
       });
 

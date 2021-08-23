@@ -53,4 +53,4 @@ jobs:
             git pull origin $BRANCH_NAME
             /usr/bin/aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}
             /usr/bin/docker pull $IMAGE
-            /snap/bin/docker-compose up -d
+            /usr/bin/docker-compose up -d
