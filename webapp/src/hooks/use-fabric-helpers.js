@@ -38,6 +38,7 @@ const useCanvasHelpers = () => {
       action: "deleted all annotations",
       text: "",
       timeStamp: getTimestamp(),
+      type: "CLEAR",
     };
 
     dispatch(updateActivityFeed([...activityFeed, message]));

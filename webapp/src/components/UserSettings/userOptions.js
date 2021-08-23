@@ -13,7 +13,7 @@ import { updateActivityFeed } from "../../state/reducers/feedReducer";
 
 const UserOptions = () => {
   const [_roomName, setRoomName] = useState("");
-  const [_alias, setAlias] = useState(rug.generate());
+  // const [_alias, setAlias] = useState(rug.generate());
   const { sharing } = useSelector((state) => state.shareState);
 
   const { fabricOverlay, userCanvases } = useSelector(
@@ -29,9 +29,9 @@ const UserOptions = () => {
     setRoomName(e.target.value);
   };
 
-  const handleAliasChange = (e) => {
-    setAlias(e.target.value);
-  };
+  // const handleAliasChange = (e) => {
+  //   setAlias(e.target.value);
+  // };
 
   useEffect(() => {
     if (roomName && alias) socket.emit("send_guest_list", { roomName, alias });
@@ -69,17 +69,17 @@ const UserOptions = () => {
   }, []);
 
   const handleConnect = async () => {
-    if (_roomName && _alias) {
+    if (_roomName && alias) {
       let _username = await uuidv4();
       socket.emit("join_room", {
         room: _roomName,
-        guest: { username: _username, alias: _alias },
+        guest: { username: _username, alias: alias },
       });
       dispatch(
         updateSocketDetails({
           username: _username,
           roomName: _roomName,
-          alias: _alias,
+          // alias: _alias,
         })
       );
       dispatch(updateSharing(true));
@@ -110,14 +110,14 @@ const UserOptions = () => {
             _placeholder={{ color: "grey" }}
             onChange={(e) => handleInputChange(e)}
           />
-          <Input
+          {/* <Input
             mt="10px"
             placeholder={_alias}
             value={_alias}
             color="white"
             _placeholder={{ color: "grey" }}
             onChange={(e) => handleAliasChange(e)}
-          />
+          /> */}
           <Button
             w="min-content"
             colorScheme="blue"

@@ -16,7 +16,8 @@ import {
 } from "../../state/reducers/shapeReducer";
 import { fonts } from "../Text/fontPicker";
 import { updateActivityFeed } from "../../state/reducers/feedReducer";
-import { getFontSize, getTimestamp } from "../../hooks/utility";
+import { getCanvasImage, getFontSize, getTimestamp } from "../../hooks/utility";
+import { useMediaQuery } from "@chakra-ui/media-query";
 
 const FABRIC_SHAPE_TYPES = ["circle", "rect"];
 
@@ -42,6 +43,13 @@ const Shape = () => {
     myStateRef.current = { ...myState, ...data };
     dispatch(action(data));
   };
+
+  const screenSize = useMediaQuery([
+    "(max-width: 1280px)",
+    "(max-width: 1440px)",
+    "(max-width: 1920px)",
+    "(max-width: 2560px)",
+  ]);
 
   /**
    * Handle primary tool change
@@ -236,13 +244,14 @@ const Shape = () => {
 
     // Create new Textbox instance and add it to canvas
     const createTextbox = ({ left, top, height }) => {
-      const fontSize = getFontSize(viewer.viewport.getZoom());
+      const fontSize = getFontSize(screenSize, viewer.viewport.getZoom());
 
       const tbox = new fabric.IText("", {
         left: left,
         top: top + height + 2,
         fontFamily: fonts[0].fontFamily,
         fontSize: fontSize,
+        fontWeight: "bold",
         selectionBackgroundColor: "rgba(255, 255, 255, 0.5)",
       });
 
@@ -272,10 +281,22 @@ const Shape = () => {
 
       setShape(myStateRef.current.currentDragShape);
 
+      let [left, top, height, width] = [
+        currShape.left,
+        currShape.top,
+        currShape.height,
+        currShape.width,
+      ];
+
+      if (currShape.type === "ellipse") {
+        if (currShape.originX === "right") left -= width;
+        if (currShape.originY === "bottom") height = 0;
+      }
+
       createTextbox({
-        left: currShape.left,
-        top: currShape.top,
-        height: currShape.height,
+        left: left,
+        top: top,
+        height: height,
       });
 
       setMyState(updateShape, {
@@ -347,7 +368,7 @@ const Shape = () => {
 
   // group shape and textbox together
   // first remove both from canvas then group them and then add group to canvas
-  useEffect(() => {
+  useEffect(async () => {
     if (!shape || !textbox) return;
     const canvas = fabricOverlay.fabricCanvas();
 
@@ -357,6 +378,9 @@ const Shape = () => {
       action: "added",
       text: "",
       timeStamp: getTimestamp(),
+      type: shape.type,
+      object: shape,
+      image: null,
     };
 
     if (textbox.text !== "") {
@@ -365,10 +389,15 @@ const Shape = () => {
       textbox.set({
         visible: false,
       });
-      const group = new fabric.Group([shape, textbox], {});
+      const group = new fabric.Group([shape, textbox], { isExist: true });
       canvas.add(group);
       message.text = textbox.text;
+      message.object = group;
+    } else {
+      shape.set({ isExist: true });
     }
+
+    message.image = await getCanvasImage();
 
     setShape(null);
     setTextbox(null);

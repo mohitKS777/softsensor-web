@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { DeleteIcon } from "@chakra-ui/icons";
 import ToolbarButton from "./ViewerToolbar/button";
 import { updateActivityFeed } from "../state/reducers/feedReducer";
-import { getTimestamp } from "../hooks/utility";
+import { getCanvasImage, getTimestamp } from "../hooks/utility";
 
 const RemoveObject = () => {
   const { fabricOverlay } = useSelector((state) => state.fabricOverlayState);
@@ -35,7 +35,7 @@ const RemoveObject = () => {
     };
   }, [fabricOverlay]);
 
-  const handleRemoveObject = () => {
+  const handleRemoveObject = async () => {
     const canvas = fabricOverlay.fabricCanvas();
     const activeObject = canvas.getActiveObject();
 
@@ -55,7 +55,15 @@ const RemoveObject = () => {
       action: "deleted",
       text: activeObject._objects ? activeObject._objects[1].text : "",
       timeStamp: getTimestamp(),
+      type: activeObject._objects
+        ? activeObject._objects[0].type
+        : activeObject.type,
+      image: null,
     };
+
+    activeObject.set({ isExist: false });
+
+    message.image = await getCanvasImage();
 
     canvas.remove(activeObject);
 
