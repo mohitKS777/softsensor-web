@@ -100,8 +100,8 @@ const ViewerControls = () => {
               size={buttonSize}
               disabled
             />
-          </Tooltip>  */}
-      </ButtonGroup> 
+          </Tooltip>  
+      </ButtonGroup> */}
     </Box>
   );
 };
