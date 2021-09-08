@@ -29,7 +29,7 @@ RUN yarn install
 # Setup React Server
 WORKDIR /usr/src/react
 COPY ./webapp ./
-RUN yarn install
+RUN yarn install --verbose
 RUN yarn run build
 
 WORKDIR /usr/src
