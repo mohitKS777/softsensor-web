@@ -78,7 +78,8 @@
   },
   "resolutions": {
     "use-open-seadragon/react": "^17.0.1",
-    "use-open-seadragon/react-dom": "^17.0.1"
+    "use-open-seadragon/react-dom": "^17.0.1",
+    "es5-ext": "0.10.52"
   },
   "devDependencies": {
     "prettier": "^2.2.1"
