@@ -23,8 +23,8 @@ RUN python3 -m pip install --upgrade -r requirements.txt
 WORKDIR /usr/src/node
 COPY . .
 RUN rm -rf server webapp
-RUN npm install -g pm2
-RUN npm install
+RUN yarn global add pm2
+RUN yarn install
 
 # Setup React Server
 WORKDIR /usr/src/react

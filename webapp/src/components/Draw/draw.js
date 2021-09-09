@@ -114,7 +114,7 @@ const Draw = () => {
         left: left,
         top: top + height + 10,
         fontFamily: fonts[0].fontFamily,
-        fontSize: fontSize,
+        fontSize: fontSize,        
         selectionBackgroundColor: "rgba(255, 255, 255, 0.5)",
       });
 

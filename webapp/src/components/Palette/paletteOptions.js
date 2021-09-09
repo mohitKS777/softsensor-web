@@ -38,6 +38,7 @@ const PaletteOptions = () => {
   // const [password, setPassword] = useState("");
   // const [message, setMessage] = useState("");
 
+
   const { viewer, fabricOverlay } = useSelector(
     (state) => state.fabricOverlayState
   );
