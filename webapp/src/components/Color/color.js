@@ -63,7 +63,7 @@ const Color = () => {
   }, [fabricOverlay]);
 
   return (
-    <Box pl={3}>
+    <Box pl={1}>
       <ColorOptionsPanel />
     </Box>
   );

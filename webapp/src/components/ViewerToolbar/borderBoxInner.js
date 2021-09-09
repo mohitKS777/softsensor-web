@@ -7,17 +7,14 @@ const ToolbarBorderBoxInner = ({ ...restProps }) => {
   return (
     <Box
       as="button"
-      w="100%"
-      height="100%"
       borderRadius={25}
       borderWidth="2px"
-      borderColor={bg}
       _focus={{
         // outline: `lightgray auto 1px`,
         outline: `none`,
       }}
       {...restProps}
-    ></Box>
+    />
   );
 };
 

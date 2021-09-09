@@ -125,28 +125,35 @@ const ActivityFeed = () => {
         )}
         autoHide
       >
-        <VStack
-          w="100%"
-          spacing="20px"
-          px="4px"
-          py="10px"
-          align="center"
-          color="#EDE8E8"
-        >
+        <VStack w="100%" spacing={1} px="4px" pb="10px" align="center">
           {activityFeed.map((activity, index) => (
             <Box
               as="button"
               key={index}
               bg="#252525"
-              w="85%"
-              borderWidth="2px"
+              w="100%"
               borderRadius="5px"
               px="5px"
               pt="5px"
               pb="2px"
-              textAlign="center"
+              textAlign="left"
+              color="#3963c390"
+              backgroundColor="rgba(255,255,255,0.7)"
               onClick={() => handleClick(activity)}
             >
+              <HStack>
+                {activity.type !== "CLEAR" && (
+                  <Icon
+                    boxSize="10px"
+                    mb="2px"
+                    color="white"
+                    as={activity.type === "path" ? FaPaintBrush : FaShapes}
+                  />
+                )}
+                <Text fontSize="sm" fontWeight="600">
+                  {activity.username + " "}
+                </Text>
+              </HStack>
               <Image
                 borderWidth="2px"
                 mb="3px"
@@ -154,34 +161,19 @@ const ActivityFeed = () => {
                 crossOrigin="anonymous"
                 src={activity.image}
               />
-              <Text>
-                {activity.username + " "}
-                <b style={{ fontSize: "17px" }}>{activity.action}</b>
-              </Text>
-              {activity.text && (
-                <Text as="strong" fontSize="20px" color="white">
-                  "{activity.text}"
-                </Text>
-              )}
+              {activity.text && <Text fontSize="xs">{activity.text}</Text>}
               <HStack mt="8px" mr="10px" justify="flex-end">
                 <Text fontSize="10px" mr="5px">
                   {activity.timeStamp}
                 </Text>
                 {activity.type !== "CLEAR" && (
-                  <>
-                    <Circle size="7px" bg={activity.color} />
-                    <Icon
-                      boxSize="10px"
-                      mb="2px"
-                      as={activity.type === "path" ? FaPaintBrush : FaShapes}
-                    />
-                  </>
+                  <Circle size="7px" bg={activity.color} />
                 )}
               </HStack>
             </Box>
           ))}
         </VStack>
-        <PDFDownloadLink document={<MyDocument />} fileName="feedReport.pdf">
+        {/* <PDFDownloadLink document={<MyDocument />} fileName="feedReport.pdf">
           <IconButton
             icon={<DownloadIcon />}
             w={10}
@@ -200,7 +192,7 @@ const ActivityFeed = () => {
             bottom="5px"
             _hover={{ color: "#29F236", borderColor: "#29F236" }}
           />
-        </PDFDownloadLink>
+        </PDFDownloadLink> */}
       </Scrollbars>
     </>
   );

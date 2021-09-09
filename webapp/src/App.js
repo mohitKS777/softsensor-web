@@ -16,8 +16,8 @@ const theme = extendTheme({
     brand: brandPalette,
   },
   fonts: {
-    heading: "Arial sans-serif",
-    body: "Arial sans-serif",
+    heading: "sans-serif",
+    body: "sans-serif",
 
     courierPrime: "Courier Prime",
     ocrAStd: "ocr-a-std",
@@ -27,13 +27,13 @@ const theme = extendTheme({
   styles: {
     global: {
       button: {
-        fontFamily: "Whitney,Helvetica Neue,Helvetica,Arial,sans-serif",
+        fontFamily: "sans-serif",
       },
       header: {
-        fontFamily: "ocr-a-std",
+        fontFamily: "Roboto",
       },
       nav: {
-        fontFamily: "ocr-a-std",
+        fontFamily: "Roboto",
       },
     },
   },

@@ -1,25 +1,28 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Flex } from "@chakra-ui/react";
+import UserInfo from "../Sidebar/userInfo";
 
-const LayoutAppSidebar = ({children}) => {
+const LayoutAppSidebar = ({ children }) => {
   return (
     <Flex
       as="section"
-      w={{ base: "50px", sm: "60px", md: "80px" }}
+      w="16%"
       direction="column"
-      justifyContent="space-between"
-      alignItems="center"
+      alignItems="left"
       boxShadow="base"
       zIndex="1"
-      bg="#151515"
-      borderRight="0.5px solid #ffffff"
-      borderBottom="0.5px solid #ffffff"
+      bg="#3963C3"
+      pt="20px"
+      px="5px"
+      // borderRight="0.5px solid #ffffff"
+      // borderBottom="0.5px solid #ffffff"
     >
-        {children}
+      <UserInfo />
+      {children}
     </Flex>
   );
-}
+};
 
 LayoutAppSidebar.propTypes = {
   children: PropTypes.node,

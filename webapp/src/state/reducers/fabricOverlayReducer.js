@@ -14,7 +14,7 @@ const getLocalUserCanvases = () => {
 const fabricOverlaySlice = createSlice({
   name: "fabricOverlay",
   initialState: {
-    activeTool: null,
+    activeTool: "Move",
     activeUserCanvas: "",
     color: brandColors[0],
     fabricOverlay: null,

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { DeleteIcon } from "@chakra-ui/icons";
+import { RiDeleteBin6Line } from "react-icons/ri";
 import ToolbarButton from "./ViewerToolbar/button";
 import { updateActivityFeed } from "../state/reducers/feedReducer";
 import { getCanvasImage, getTimestamp } from "../hooks/utility";
+import TypeButton from "./typeButton";
 
 const RemoveObject = () => {
   const { fabricOverlay } = useSelector((state) => state.fabricOverlayState);
@@ -81,12 +82,15 @@ const RemoveObject = () => {
   };
 
   return (
-    <ToolbarButton
+    <TypeButton
       onClick={handleRemoveObject}
-      icon={<DeleteIcon />}
-      label="Remove item"
+      icon={<RiDeleteBin6Line size={12} />}
       disabled={!isActiveObject}
-      color="#fff"
+      backgroundColor={!isActiveObject ? "#898888" : "#dddddd"}
+      color={!isActiveObject ? "black" : "#3963c3"}
+      _focus={{ backgroundColor: "white", color: "black" }}
+      _hover={{ backgroundColor: !isActiveObject ? "#898888" : "#dddddd" }}
+      label="Remove Item"
     />
   );
 };

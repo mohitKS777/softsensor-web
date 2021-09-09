@@ -17,6 +17,7 @@ import {
   selected,
   fontChange,
 } from "../../state/reducers/textReducer";
+import TypeButton from "../typeButton";
 
 const TypeText = () => {
   const dispatch = useDispatch();
@@ -176,20 +177,18 @@ const TypeText = () => {
   };
 
   return (
-    <div>
-      <ToolbarButton
-        onClick={handleToolbarButtonClick}
-        icon={<FiType />}
-        isActive={isActive}
-        label="Type Text"
-        color="#999999"
-      />
-      {isActive && (
-        <ToolbarOptionsPanel>
-          <TypeTextFontPicker handleFontChange={handleFontChange} />
-        </ToolbarOptionsPanel>
-      )}
-    </div>
+    <TypeButton
+      onClick={handleToolbarButtonClick}
+      icon={<FiType />}
+      backgroundColor={isActive ? "#8fa8e1" : "#dddddd"}
+      color={isActive ? "black" : "#3963c3"}
+      label="Type Text"
+    />
+    // {isActive && (
+    //   <ToolbarOptionsPanel>
+    //     <TypeTextFontPicker handleFontChange={handleFontChange} />
+    //   </ToolbarOptionsPanel>
+    // )}
   );
 };
 
