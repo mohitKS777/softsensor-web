@@ -15,7 +15,7 @@ import { fonts } from "../Text/fontPicker";
 import { updateActivityFeed } from "../../state/reducers/feedReducer";
 import { getCanvasImage, getFontSize, getTimestamp } from "../../hooks/utility";
 import { useMediaQuery } from "@chakra-ui/media-query";
-
+import TypeButton from "../typeButton";
 
 const getDrawCursor = (brushSize, brushColor) => {
   brushSize = brushSize < 12 ? 8 : brushSize;
@@ -114,7 +114,7 @@ const Draw = () => {
         left: left,
         top: top + height + 10,
         fontFamily: fonts[0].fontFamily,
-        fontSize: fontSize,        
+        fontSize: fontSize,
         selectionBackgroundColor: "rgba(255, 255, 255, 0.5)",
       });
 
@@ -264,20 +264,13 @@ const Draw = () => {
   };
 
   return (
-    <>
-      <ToolbarButton
-        onClick={handleToolbarClick}
-        icon={<FaPaintBrush />}
-        isActive={isActive}
-        label="Draw"
-        color="#fff"
-      />
-      {isActive && (
-        <ToolbarOptionsPanel>
-          <DrawWidthPicker />
-        </ToolbarOptionsPanel>
-      )}
-    </>
+    <TypeButton
+      onClick={handleToolbarClick}
+      icon={<FaPaintBrush size={12} />}
+      backgroundColor={isActive ? "#8fa8e1" : "#dddddd"}
+      color={isActive ? "black" : "#3963c3"}
+      label="Draw"
+    />
   );
 };
 

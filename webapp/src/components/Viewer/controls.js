@@ -9,9 +9,11 @@ import {
   IconButton,
   Portal,
   Tooltip,
+  VStack,
 } from "@chakra-ui/react";
 import { FiZoomIn, FiZoomOut } from "react-icons/fi";
 import { useSelector } from "react-redux";
+import ZoomSlider from "../ZoomSlider/slider";
 
 const ViewerControls = () => {
   const { viewer } = useSelector((state) => state.fabricOverlayState);
@@ -57,12 +59,24 @@ const ViewerControls = () => {
         backgroundColor: "black",
         fontSize: "14px",
         barThickness: 2,
-        stayInsideImage: false
+        stayInsideImage: false,
       });
 
       setScalebar(scalebarInit);
     }
   }, [viewer]);
+
+  const ZoomButton = (restProps) => {
+    return (
+      <IconButton
+        size="sm"
+        backgroundColor="white"
+        boxShadow="lg"
+        _focus={{ border: "none" }}
+        {...restProps}
+      />
+    );
+  };
 
   return (
     <Box position="absolute" right="20px" top="20px" zIndex="1">
@@ -100,8 +114,25 @@ const ViewerControls = () => {
               size={buttonSize}
               disabled
             />
-          </Tooltip>  */}
-      </ButtonGroup> 
+          </Tooltip>  
+      </ButtonGroup> */}
+      <VStack
+        w="fit-content"
+        backgroundColor="white"
+        border="1px solid #3965C6"
+        borderRadius="5px"
+        p={1}
+      >
+        <ZoomButton
+          icon={<FiZoomIn color="#3965C6" size={20} />}
+          onClick={handleZoomIn}
+        />
+        <ZoomSlider />
+        <ZoomButton
+          icon={<FiZoomOut color="#3965C6" size={20} />}
+          onClick={handleZoomOut}
+        />
+      </VStack>
     </Box>
   );
 };

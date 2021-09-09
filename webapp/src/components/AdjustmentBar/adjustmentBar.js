@@ -13,6 +13,9 @@ import {
   Avatar,
   AvatarBadge,
   AvatarGroup,
+  Spacer,
+  Text,
+  VStack,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { isBrowser } from "react-device-detect";
@@ -25,147 +28,84 @@ import ImageGalleryModal from "../imageGalleryModal";
 import Login from "../Authenticate/login";
 import { useSelector } from "react-redux";
 import AltButton from "../altButton";
+import SlideSearch from "../Search/search";
+import SlideChat from "../Chat/chat";
+import ToolbarPointerControl from "../ViewerToolbar/pointerControl";
+import RemoveObject from "../removeComponents";
+import SlideUser from "../UserSettings/user";
+import Move from "../Move/move";
+import Screenshot from "../Screenshot/screenshot";
+import DrawWidthPicker from "../Draw/widthPicker";
+import Case from "../Case/case";
+import Draw from "../Draw/draw";
+import Square from "../Shape/square";
+import TypeText from "../Text/text";
+import ShareLink from "../Share/shareLink";
+import Line from "../Shape/line";
+import Arrow from "../Shape/arrow";
+import Circle from "../Shape/circle";
+import Algorithm from "../Palette/algorithm";
 
 const AdjustmentBar = () => {
   const { roomName, guestList } = useSelector((state) => state.socketState);
-  const bg = "#212121";
+  const { activeDrawerTool } = useSelector((state) => state.drawerState);
+  const bg = "#3965C3";
 
   return (
     <div className="adjustmentbar">
-      {roomName === "" ? (
-        <Flex bgColor={bg} justifyContent="space-between" alignItems="center">
-          <Box ml={2} py={2}>
-            <Color />
-          </Box>
-          <HStack spacing={2}>
-            <ImageGalleryModal />
-            {/* <Login />
-            <Center height="20px">
-              <Divider orientation="vertical" />
-            </Center>
-            <ShareAnnotation />
-            <Center height="20px">
-              <Divider orientation="vertical" />
-            </Center>
-            <MyAnnotationsSave />
-            <Center height="20px">
-              <Divider orientation="vertical" />
-            </Center>
-            <ClearCanvas />
-            <Center height="20px">
-              <Divider orientation="vertical" />
-            </Center>
-            {isBrowser && <Download />}:w :w */}
-          </HStack>
-        </Flex>
-      ) : (
-        <>
-          <Flex bgColor={bg} justifyContent="left" alignItems="center">
-            <Box ml={2} py={2} width="70%">
+      <Flex bgColor={bg} alignItems="center">
+        <Box ml="5px" pt="3px" pb="6px">
+          <Case />
+        </Box>
+        <Spacer />
+        <Algorithm />
+        <Spacer />
+        <ImageGalleryModal />
+        <Spacer />
+        <HStack spacing={3} p="1px" alignItems="center">
+          <Move />
+          <ToolbarPointerControl />
+          <Screenshot />
+        </HStack>
+        <Box
+          w="30%"
+          h="inherit"
+          className="annotate"
+          color="white"
+          mx="20px"
+          borderX="1px solid #ffffff50"
+        >
+          <Text align="center">Annotate</Text>
+          <HStack spacing={0} align="stretch">
+            <Box w="52%">
+              <Text borderY="1px solid #ffffff50">Color</Text>
               <Color />
             </Box>
-            <Box
-              width="30%"
-              display="flex"
-              justifyContent="flex-end"
-              alignItems="center"
-            >
-              <HStack spacing={2} margin="5px">
-                <AvatarGroup max={3} border="none">
-                  {guestList.map((guest, id) => {
-                    return (
-                      <Avatar key={id} name={guest.alias} border="none">
-                        <AvatarBadge
-                          boxSize="1.25rem"
-                          bg="green.400"
-                          border="0.5px solid white"
-                        />
-                      </Avatar>
-                    );
-                  })}
-                </AvatarGroup>
-              </HStack>
-              <Menu>
-                <MenuButton
-                  as={Button}
-                  aria-label="Options"
-                  rightIcon={<ChevronDownIcon />}
-                  size="md"
-                  variant="outline"
-                  transition="all 0.2s"
-                  borderRadius="md"
-                  margin="0px 5px"
-                  borderWidth="2px"
-                  bg="black"
-                  color="#FFF"
-                  _hover={{ bg: "gray.400" }}
-                  _expanded={{ bg: "white.400" }}
-                  _focus={{
-                    boxShadow: "outline",
-                    bg: "white.400",
-                  }}
-                >
-                  Actions
-                </MenuButton>
-                <MenuList position="relative" zIndex="10000" background={bg}>
-                  <MenuItem
-                    _focus={{
-                      bg: "white.300",
-                    }}
-                  >
-                    <Box
-                      width="100%"
-                      bg="white.400"
-                      justifyContent="flex-start"
-                      _hover={{
-                        bg: "none",
-                        border: "1px solid white",
-                      }}
-                    >
-                      <MyAnnotationsSave />
-                    </Box>
-                  </MenuItem>
-                  <MenuItem
-                    _focus={{
-                      bg: "white.300",
-                    }}
-                  >
-                    <Box
-                      width="100%"
-                      bg="white.400"
-                      justifyContent="left"
-                      _hover={{
-                        bg: "none",
-                        border: "1px solid white",
-                      }}
-                    >
-                      <ClearCanvas />
-                    </Box>
-                  </MenuItem>
-                  <MenuItem
-                    color="#fff"
-                    _focus={{
-                      bg: "white.300",
-                    }}
-                  >
-                    <Box
-                      width="100%"
-                      bg="white.400"
-                      justifyContent="left"
-                      _hover={{
-                        bg: "none",
-                        border: "1px solid white",
-                      }}
-                    >
-                      {isBrowser && <Download />} Download
-                    </Box>
-                  </MenuItem>
-                </MenuList>
-              </Menu>
+            <Box w="50%">
+              <Text border="1px solid #ffffff50">Width</Text>
+              <DrawWidthPicker align="end" />
             </Box>
-          </Flex>
-        </>
-      )}
+            <Box w="100%">
+              <Text borderY="1px solid #ffffff50">Type</Text>
+              <HStack px={1} py={2}>
+                <Line />
+                <Square />
+                <Circle />
+                <Draw />
+                <TypeText />
+                <RemoveObject />
+              </HStack>
+            </Box>
+          </HStack>
+        </Box>
+        <Box mr="20px">
+          <ShareLink />
+          <HStack mt="5px" justify="space-around">
+            <SlideUser />
+            <SlideChat />
+          </HStack>
+        </Box>
+      </Flex>
     </div>
   );
 };

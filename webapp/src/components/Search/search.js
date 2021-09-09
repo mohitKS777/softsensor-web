@@ -4,6 +4,7 @@ import { SearchIcon } from "@chakra-ui/icons";
 import ToolbarButton from "../ViewerToolbar/button";
 import { useSelector, useDispatch } from "react-redux";
 import { updateActiveDrawerTool } from "../../state/reducers/drawerReducer";
+import { Input } from "@chakra-ui/react";
 
 const SlideSearch = () => {
   const { activeDrawerTool } = useSelector((state) => state.drawerState);
@@ -15,12 +16,13 @@ const SlideSearch = () => {
   };
 
   return (
-    <ToolbarButton
-      onClick={handleToolbarClick}
-      icon={<SearchIcon />}
-      label="Search"
-      color={isActive ? "white" : "#999999"}
-    />
+    <Input type="text" w="300px" color="white" placeholder="Search" />
+    // <ToolbarButton
+    //   onClick={handleToolbarClick}
+    //   icon={<SearchIcon />}
+    //   label="Search"
+    //   color={isActive ? "white" : "#999999"}
+    // />
   );
 };
 

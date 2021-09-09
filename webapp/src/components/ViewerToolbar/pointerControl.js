@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { BiPointer } from "react-icons/bi";
+import { FiMousePointer } from "react-icons/fi";
 import ToolbarButton from "./button";
 import { useSelector, useDispatch } from "react-redux";
 import { updateTool } from "../../state/reducers/fabricOverlayReducer";
@@ -21,10 +21,11 @@ const ToolbarPointerControl = () => {
   return (
     <ToolbarButton
       onClick={handleToolbarClick}
-      icon={<BiPointer />}
+      icon={<FiMousePointer size={25} />}
       isActive={isActive}
+      backgroundColor={isActive ? "white" : "rgba(255,255,255, 0.5)"}
+      color={isActive ? "black" : "#3963c3"}
       label="Select"
-      color="#fff"
     />
   );
 };

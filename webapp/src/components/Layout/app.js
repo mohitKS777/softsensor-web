@@ -36,27 +36,18 @@ const LayoutApp = () => {
 
   return (
     <Flex as={Div100vh} h="100vh" direction="column" onKeyDown={handleEvent}>
-      <LayoutHeader />
       <LayoutOuterBody>
         <LayoutAppSidebar>
           <SidebarTools />
         </LayoutAppSidebar>
-        <ExtendibleDrawer />
         <LayoutInnerBody>
+          <LayoutHeader />
           <AdjustmentBar />
           <LayoutAppBody>
-            <ViewerToolbar>
-              {isToolbarVisible && (
-                <>
-                  <Toolbar />
-                </>
-              )}
-            </ViewerToolbar>
             <ViewerContainer />
           </LayoutAppBody>
         </LayoutInnerBody>
       </LayoutOuterBody>
-      <LayoutAppFooter />
     </Flex>
   );
 };
