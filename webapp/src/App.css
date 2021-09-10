@@ -1,20 +1,21 @@
 .header {
-  background-color: #151515;
+  background-color: #3963c3;
   color: white;
-  border-bottom: 0.3px solid #ffffff;
+  border-bottom: 1px solid #ffffff50;
 }
 .head-btn Button {
   margin-left: 10px;
   border: 0.5px solid white;
 }
 .adjustmentbar {
-  background: #212121;
-}
-.adjustmentbar Button {
-  margin-right: 15px;
-  border: 0.5px solid white;
+  background: #3963c3;
 }
 .changeslide Button {
   border: 0.3px solid #ffffff;
   margin-right: 16px;
+}
+
+.annotate p {
+  font-size: small;
+  text-align: center;
 }

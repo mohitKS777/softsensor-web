@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { VStack } from "@chakra-ui/react";
+import { HStack } from "@chakra-ui/react";
 import ToolbarBorderBox from "../ViewerToolbar/borderBox";
 import ToolbarBorderBoxInner from "../ViewerToolbar/borderBoxInner";
 import { useSelector, useDispatch } from "react-redux";
@@ -13,24 +13,31 @@ const DrawWidthPicker = () => {
   const dispatch = useDispatch();
 
   return (
-    <VStack spacing={3} px={1}>
+    <HStack spacing={2} px={1} py={2}>
       {widths.map((widthObj) => {
         let imgSrc = require(`../../images/pen-weight-icons/${color.label}${widthObj.size}.png`);
         return (
-          <ToolbarBorderBox
+          // <ToolbarBorderBox
+          //   key={widthObj.size}
+          //   isActive={width && widthObj.size === width.size}
+          // >
+          <ToolbarBorderBoxInner
             key={widthObj.size}
             isActive={width && widthObj.size === width.size}
-          >
-            <ToolbarBorderBoxInner
-              bgImage={`url(${imgSrc.default})`}
-              bgSize="cover"
-              display="block"
-              onClick={() => dispatch(updateWidth(widthObj))}
-            />
-          </ToolbarBorderBox>
+            w={widthObj.boxSize}
+            h={widthObj.boxSize}
+            bgImage={`url(${imgSrc.default})`}
+            borderColor={
+              width && widthObj.size === width.size ? "white" : "#A3A3A3"
+            }
+            bgSize="cover"
+            display="block"
+            onClick={() => dispatch(updateWidth(widthObj))}
+          />
+          // </ToolbarBorderBox>
         );
       })}
-    </VStack>
+    </HStack>
   );
 };
 

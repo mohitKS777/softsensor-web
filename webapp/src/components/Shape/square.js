@@ -1,12 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
-import ToolbarButton from "../ViewerToolbar/button";
-import ToolbarOptionsPanel from "../ViewerToolbar/optionsPanel";
-import { FaShapes } from "react-icons/fa";
 import { fabric } from "openseadragon-fabricjs-overlay";
 import { useSelector, useDispatch } from "react-redux";
 import { updateTool } from "../../state/reducers/fabricOverlayReducer";
-import ShapePicker from "./picker";
 import useFabricHelpers from "../../hooks/use-fabric-helpers";
 import {
   updateActive,
@@ -19,10 +15,10 @@ import { updateActivityFeed } from "../../state/reducers/feedReducer";
 
 import { getCanvasImage, getFontSize, getTimestamp } from "../../hooks/utility";
 import { useMediaQuery } from "@chakra-ui/media-query";
+import { BsSquare } from "react-icons/bs";
+import TypeButton from "../typeButton";
 
-const FABRIC_SHAPE_TYPES = ["circle", "rect"];
-
-const Shape = () => {
+const Square = () => {
   const dispatch = useDispatch();
   const { color, fabricOverlay, viewer, activeTool } = useSelector(
     (state) => state.fabricOverlayState
@@ -33,7 +29,7 @@ const Shape = () => {
   const { activityFeed } = useSelector((state) => state.feedState);
 
   const { deselectAll } = useFabricHelpers();
-  const isActive = activeTool === "SHAPE";
+  const isActive = activeTool === "Square";
 
   const [shape, setShape] = useState(null);
   const [textbox, setTextbox] = useState(null);
@@ -73,7 +69,7 @@ const Shape = () => {
     if (!fabricOverlay) return;
     const canvas = fabricOverlay.fabricCanvas();
 
-    if (myState.activeShape) {
+    if (isActive) {
       canvas.defaultCursor = "crosshair";
 
       // Disable OSD mouseclicks
@@ -89,7 +85,7 @@ const Shape = () => {
       viewer.setMouseNavEnabled(true);
       viewer.outerTracker.setTracking(true);
     }
-  }, [myState.activeShape]);
+  }, [isActive]);
 
   /**
    * Add shapes and handle mouse events
@@ -102,11 +98,7 @@ const Shape = () => {
      * Mouse down
      */
     function handleMouseDown(options) {
-      if (
-        options.target ||
-        !myStateRef.current.activeShape ||
-        !myStateRef.current.isActive
-      ) {
+      if (options.target || !myStateRef.current.isActive) {
         return;
       }
 
@@ -134,40 +126,13 @@ const Shape = () => {
         strokeWidth: zoomLevel <= 1 ? 2 : 2 / zoomLevel,
       };
 
-      // Shape options
-      switch (myStateRef.current.activeShape.name) {
-        /**
-         * Square
-         */
-        case "square":
-          newShape = new fabric.Rect({
-            ...shapeOptions,
-            ...fillProps,
-            width: pointer.x - origX,
-            height: pointer.y - origY,
-          });
-          fabricOverlay.fabricCanvas().add(newShape);
-          break;
-
-        /**
-         * Circle
-         */
-        case "circle":
-          newShape = new fabric.Ellipse({
-            ...shapeOptions,
-            ...fillProps,
-            originX: "left",
-            originY: "top",
-            rx: pointer.x - origX,
-            ry: pointer.y - origY,
-            angle: 0,
-          });
-          fabricOverlay.fabricCanvas().add(newShape);
-          break;
-
-        default:
-          break;
-      }
+      newShape = new fabric.Rect({
+        ...shapeOptions,
+        ...fillProps,
+        width: pointer.x - origX,
+        height: pointer.y - origY,
+      });
+      fabricOverlay.fabricCanvas().add(newShape);
 
       setMyState(updateShape, {
         ...myStateRef.current,
@@ -187,7 +152,6 @@ const Shape = () => {
     function handleMouseMove(options) {
       if (
         //options.target ||
-        !myStateRef.current.activeShape ||
         !myStateRef.current.isActive ||
         !myStateRef.current.currentDragShape
       ) {
@@ -198,47 +162,21 @@ const Shape = () => {
       // Dynamically drag size element to the canvas
       const pointer = fabricOverlay.fabricCanvas().getPointer(options.e);
 
-      if (["square"].indexOf(c.activeShape.name) > -1) {
-        /**
-         * Rectangle or Triangle
-         */
-        if (c.origX > pointer.x) {
-          c.currentDragShape.set({
-            left: Math.abs(pointer.x),
-          });
-        }
-        if (c.origY > pointer.y) {
-          c.currentDragShape.set({ top: Math.abs(pointer.y) });
-        }
+      /**
+       * Rectangle or Triangle
+       */
+      if (c.origX > pointer.x) {
         c.currentDragShape.set({
-          width: Math.abs(c.origX - pointer.x),
-          height: Math.abs(c.origY - pointer.y),
+          left: Math.abs(pointer.x),
         });
-      } else if (c.activeShape.name === "circle") {
-        /**
-         * Ellipse (circle)
-         */
-        let rx = Math.abs(c.origX - pointer.x) / 2;
-        let ry = Math.abs(c.origY - pointer.y) / 2;
-        if (rx > c.currentDragShape.strokeWidth) {
-          rx -= c.currentDragShape.strokeWidth / 2;
-        }
-        if (ry > c.currentDragShape.strokeWidth) {
-          ry -= c.currentDragShape.strokeWidth / 2;
-        }
-        c.currentDragShape.set({ rx, ry });
-
-        if (c.origX > pointer.x) {
-          c.currentDragShape.set({ originX: "right" });
-        } else {
-          c.currentDragShape.set({ originX: "left" });
-        }
-        if (c.origY > pointer.y) {
-          c.currentDragShape.set({ originY: "bottom" });
-        } else {
-          c.currentDragShape.set({ originY: "top" });
-        }
       }
+      if (c.origY > pointer.y) {
+        c.currentDragShape.set({ top: Math.abs(pointer.y) });
+      }
+      c.currentDragShape.set({
+        width: Math.abs(c.origX - pointer.x),
+        height: Math.abs(c.origY - pointer.y),
+      });
 
       fabricOverlay.fabricCanvas().renderAll();
     }
@@ -281,22 +219,10 @@ const Shape = () => {
 
       setShape(myStateRef.current.currentDragShape);
 
-      let [left, top, height, width] = [
-        currShape.left,
-        currShape.top,
-        currShape.height,
-        currShape.width,
-      ];
-
-      if (currShape.type === "ellipse") {
-        if (currShape.originX === "right") left -= width;
-        if (currShape.originY === "bottom") height = 0;
-      }
-
       createTextbox({
-        left: left,
-        top: top,
-        height: height,
+        left: currShape.left,
+        top: currShape.top,
+        height: currShape.height,
       });
 
       setMyState(updateShape, {
@@ -337,10 +263,7 @@ const Shape = () => {
 
       // Filter out any non-shape selections
       const optionsTargetType = options.target.get("type");
-      if (
-        !FABRIC_SHAPE_TYPES.find((shapeType) => shapeType === optionsTargetType)
-      )
-        return;
+      if (!"square" === optionsTargetType) return;
 
       setMyState(updateShape, {
         ...myStateRef.current,
@@ -416,16 +339,19 @@ const Shape = () => {
     );
   }, [textbox]);
 
-  const handleShapeSelect = (shape) => {
-    dispatch(updateTool({ tool: isActive ? "" : "SHAPE" }));
-    setMyState(updateActiveShape, { activeShape: shape });
+  const handleClick = () => {
+    dispatch(updateTool({ tool: isActive ? "" : "Square" }));
   };
 
-  const handleToolbarClick = () => {
-    dispatch(updateTool({ tool: isActive ? "" : "SHAPE" }));
-  };
-
-  return <ShapePicker handleShapeSelect={handleShapeSelect} />;
+  return (
+    <TypeButton
+      icon={<BsSquare />}
+      backgroundColor={isActive ? "#8fa8e1" : "#dddddd"}
+      color={isActive ? "black" : "#3963c3"}
+      label="Square"
+      onClick={handleClick}
+    />
+  );
 };
 
-export default Shape;
+export default Square;

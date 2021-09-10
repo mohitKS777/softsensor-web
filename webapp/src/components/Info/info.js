@@ -1,9 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { InfoIcon } from "@chakra-ui/icons";
-import ToolbarButton from "../ViewerToolbar/button";
 import { useSelector, useDispatch } from "react-redux";
 import { updateActiveDrawerTool } from "../../state/reducers/drawerReducer";
+import HeaderButton from "../headerButton";
 
 const SlideInfo = () => {
   const { activeDrawerTool } = useSelector((state) => state.drawerState);
@@ -14,14 +12,7 @@ const SlideInfo = () => {
     dispatch(updateActiveDrawerTool({ tool: isActive ? "" : "INFO" }));
   };
 
-  return (
-    <ToolbarButton
-      onClick={handleToolbarClick}
-      icon={<InfoIcon />}
-      label="Info"
-      color={isActive ? "white" : "#999999"}
-    />
-  );
+  return <HeaderButton label="Info" />;
 };
 
 export default SlideInfo;

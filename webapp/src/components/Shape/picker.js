@@ -1,18 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Box, Divider, IconButton, Text, VStack } from "@chakra-ui/react";
+import { Box, Divider, IconButton, Text, HStack } from "@chakra-ui/react";
 import { BsCircle, BsSquare } from "react-icons/bs";
 import { useWindowHeight } from "@react-hook/window-size";
 import { isMobile, isTablet } from "react-device-detect";
 import { useSelector } from "react-redux";
+import TypeButton from "../typeButton";
 
 export const shapes = [
-  { name: "square", icon: <BsSquare /> },
+  { name: "rect", icon: <BsSquare /> },
   { name: "circle", icon: <BsCircle /> },
 ];
 
 const ShapePicker = ({ handleShapeSelect }) => {
-  const { activeShape } = useSelector((state) => state.shapeState);
+  const { activeShape, activeTool } = useSelector((state) => state.shapeState);
   const { color } = useSelector((state) => state.fabricOverlayState);
   const windowHeight = useWindowHeight();
   let btnSize = "lg";
@@ -25,24 +26,20 @@ const ShapePicker = ({ handleShapeSelect }) => {
   }
 
   return (
-    <>
-      <Text fontSize="xs" textAlign="center" my={1}>
-        Shape
-      </Text>
-      <VStack color={color.hex}>
-        {shapes.map((shape) => (
-          <IconButton
-            key={shape.name}
-            icon={shape.icon}
-            onClick={() => handleShapeSelect(shape)}
-            size={btnSize}
-            variant={
-              activeShape && activeShape.name === shape.name ? "solid" : "ghost"
-            }
-          />
-        ))}
-      </VStack>
-    </>
+    <HStack>
+      {shapes.map((shape) => (
+        <TypeButton
+          key={shape.name}
+          icon={shape.icon}
+          backgroundColor={activeTool === shape.name ? "#8fa8e1" : "#dddddd"}
+          color={activeTool === shape.name ? "black" : "#3963c3"}
+          onClick={() => handleShapeSelect(shape)}
+          // variant={
+          //   activeShape && activeShape.name === shape.name ? "solid" : "ghost"
+          // }
+        />
+      ))}
+    </HStack>
   );
 };
 

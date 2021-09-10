@@ -4,6 +4,7 @@ import { FaClipboardList } from "react-icons/fa";
 import ToolbarButton from "../ViewerToolbar/button";
 import { useSelector, useDispatch } from "react-redux";
 import { updateActiveDrawerTool } from "../../state/reducers/drawerReducer";
+import HeaderButton from "../headerButton";
 
 const SlideFeed = () => {
   const { activeDrawerTool } = useSelector((state) => state.drawerState);
@@ -14,14 +15,7 @@ const SlideFeed = () => {
     dispatch(updateActiveDrawerTool({ tool: isActive ? "" : "FEED" }));
   };
 
-  return (
-    <ToolbarButton
-      onClick={handleToolbarClick}
-      icon={<FaClipboardList />}
-      label="Feed"
-      color={isActive ? "white" : "#999999"}
-    />
-  );
+  return <HeaderButton label="Active Feed" />;
 };
 
 export default SlideFeed;

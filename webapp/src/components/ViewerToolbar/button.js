@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
-import { IconButton, Tooltip } from "@chakra-ui/react";
+import { IconButton, Tooltip, Box, Text } from "@chakra-ui/react";
 import { useWindowHeight } from "@react-hook/window-size";
 import { isMobile, isTablet } from "react-device-detect";
 
@@ -29,28 +29,31 @@ const ToolbarButton = ({
   }
 
   return (
-    <Tooltip
-      label={label}
-      aria-label={label}
-      placement="right-end"
-      openDelay={500}
-    >
+    <Box>
+      {/* <Tooltip
+        label={label}
+        aria-label={label}
+        placement="bottom"
+        openDelay={500}
+      > */}
       <IconButton
-        size={iconSizes.size}
-        marginTop="20px"
-        fontSize={iconSizes.fontSize}
-        variant={isActive ? "outline" : "ghost"}
-        _hover={{
-          background: "#999999",
-          color: "#000",
-        }}
+        size="lg"
+        variant="unstyled"
+        backgroundColor="rgba(255,255,255, 0.5)"
+        color="#3963c3"
+        pl="10px"
+        p="10px"
+        borderRadius="3px"
         _focus={{
-          borderColor: "none",
+          border: "none",
         }}
-        textTransform="capitalize"
         {...restProps}
       />
-    </Tooltip>
+      {/* </Tooltip> */}
+      <Text color="white" align="center" fontSize="0.6rem">
+        {label}
+      </Text>
+    </Box>
   );
 };
 

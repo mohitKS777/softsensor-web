@@ -4,6 +4,7 @@ import ToolbarButton from "../ViewerToolbar/button";
 import { useSelector, useDispatch } from "react-redux";
 import { useDisclosure } from "@chakra-ui/react";
 import { updateActiveDrawerTool } from "../../state/reducers/drawerReducer";
+import HeaderButton from "../headerButton";
 
 const Palette = () => {
   const { activeDrawerTool } = useSelector((state) => state.drawerState);
@@ -14,20 +15,7 @@ const Palette = () => {
     dispatch(updateActiveDrawerTool({ tool: isActive ? "" : "PALETTE" }));
   };
 
-  return (
-    <>
-      <ToolbarButton
-        onClick={() => {
-          handleToolbarClick();
-          // onOpen();
-        }}
-        icon={<IoIosColorPalette size={24}/>}
-        // isActive={isActive}
-        label="Palette"
-        color={isActive ? "white" : "#999999"}
-      />
-    </>
-  );
+  return <HeaderButton label="Palette" />;
 };
 
 export default Palette;
