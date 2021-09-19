@@ -15,7 +15,10 @@ import "../../styles/styles.css";
 import ActivityFeed from "../Feed/activityFeed";
 import PaletteOptions from "../Palette/paletteOptions";
 import UserOptions from "../UserSettings/userOptions";
+<<<<<<< HEAD
 import { updateActiveFeed } from "../../state/reducers/feedReducer";
+=======
+>>>>>>> Feature add chat UI (#33)
 
 const SidebarTools = () => {
   const { activeTool } = useSelector((state) => state.fabricOverlayState);
