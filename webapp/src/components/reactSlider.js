@@ -1,7 +1,13 @@
 import React, { useRef, useState, useMemo, useCallback } from "react";
 import PropTypes from "prop-types";
+import { updateZoomValue } from "../state/reducers/zoomReducer";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "@chakra-ui/react";
 
 const Slider = (props) => {
+  const { viewer } = useSelector((state) => state.fabricOverlayState);
+  const { zoomValue } = useSelector((state) => state.zoomState);
+  const dispatch = useDispatch();
   const {
     defaultValue,
     value,
@@ -310,6 +316,10 @@ const Slider = (props) => {
   };
 
   const renderMarkers = () => {
+    const onClickHandle = (value) => {
+      viewer.viewport.zoomTo(viewer.viewport.getMaxZoom() * value * 2.5 * 0.01);
+      dispatch(updateZoomValue(value));  
+    }
     return (
       <React.Fragment>
         {trackLength !== 0 && markers >= 2 && (
@@ -345,7 +355,14 @@ const Slider = (props) => {
                         }),
                   }}
                 >
-                  {markersLabel ? markersLabel[index] : value}
+                  <Link 
+                    variant="unstyled" 
+                    fontSize="8px"
+                    _hover={{color:"#3965C6"}}
+                    onClick={() => onClickHandle(value)}
+                  >
+                    {markersLabel ? markersLabel[index] : value}
+                  </Link>
                 </div>
               );
             })}

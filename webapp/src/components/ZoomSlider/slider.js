@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import Slider from "../reactSlider";
 import { updateZoomValue } from "../../state/reducers/zoomReducer";
-import { Box, IconButton, VStack } from "@chakra-ui/react";
+import { Box, Link} from "@chakra-ui/react";
 import { FiZoomIn, FiZoomOut } from "react-icons/fi";
 
 const ZoomSlider = () => {
@@ -13,6 +13,11 @@ const ZoomSlider = () => {
   const dispatch = useDispatch();
 
   const handleSlider = (val) => {
+    viewer.viewport.zoomTo(viewer.viewport.getMaxZoom() * val * 2.5 * 0.01);
+    dispatch(updateZoomValue(val));
+  };
+
+  const handleLabel = (val) => {
     viewer.viewport.zoomTo(viewer.viewport.getMaxZoom() * val * 2.5 * 0.01);
     dispatch(updateZoomValue(val));
   };
@@ -33,7 +38,7 @@ const ZoomSlider = () => {
         ref={sliderRef}
         value={zoomValue}
         valueLabelStyle={{ display: "none" }}
-        min={0}
+        min={1}
         max={40}
         markers={6}
         stepSize={8}

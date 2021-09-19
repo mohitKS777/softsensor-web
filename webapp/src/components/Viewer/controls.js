@@ -125,11 +125,13 @@ const ViewerControls = () => {
       >
         <ZoomButton
           icon={<FiZoomIn color="#3965C6" size={20} />}
+          border="1px solid #3965C6"
           onClick={handleZoomIn}
         />
         <ZoomSlider />
         <ZoomButton
           icon={<FiZoomOut color="#3965C6" size={20} />}
+          border="1px solid #3965C6"
           onClick={handleZoomOut}
         />
       </VStack>
