@@ -22,6 +22,7 @@ const ZoomSlider = ({ viewerId }) => {
     dispatch(updateZoomValue({ id: viewerId, value: val }));
   };
 
+
   useEffect(() => {
     if (!viewer) return;
     viewer.addHandler("zoom", (e) => {
