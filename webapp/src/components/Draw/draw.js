@@ -51,6 +51,7 @@ const Draw = () => {
   const { username, roomName, alias, socket } = useSelector(
     (state) => state.socketState
   );
+  const { zoomValue } = useSelector((state) => state.zoomState);
   const { activityFeed } = useSelector((state) => state.feedState);
 
   const dispatch = useDispatch();
@@ -104,9 +105,9 @@ const Draw = () => {
   useEffect(() => {
     if (!fabricOverlay) return;
     const canvas = fabricOverlay.fabricCanvas();
-    const zoomLevel = viewer.viewport.getZoom();
 
-    const fontSize = getFontSize(screenSize, zoomLevel);
+    const fontSize = getFontSize(screenSize, zoomValue);
+    console.log(zoomValue, fontSize);
 
     // Create new Textbox instance and add it to canvas
     const createTextbox = ({ left, top, height }) => {
@@ -114,7 +115,8 @@ const Draw = () => {
         left: left,
         top: top + height + 10,
         fontFamily: fonts[0].fontFamily,
-        fontSize: fontSize,        
+        fontSize: fontSize,
+        fontWeight: "bold",
         selectionBackgroundColor: "rgba(255, 255, 255, 0.5)",
       });
 
@@ -162,9 +164,7 @@ const Draw = () => {
       viewer.outerTracker.setTracking(false);
       canvas.isDrawingMode = true;
       canvas.freeDrawingBrush.color = color.hex;
-      canvas.freeDrawingBrush.width =
-        zoomLevel <= 1 ? brushWidth : brushWidth / zoomLevel;
-
+      canvas.freeDrawingBrush.width = brushWidth;
       canvas.renderAll();
 
       // EXAMPLE: of using an image for cursor
@@ -201,11 +201,9 @@ const Draw = () => {
 
     const canvas = fabricOverlay.fabricCanvas();
     const brushWidth = myState.width.pixelWidth;
-    const zoomLevel = viewer.viewport.getZoom();
 
     canvas.freeDrawingBrush.color = color.hex;
-    canvas.freeDrawingBrush.width =
-      zoomLevel <= 1 ? brushWidth : brushWidth / zoomLevel;
+    canvas.freeDrawingBrush.width = brushWidth;
     canvas.freeDrawingCursor = createFreeDrawingCursor(brushWidth, color.hex);
   }, [color, myState.width]);
 

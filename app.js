@@ -40,7 +40,7 @@ io.on("connection", (socket) => {
   socket.on("send_guest_list", (data) => {
     console.log("received guest list request for room: ", data.roomName);
     console.log("sent to: ", data.alias, "guest list ", guestList);
-    socket.to(data.roomName).emit("receive_guest_list", guestList);
+    io.in(data.roomName).emit("receive_guest_list", guestList);
   });
 
   socket.on("send_annotations", (data) => {
@@ -53,8 +53,9 @@ io.on("connection", (socket) => {
   });
 
   socket.on("send_message", (data) => {
-    console.log(data);
-    socket.to(data.room).emit("receive_message", data.content);
+    data = JSON.parse(data);
+    console.log("message received: ", data);
+    socket.to(data.roomName).emit("receive_message", data.messages);
   });
 
   socket.on("disconnect", () => {

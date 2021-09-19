@@ -6,6 +6,7 @@ import useFabricHelpers from "../../hooks/use-fabric-helpers";
 import "../../styles/styles.css";
 import ActivityFeed from "../Feed/activityFeed";
 import PaletteOptions from "../Palette/paletteOptions";
+import UserOptions from "../UserSettings/userOptions";
 
 const SidebarTools = () => {
   const { activeTool } = useSelector((state) => state.fabricOverlayState);
@@ -26,12 +27,13 @@ const SidebarTools = () => {
         Annotations
       </Box>
       <Box
-        h={activeDrawerTool === "Algorithm" ? "30vh" : "75vh"}
+        h={activeDrawerTool === "Algorithm" ? "30vh" : "55vh"}
         mt="5px"
         mb="10px"
       >
         <ActivityFeed />
       </Box>
+      <UserOptions />
       {activeDrawerTool === "Algorithm" && <PaletteOptions />}
     </Box>
   );

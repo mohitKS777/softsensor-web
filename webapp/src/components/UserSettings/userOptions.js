@@ -10,6 +10,7 @@ import {
 } from "../../state/reducers/socketReducer";
 import { updateSharing } from "../../state/reducers/shareReducer";
 import { updateActivityFeed } from "../../state/reducers/feedReducer";
+import { updateMessages } from "../../state/reducers/chatReducer";
 
 const UserOptions = () => {
   const [_roomName, setRoomName] = useState("");
@@ -23,7 +24,7 @@ const UserOptions = () => {
     (state) => state.socketState
   );
   const dispatch = useDispatch();
-  console.log(roomName, guestList);
+  // console.log(roomName, guestList);
 
   const handleInputChange = (e) => {
     setRoomName(e.target.value);
@@ -38,12 +39,6 @@ const UserOptions = () => {
   }, [sharing]);
 
   useEffect(() => {
-    const receiveGuestList = (data) => {
-      dispatch(
-        updateGuestDetails({ guestCount: data.length, guestList: [...data] })
-      );
-    };
-
     const receiveAnnotations = (data) => {
       if (fabricOverlay) {
         let annotations = {
@@ -53,6 +48,7 @@ const UserOptions = () => {
             fabricCanvas: data.content,
           },
         };
+        // console.log(data.feed);
         dispatch(updateAnnotations(annotations));
         dispatch(updateActivityFeed(data.feed));
         let canvas = fabricOverlay.fabricCanvas();
@@ -63,9 +59,20 @@ const UserOptions = () => {
       }
     };
 
-    socket.on("receive_guest_list", receiveGuestList);
-
     socket.on("receive_annotations", receiveAnnotations);
+  }, [fabricOverlay]);
+
+  useEffect(() => {
+    socket.on("receive_guest_list", (data) => {
+      dispatch(
+        updateGuestDetails({ guestCount: data.length, guestList: [...data] })
+      );
+    });
+
+    socket.on("receive_message", (data) => {
+      console.log(data);
+      dispatch(updateMessages(data));
+    });
   }, []);
 
   const handleConnect = async () => {

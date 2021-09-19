@@ -7,49 +7,38 @@ export const getTimestamp = () => {
   }).format(Date.now());
 };
 
-export const getFontSize = (screenSize, zoomLevel) => {
+export const getFontSize = (screenSize, zoomValue) => {
+  const scaleValue = zoomValue / 40;
   // for screen smaller than 1280
   if (screenSize[0]) {
-    if (zoomLevel <= 0.18) return 95;
-    else if (zoomLevel <= 0.28) return 80;
-    else if (zoomLevel <= 0.35) return 48;
-    else if (zoomLevel <= 0.52) return 38;
-    else if (zoomLevel <= 0.88) return 27;
-    else if (zoomLevel <= 1.05) return 16;
-    else return 18 / zoomLevel;
+    return 15 / scaleValue;
   }
   // for screen smaller than 1440
   else if (screenSize[1]) {
-    if (zoomLevel <= 0.18) return 100;
-    else if (zoomLevel <= 0.28) return 80;
-    else if (zoomLevel <= 0.35) return 52;
-    else if (zoomLevel <= 0.52) return 42;
-    else if (zoomLevel <= 0.88) return 30;
-    else if (zoomLevel <= 1.05) return 18;
-    else return 20 / zoomLevel;
+    // if (zoomValue <= 5) return 105 / (zoomValue / 5);
+    // else if (zoomValue <= 10) return 56 / (zoomValue / 10);
+    // else if (zoomValue <= 15) return 42 / (zoomValue / 15);
+    // else if (zoomValue <= 20) return 32 / (zoomValue / 20);
+    // else if (zoomValue <= 25) return 28 / (zoomValue / 25);
+    // else if (zoomValue <= 30) return 22 / (zoomValue / 30);
+    // else if (zoomValue <= 35) return 19 / (zoomValue / 35);
+    // else if (zoomValue <= 40) return 16 / (zoomValue / 40);
+    if (zoomValue <= 1) return 480;
+    if (zoomValue <= 2) return 290;
+    if (zoomValue <= 3) return 190;
+    return 16 / scaleValue;
   }
   // for screen smaller than 1920
   else if (screenSize[2]) {
-    if (zoomLevel <= 0.18) return 120;
-    else if (zoomLevel <= 0.28) return 100;
-    else if (zoomLevel <= 0.35) return 70;
-    else if (zoomLevel <= 0.52) return 50;
-    else if (zoomLevel <= 0.88) return 40;
-    else if (zoomLevel <= 1.05) return 30;
-    else return 30 / zoomLevel;
+    if (zoomValue <= 1) return 650;
+    if (zoomValue <= 2) return 400;
+    return 24 / scaleValue;
   }
   // for screen smaller than 2560
   else if (screenSize[3]) {
-    if (zoomLevel <= 0.18) return 170;
-    else if (zoomLevel <= 0.28) return 140;
-    else if (zoomLevel <= 0.35) return 90;
-    else if (zoomLevel <= 0.52) return 60;
-    else if (zoomLevel <= 0.88) return 52;
-    else if (zoomLevel <= 1.05) return 42;
-    else return 42 / zoomLevel;
+    return 35 / scaleValue;
   } else {
-    if (zoomLevel <= 1) return 200;
-    else return 180 / zoomLevel;
+    return 44 / scaleValue;
   }
 };
 

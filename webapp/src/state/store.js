@@ -10,6 +10,7 @@ import feedReducer from "./reducers/feedReducer";
 import shareReducer from "./reducers/shareReducer";
 import paletteReducer from "./reducers/paletteReducer";
 import zoomReducer from "./reducers/zoomReducer";
+import chatReducer from "./reducers/chatReducer";
 
 const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ const store = configureStore({
     shareState: shareReducer,
     paletteState: paletteReducer,
     zoomState: zoomReducer,
+    chatState: chatReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -26,6 +26,7 @@ const Square = () => {
   const { username, roomName, alias, socket } = useSelector(
     (state) => state.socketState
   );
+  const { zoomValue } = useSelector((state) => state.zoomState);
   const { activityFeed } = useSelector((state) => state.feedState);
 
   const { deselectAll } = useFabricHelpers();
@@ -102,8 +103,6 @@ const Square = () => {
         return;
       }
 
-      const zoomLevel = viewer.viewport.getZoom();
-
       // Save starting mouse down coordinates
       let pointer = canvas.getPointer(options.e);
       let origX = pointer.x;
@@ -123,7 +122,7 @@ const Square = () => {
       let fillProps = {
         fill: "rgba(0,0,0,0)",
         stroke: shapeOptions.color,
-        strokeWidth: zoomLevel <= 1 ? 2 : 2 / zoomLevel,
+        strokeWidth: 40,
       };
 
       newShape = new fabric.Rect({
@@ -181,10 +180,11 @@ const Square = () => {
       fabricOverlay.fabricCanvas().renderAll();
     }
 
+    const fontSize = getFontSize(screenSize, zoomValue);
+    console.log(zoomValue, fontSize);
+
     // Create new Textbox instance and add it to canvas
     const createTextbox = ({ left, top, height }) => {
-      const fontSize = getFontSize(screenSize, viewer.viewport.getZoom());
-
       const tbox = new fabric.IText("", {
         left: left,
         top: top + height + 2,
