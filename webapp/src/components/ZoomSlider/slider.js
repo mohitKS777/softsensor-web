@@ -22,11 +22,6 @@ const ZoomSlider = ({ viewerId }) => {
     dispatch(updateZoomValue({ id: viewerId, value: val }));
   };
 
-  const handleLabel = (val) => {
-    viewer.viewport.zoomTo(viewer.viewport.getMaxZoom() * val * 2.5 * 0.01);
-    dispatch(updateZoomValue(val));
-  };
-
   useEffect(() => {
     if (!viewer) return;
     viewer.addHandler("zoom", (e) => {
