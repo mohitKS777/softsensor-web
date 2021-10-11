@@ -8,9 +8,9 @@ import {
   updateAnnotations,
   updateGuestDetails,
 } from "../../state/reducers/socketReducer";
-import { updateSharing } from "../../state/reducers/shareReducer";
-import { updateActivityFeed } from "../../state/reducers/feedReducer";
+import { updateSharing } from "../../state/reducers/shareReducer";                                                                                                                          
 import { updateMessages } from "../../state/reducers/chatReducer";
+import { updateActivityFeed } from "../../state/reducers/fabricOverlayReducer";
 
 const UserOptions = () => {
   const [_roomName, setRoomName] = useState("");
@@ -18,7 +18,7 @@ const UserOptions = () => {
   const { sharing } = useSelector((state) => state.shareState);
 
   const { fabricOverlay, userCanvases } = useSelector(
-    (state) => state.fabricOverlayState
+    (state) => state.fabricOverlayState.viewerWindow["viewer1"]
   );
   const { username, roomName, socket, guestList, alias } = useSelector(
     (state) => state.socketState
@@ -50,7 +50,7 @@ const UserOptions = () => {
         };
         // console.log(data.feed);
         dispatch(updateAnnotations(annotations));
-        dispatch(updateActivityFeed(data.feed));
+        dispatch(updateActivityFeed({ id: "viewer1", feed: data.feed }));
         let canvas = fabricOverlay.fabricCanvas();
         canvas.loadFromJSON(
           annotations[data.username]["fabricCanvas"],
@@ -70,7 +70,6 @@ const UserOptions = () => {
     });
 
     socket.on("receive_message", (data) => {
-      console.log(data);
       dispatch(updateMessages(data));
     });
   }, []);

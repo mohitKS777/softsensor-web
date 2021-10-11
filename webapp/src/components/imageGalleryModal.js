@@ -28,16 +28,21 @@ import { useHistory } from "react-router-dom";
 import { MenuAltButton, MenuAltItem } from "./altButton";
 import ModalButton from "./modalButton";
 import useFabricHelpers from "../hooks/use-fabric-helpers";
-import { useDispatch } from "react-redux";
-import { updateActivityFeed } from "../state/reducers/feedReducer";
-import { updateTool } from "../state/reducers/fabricOverlayReducer";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  updateTool,
+  updateActivityFeed,
+} from "../state/reducers/fabricOverlayReducer";
 
 const activeStyles = {
   border: "4px",
   borderColor: "brand.green.500",
 };
 
-const ImageGalleryModal = () => {
+const ImageGalleryModal = ({ viewerId }) => {
+  const { viewer, fabricOverlay } = useSelector(
+    (state) => state.fabricOverlayState.viewerWindow[viewerId]
+  );
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [activeWork, setActiveWork] = useState();
   const history = useHistory();
@@ -50,11 +55,12 @@ const ImageGalleryModal = () => {
   };
 
   const handleSelectItem = (image) => {
-    clearCanvas();
-    dispatch(updateActivityFeed([]));
+    clearCanvas(fabricOverlay.fabricCanvas());
+    dispatch(updateActivityFeed({ id: viewerId, feed: [] }));
     dispatch(updateTool({ tool: "Move" }));
     // history.push(`/${activeWork}`);
-    history.push(`/slide/${image.id}`);
+    // history.push(`/slide/${image.id}`);
+    viewer.open(image);
   };
 
   return (
@@ -70,13 +76,11 @@ const ImageGalleryModal = () => {
         color="#3965C6"
       >
         {Images.map((image, index) => (
-          <>
-            <MenuAltItem
-              key={image.id}
-              label={"Slide " + (index + 1)}
-              onClick={() => handleSelectItem(image)}
-            />
-          </>
+          <MenuAltItem
+            key={image.id}
+            label={"Slide " + (index + 1)}
+            onClick={() => handleSelectItem(image)}
+          />
         ))}
       </MenuList>
     </Menu>

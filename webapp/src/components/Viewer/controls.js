@@ -6,27 +6,36 @@ import {
   Box,
   Button,
   ButtonGroup,
+  HStack,
   IconButton,
   Portal,
   Tooltip,
   VStack,
+  Text,
 } from "@chakra-ui/react";
 import { FiZoomIn, FiZoomOut } from "react-icons/fi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ZoomSlider from "../ZoomSlider/slider";
+import { updateCurrentViewer } from "../../state/reducers/viewerReducer";
+import { updateTool } from "../../state/reducers/fabricOverlayReducer";
 
-const ViewerControls = () => {
-  const { viewer } = useSelector((state) => state.fabricOverlayState);
-  const { zoomIn, zoomOut } = useZoom();
+const ViewerControls = ({ viewerId }) => {
+  const { viewerWindow } = useSelector((state) => state.fabricOverlayState);
+  const { currentViewer, isMultiView } = useSelector(
+    (state) => state.viewerState
+  );
+  const { viewer } = viewerWindow[viewerId];
+  const dispatch = useDispatch();
   const [scalebar, setScalebar] = useState(null);
 
   // const buttonSize = useButtonSize();
 
   // viewer = new OpenSeadragon({id: "viewer1"});
+
   const handleZoomIn = (e) => {
     try {
       if (viewer.viewport.getMaxZoom() > viewer.viewport.getZoom()) {
-        zoomIn();
+        viewer.viewport.zoomBy(1.0 / 0.7);
       }
     } catch (e) {
       console.error("Error handling Zoom In button click", e);
@@ -36,7 +45,7 @@ const ViewerControls = () => {
   const handleZoomOut = (e) => {
     try {
       if (viewer.viewport.getMinZoom() < viewer.viewport.getZoom()) {
-        zoomOut();
+        viewer.viewport.zoomBy(0.7);
       }
     } catch (e) {
       console.error("Error handling Zoom Out button click", e);
@@ -78,9 +87,31 @@ const ViewerControls = () => {
     );
   };
 
+  const handleSelectSlide = () => {
+    if (currentViewer === viewerId) return;
+    // const { fabricOverlay } = viewerWindow[currentViewer];
+    // fabricOverlay.fabricCanvas().discardActiveObject();
+    // fabricOverlay.fabricCanvas().defaultCursor = "default";
+    // fabricOverlay.fabricCanvas().hoverCursor = "move";
+    // dispatch(updateTool({ tool: "Move" }));
+    dispatch(updateCurrentViewer(viewerId));
+  };
+
   return (
-    <Box position="absolute" right="20px" top="20px" zIndex="1">
-      {/* <ButtonGroup spacing="3" size="lg">
+    <>
+      {isMultiView && (
+        <Box position="absolute" left="20px" top="20px" zIndex="1">
+          <HStack color="blue.400" fontSize={10}>
+            <Text as="button">View Details</Text>
+            <Text onClick={handleSelectSlide} as="button">
+              Select this slide
+            </Text>
+          </HStack>
+          <Text fontWeight="bold">Slide {viewerId.slice(-1)}: Name/info</Text>
+        </Box>
+      )}
+      <Box position="absolute" right="20px" top="20px" zIndex="1">
+        {/* <ButtonGroup spacing="3" size="lg">
         <Tooltip label="Zoom in" aria-label="Zoom in">
           <IconButton
             icon={<FiZoomIn />}
@@ -116,26 +147,27 @@ const ViewerControls = () => {
             />
           </Tooltip>  
       </ButtonGroup> */}
-      <VStack
-        w="fit-content"
-        backgroundColor="white"
-        border="1px solid #3965C6"
-        borderRadius="5px"
-        p={1}
-      >
-        <ZoomButton
-          icon={<FiZoomIn color="#3965C6" size={20} />}
+        <VStack
+          w="fit-content"
+          backgroundColor="white"
           border="1px solid #3965C6"
-          onClick={handleZoomIn}
-        />
-        <ZoomSlider />
-        <ZoomButton
-          icon={<FiZoomOut color="#3965C6" size={20} />}
-          border="1px solid #3965C6"
-          onClick={handleZoomOut}
-        />
-      </VStack>
-    </Box>
+          borderRadius="5px"
+          p={1}
+        >
+          <ZoomButton
+            icon={<FiZoomIn color="#3965C6" size={20} />}
+            border="1px solid #3965C6"
+            onClick={handleZoomIn}
+          />
+          <ZoomSlider viewerId={viewerId} />
+          <ZoomButton
+            icon={<FiZoomOut color="#3965C6" size={20} />}
+            border="1px solid #3965C6"
+            onClick={handleZoomOut}
+          />
+        </VStack>
+      </Box>
+    </>
   );
 };
 

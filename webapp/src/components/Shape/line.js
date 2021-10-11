@@ -4,13 +4,13 @@ import TypeButton from "../typeButton";
 import { useSelector, useDispatch } from "react-redux";
 import { updateTool } from "../../state/reducers/fabricOverlayReducer";
 
-const Line = () => {
+const Line = ({ viewerId }) => {
   const { activeTool } = useSelector((state) => state.fabricOverlayState);
   const isActive = activeTool === "Line";
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    dispatch(updateTool({ tool: isActive ? "" : "Line" }));
+    dispatch(updateTool({ tool: "Line" }));
   };
 
   return (

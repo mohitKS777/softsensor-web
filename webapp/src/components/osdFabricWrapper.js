@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import { updateOverlay } from "../state/reducers/fabricOverlayReducer";
 
 const OsdFabricWrapper = ({ children }) => {
-  useDispatch(updateOverlay(children));
   return <ViewerProvider>{children}</ViewerProvider>;
 };
 

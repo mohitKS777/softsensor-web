@@ -19,11 +19,15 @@ import {
 } from "../../state/reducers/textReducer";
 import TypeButton from "../typeButton";
 
-const TypeText = () => {
+const TypeText = ({ viewerId }) => {
   const dispatch = useDispatch();
-  const { color, fabricOverlay, viewer, activeTool } = useSelector(
+  const { color, viewerWindow, activeTool } = useSelector(
     (state) => state.fabricOverlayState
   );
+
+  const { fabricOverlay, viewer, zoomValue, activityFeed } =
+    viewerWindow[viewerId];
+
   const { deselectAll } = useFabricHelpers();
   const isActive = activeTool === "TYPE";
 
@@ -152,7 +156,7 @@ const TypeText = () => {
   };
 
   const handleToolbarButtonClick = (e) => {
-    dispatch(updateTool({ tool: isActive ? "" : "TYPE" }));
+    dispatch(updateTool({ tool: "TYPE" }));
   };
 
   const loadAndUse = (font) => {

@@ -3,13 +3,14 @@ import { Button } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import ToolbarButton from "./ViewerToolbar/button";
-import { updateActivityFeed } from "../state/reducers/feedReducer";
+import { updateActivityFeed } from "../state/reducers/fabricOverlayReducer";
 import { getCanvasImage, getTimestamp } from "../hooks/utility";
 import TypeButton from "./typeButton";
 
-const RemoveObject = () => {
-  const { fabricOverlay } = useSelector((state) => state.fabricOverlayState);
-  const { activityFeed } = useSelector((state) => state.feedState);
+const RemoveObject = ({ viewerId }) => {
+  const { fabricOverlay, activityFeed } = useSelector(
+    (state) => state.fabricOverlayState.viewerWindow[viewerId]
+  );
   const [isActiveObject, setIsActiveObject] = useState();
   const dispatch = useDispatch();
   const { username, roomName, socket, alias } = useSelector(
@@ -64,11 +65,13 @@ const RemoveObject = () => {
 
     activeObject.set({ isExist: false });
 
-    message.image = await getCanvasImage();
+    message.image = await getCanvasImage(viewerId);
 
     canvas.remove(activeObject);
 
-    dispatch(updateActivityFeed([...activityFeed, message]));
+    dispatch(
+      updateActivityFeed({ id: viewerId, feed: [...activityFeed, message] })
+    );
 
     socket.emit(
       "send_annotations",

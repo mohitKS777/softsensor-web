@@ -45,10 +45,14 @@ import Line from "../Shape/line";
 import Arrow from "../Shape/arrow";
 import Circle from "../Shape/circle";
 import Algorithm from "../Palette/algorithm";
+import TypeTools from "./typeTools";
+import MultiView from "../MultiView/multiView";
 
 const AdjustmentBar = () => {
   const { roomName, guestList } = useSelector((state) => state.socketState);
   const { activeDrawerTool } = useSelector((state) => state.drawerState);
+  const { currentViewer } = useSelector((state) => state.viewerState);
+  const viewerId = "viewer1";
   const bg = "#3965C3";
 
   return (
@@ -60,12 +64,13 @@ const AdjustmentBar = () => {
         <Spacer />
         <Algorithm />
         <Spacer />
-        <ImageGalleryModal />
+        <ImageGalleryModal viewerId={currentViewer} />
         <Spacer />
         <HStack spacing={3} p="1px" alignItems="center">
           <Move />
-          <ToolbarPointerControl />
+          <ToolbarPointerControl viewerId={viewerId} />
           <Screenshot />
+          <MultiView />
         </HStack>
         <Box
           w="30%"
@@ -85,17 +90,7 @@ const AdjustmentBar = () => {
               <Text border="1px solid #ffffff50">Width</Text>
               <DrawWidthPicker align="end" />
             </Box>
-            <Box w="100%">
-              <Text borderY="1px solid #ffffff50">Type</Text>
-              <HStack px={1} py={2}>
-                <Line />
-                <Square />
-                <Circle />
-                <Draw />
-                <TypeText />
-                <RemoveObject />
-              </HStack>
-            </Box>
+            <TypeTools viewerId={viewerId} />
           </HStack>
         </Box>
         <Box mr="20px">

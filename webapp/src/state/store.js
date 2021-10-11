@@ -11,10 +11,13 @@ import shareReducer from "./reducers/shareReducer";
 import paletteReducer from "./reducers/paletteReducer";
 import zoomReducer from "./reducers/zoomReducer";
 import chatReducer from "./reducers/chatReducer";
+import viewerReducer from "./reducers/viewerReducer";
 
 const store = configureStore({
   reducer: {
     socketState: socketReducer,
+    // fabricOverlay_A: fabricOverlayReducer_A,
+    // fabricOverlay_B: fabricOverlayReducer_B,
     fabricOverlayState: fabricOverlayReducer,
     textState: textReducer,
     drawState: drawReducer,
@@ -26,6 +29,7 @@ const store = configureStore({
     paletteState: paletteReducer,
     zoomState: zoomReducer,
     chatState: chatReducer,
+    viewerState: viewerReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

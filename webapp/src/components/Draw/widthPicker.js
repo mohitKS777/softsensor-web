@@ -23,7 +23,6 @@ const DrawWidthPicker = () => {
           // >
           <ToolbarBorderBoxInner
             key={widthObj.size}
-            isActive={width && widthObj.size === width.size}
             w={widthObj.boxSize}
             h={widthObj.boxSize}
             bgImage={`url(${imgSrc.default})`}

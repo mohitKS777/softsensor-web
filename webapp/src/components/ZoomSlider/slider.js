@@ -1,20 +1,25 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import Slider from "../reactSlider";
-import { updateZoomValue } from "../../state/reducers/zoomReducer";
-import { Box, Link} from "@chakra-ui/react";
+import { updateZoomValue } from "../../state/reducers/fabricOverlayReducer";
+import { Box, Link } from "@chakra-ui/react";
 import { FiZoomIn, FiZoomOut } from "react-icons/fi";
 
-const ZoomSlider = () => {
-  const { viewer } = useSelector((state) => state.fabricOverlayState);
-  const { zoomValue } = useSelector((state) => state.zoomState);
-  const sliderRef = useRef(null);
+const ZoomSlider = ({ viewerId }) => {
+  const { viewer, zoomValue } = useSelector(
+    (state) => state.fabricOverlayState.viewerWindow[viewerId]
+  );
   const dispatch = useDispatch();
 
   const handleSlider = (val) => {
     viewer.viewport.zoomTo(viewer.viewport.getMaxZoom() * val * 2.5 * 0.01);
-    dispatch(updateZoomValue(val));
+    dispatch(updateZoomValue({ id: viewerId, value: val }));
+  };
+
+  const handleLabel = (val) => {
+    viewer.viewport.zoomTo(viewer.viewport.getMaxZoom() * val * 2.5 * 0.01);
+    dispatch(updateZoomValue({ id: viewerId, value: val }));
   };
 
   const handleLabel = (val) => {
@@ -25,17 +30,16 @@ const ZoomSlider = () => {
   useEffect(() => {
     if (!viewer) return;
     viewer.addHandler("zoom", (e) => {
-      const zoomValue = parseInt((e.zoom * 40) / viewer.viewport.getMaxZoom());
-      dispatch(updateZoomValue(zoomValue));
+      const value = parseInt((e.zoom * 40) / viewer.viewport.getMaxZoom());
+      dispatch(updateZoomValue({ id: viewerId, value: value }));
     });
   }, [viewer]);
 
-  const label = ["1x", "5x", "10x", "20x", "30x", "40x"];
+  const label = ["1", "5", "10", "20", "30", "40"];
 
   return (
     <Box>
       <Slider
-        ref={sliderRef}
         value={zoomValue}
         valueLabelStyle={{ display: "none" }}
         min={1}
@@ -59,6 +63,7 @@ const ZoomSlider = () => {
         markersLeft="6px"
         onChange={(val) => handleSlider(val)}
         valueRenderer={(value) => `${value}%`}
+        viewerId={viewerId}
       />
     </Box>
   );

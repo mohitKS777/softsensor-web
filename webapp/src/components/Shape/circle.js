@@ -11,23 +11,24 @@ import {
   updateActiveShape,
 } from "../../state/reducers/shapeReducer";
 import { fonts } from "../Text/fontPicker";
-import { updateActivityFeed } from "../../state/reducers/feedReducer";
+import { updateActivityFeed } from "../../state/reducers/fabricOverlayReducer";
 
 import { getCanvasImage, getFontSize, getTimestamp } from "../../hooks/utility";
 import { useMediaQuery } from "@chakra-ui/media-query";
 import TypeButton from "../typeButton";
 import { BsCircle } from "react-icons/bs";
 
-const Circle = () => {
+const Circle = ({ viewerId }) => {
   const dispatch = useDispatch();
-  const { color, fabricOverlay, viewer, activeTool } = useSelector(
+  const { color, viewerWindow, activeTool } = useSelector(
     (state) => state.fabricOverlayState
   );
   const { username, roomName, alias, socket } = useSelector(
     (state) => state.socketState
   );
-  const { zoomValue } = useSelector((state) => state.zoomState);
-  const { activityFeed } = useSelector((state) => state.feedState);
+
+  const { fabricOverlay, viewer, zoomValue, activityFeed } =
+    viewerWindow[viewerId];
 
   const { deselectAll } = useFabricHelpers();
   const isActive = activeTool === "Circle";
@@ -78,7 +79,7 @@ const Circle = () => {
       viewer.outerTracker.setTracking(false);
 
       // Deselect all Fabric Canvas objects
-      deselectAll();
+      deselectAll(canvas);
     } else {
       canvas.defaultCursor = "auto";
 
@@ -122,7 +123,7 @@ const Circle = () => {
       let fillProps = {
         fill: "rgba(0,0,0,0)",
         stroke: shapeOptions.color,
-        strokeWidth: 14,
+        strokeWidth: 3 / (zoomValue / 40),
       };
 
       /**
@@ -192,7 +193,6 @@ const Circle = () => {
     }
 
     const fontSize = getFontSize(screenSize, zoomValue);
-    console.log(zoomValue, fontSize);
 
     // Create new Textbox instance and add it to canvas
     const createTextbox = ({ left, top, height }) => {
@@ -201,6 +201,7 @@ const Circle = () => {
         top: top + height + 2,
         fontFamily: fonts[0].fontFamily,
         fontSize: fontSize,
+        fontWeight: "bold",
         selectionBackgroundColor: "rgba(255, 255, 255, 0.5)",
       });
 
@@ -310,7 +311,7 @@ const Circle = () => {
       canvas.off("selection:updated", handleSelected);
       canvas.off("selection:cleared", handleSelectionCleared);
     };
-  }, [fabricOverlay]);
+  }, [isActive]);
 
   // group shape and textbox together
   // first remove both from canvas then group them and then add group to canvas
@@ -343,12 +344,14 @@ const Circle = () => {
       shape.set({ isExist: true });
     }
 
-    message.image = await getCanvasImage();
+    message.image = await getCanvasImage(viewerId);
 
     setShape(null);
     setTextbox(null);
 
-    dispatch(updateActivityFeed([...activityFeed, message]));
+    dispatch(
+      updateActivityFeed({ id: viewerId, feed: [...activityFeed, message] })
+    );
 
     // send annotation
     socket.emit(
@@ -363,7 +366,7 @@ const Circle = () => {
   }, [textbox]);
 
   const handleClick = () => {
-    dispatch(updateTool({ tool: isActive ? "" : "Circle" }));
+    dispatch(updateTool({ tool: "Circle" }));
   };
   return (
     <TypeButton

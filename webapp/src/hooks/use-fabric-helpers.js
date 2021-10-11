@@ -1,31 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateActivityFeed } from "../state/reducers/feedReducer";
+import { updateActivityFeed } from "../state/reducers/fabricOverlayReducer";
 import { getTimestamp } from "./utility";
 
 const useCanvasHelpers = () => {
-  const { activeTool, fabricOverlay } = useSelector(
+  const { activeTool, viewerWindow } = useSelector(
     (state) => state.fabricOverlayState
   );
   const { username, roomName, socket, alias } = useSelector(
     (state) => state.socketState
   );
-  const { activityFeed } = useSelector((state) => state.feedState);
+
   const dispatch = useDispatch();
-  const [canvas, setCanvas] = useState();
+  const [canvas, setCanvas] = useState([]);
 
   useEffect(() => {
-    if (!fabricOverlay) return;
-    setCanvas(fabricOverlay.fabricCanvas());
-  }, [fabricOverlay]);
+    if (!viewerWindow) return;
+    let canvases = [];
+    for (let key in viewerWindow)
+      canvases.push(viewerWindow[key].fabricOverlay);
+    setCanvas(canvases);
+  }, [viewerWindow]);
 
   // Remove all Fabric canvas objects
-  const clearCanvas = () => {
+  const clearCanvas = (canvas) => {
     if (!canvas) return;
     canvas.clear();
   };
 
-  const clearUserObjects = () => {
+  const clearUserObjects = (canvas, activityFeed) => {
     if (!canvas) return;
     const userObjects = getUserObjects();
     for (let i in userObjects) {
@@ -55,9 +58,8 @@ const useCanvasHelpers = () => {
   };
 
   // Deselect all Fabric canvas objects
-  const deselectAll = () => {
+  const deselectAll = (canvas) => {
     if (!canvas) return;
-
     canvas.discardActiveObject();
     canvas.requestRenderAll();
   };
@@ -85,7 +87,7 @@ const useCanvasHelpers = () => {
     canvas.renderAll();
   };
 
-  const updateCursor = () => {
+  const updateCursor = (canvas) => {
     if (!canvas) return;
 
     canvas.defaultCursor = "auto";

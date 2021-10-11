@@ -5,15 +5,17 @@ import ToolbarButton from "./button";
 import { useSelector, useDispatch } from "react-redux";
 import { updateTool } from "../../state/reducers/fabricOverlayReducer";
 
-const ToolbarPointerControl = () => {
-  const { fabricOverlay, activeTool } = useSelector(
+const ToolbarPointerControl = ({ viewerId }) => {
+  const { viewerWindow, activeTool } = useSelector(
     (state) => state.fabricOverlayState
   );
+  const { fabricOverlay } = viewerWindow[viewerId];
   const dispatch = useDispatch();
   const isActive = activeTool === "POINTER";
 
   const handleToolbarClick = () => {
-    dispatch(updateTool({ tool: isActive ? "" : "POINTER" }));
+    dispatch(updateTool({ tool: "POINTER" }));
+    fabricOverlay.fabricCanvas().discardActiveObject();
     fabricOverlay.fabricCanvas().defaultCursor = "default";
     fabricOverlay.fabricCanvas().hoverCursor = "move";
   };

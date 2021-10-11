@@ -1,12 +1,13 @@
 import React, { useRef, useState, useMemo, useCallback } from "react";
 import PropTypes from "prop-types";
-import { updateZoomValue } from "../state/reducers/zoomReducer";
+import { updateZoomValue } from "../state/reducers/fabricOverlayReducer";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "@chakra-ui/react";
 
 const Slider = (props) => {
-  const { viewer } = useSelector((state) => state.fabricOverlayState);
-  const { zoomValue } = useSelector((state) => state.zoomState);
+  const { viewer } = useSelector(
+    (state) => state.fabricOverlayState.viewerWindow[props.viewerId]
+  );
   const dispatch = useDispatch();
   const {
     defaultValue,
@@ -59,9 +60,9 @@ const Slider = (props) => {
   const handlerWidth_radius = handler_width / 2;
   const handlerHeight_radius = handler_height / 2;
   const defaultStep = defaultValue - min;
+  const [_value, set_Value] = useState(defaultValue);
   const step = (value !== null ? value : _value) - min;
 
-  const [_value, set_Value] = useState(defaultValue);
   const [isActive, setIsActive] = useState(false);
   const [pointerStart_positionX, setPointerStart_positionX] = useState(0);
   const [startValue, setStartValue] = useState(
@@ -317,9 +318,11 @@ const Slider = (props) => {
 
   const renderMarkers = () => {
     const onClickHandle = (value) => {
-      viewer.viewport.zoomTo(viewer.viewport.getMaxZoom() * value * 2.5 * 0.01);
-      dispatch(updateZoomValue(value));  
-    }
+      viewer.viewport.zoomTo(
+        viewer.viewport.getMaxZoom() * parseInt(value) * 2.5 * 0.01
+      );
+      dispatch(updateZoomValue({ id: props.viewerId, value: parseInt(value) }));
+    };
     return (
       <React.Fragment>
         {trackLength !== 0 && markers >= 2 && (
@@ -355,13 +358,13 @@ const Slider = (props) => {
                         }),
                   }}
                 >
-                  <Link 
-                    variant="unstyled" 
+                  <Link
+                    variant="unstyled"
                     fontSize="8px"
-                    _hover={{color:"#3965C6"}}
-                    onClick={() => onClickHandle(value)}
+                    _hover={{ color: "#3965C6" }}
+                    onClick={() => onClickHandle(markersLabel[index])}
                   >
-                    {markersLabel ? markersLabel[index] : value}
+                    {markersLabel ? markersLabel[index] + "x" : value}
                   </Link>
                 </div>
               );

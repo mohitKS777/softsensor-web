@@ -16,26 +16,13 @@ import LayoutAppSidebar from "./sidebar";
 import Div100vh from "react-div-100vh";
 import useKeyboardEvents from "../../hooks/use-keyboard-events";
 import { fabric } from "openseadragon-fabricjs-overlay";
+import ViewerFactory from "../Viewer/viewerFactory";
 
 const LayoutApp = () => {
-  const { fabricOverlay, isToolbarVisible } = useSelector(
-    (state) => state.fabricOverlayState
-  );
-  const { handleEvent } = useKeyboardEvents();
-
-  fabric.IText.prototype.onKeyDown = (e) => {
-    if (e.ctrlKey === true && e.key === "Enter") {
-      fabricOverlay.fabricCanvas().discardActiveObject();
-    }
-  };
-
-  useEffect(() => {
-    if (!fabricOverlay) return;
-    fabricOverlay.fabricCanvas().hoverCursor = "move";
-  }, [fabricOverlay]);
+  // const { handleEvent } = useKeyboardEvents();
 
   return (
-    <Flex as={Div100vh} h="100vh" direction="column" onKeyDown={handleEvent}>
+    <Flex as={Div100vh} h="100vh" direction="column">
       <LayoutOuterBody>
         <LayoutAppSidebar>
           <SidebarTools />
@@ -44,7 +31,7 @@ const LayoutApp = () => {
           <LayoutHeader />
           <AdjustmentBar />
           <LayoutAppBody>
-            <ViewerContainer />
+            <ViewerFactory />
           </LayoutAppBody>
         </LayoutInnerBody>
       </LayoutOuterBody>

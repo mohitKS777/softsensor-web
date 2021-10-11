@@ -13,7 +13,7 @@ import ToolbarOptionsPanel from "../ViewerToolbar/optionsPanel";
 
 const Color = () => {
   const dispatch = useDispatch();
-  const { activeTool, color, fabricOverlay } = useSelector(
+  const { activeTool, viewerWindow } = useSelector(
     (state) => state.fabricOverlayState
   );
 
@@ -34,7 +34,7 @@ const Color = () => {
    * Handle mouse events
    */
   useEffect(() => {
-    if (!fabricOverlay) return;
+    if (!viewerWindow) return;
 
     const handleSelectionCleared = (e) => {
       setMyState(updateIsObjectSelected, {
@@ -50,17 +50,25 @@ const Color = () => {
     };
     const handleSelectionUpdated = (e) => {};
 
-    const canvas = fabricOverlay.fabricCanvas();
-    canvas.on("selection:created", handleSelectionCreated);
-    canvas.on("selection:cleared", handleSelectionCleared);
-    canvas.on("selection:updated", handleSelectionUpdated);
-
+    for (let k in viewerWindow) {
+      const overlay = viewerWindow[k].fabricOverlay;
+      if (!overlay) continue;
+      const canvas = overlay.fabricCanvas();
+      canvas.on("selection:created", handleSelectionCreated);
+      canvas.on("selection:cleared", handleSelectionCleared);
+      canvas.on("selection:updated", handleSelectionUpdated);
+    }
     return () => {
-      canvas.off("selection:created", handleSelectionCreated);
-      canvas.off("selection:cleared", handleSelectionCleared);
-      canvas.off("selection:updated", handleSelectionUpdated);
+      for (let k in viewerWindow) {
+        const overlay = viewerWindow[k].fabricOverlay;
+        if (!overlay) continue;
+        const canvas = overlay.fabricCanvas();
+        canvas.off("selection:created", handleSelectionCreated);
+        canvas.off("selection:cleared", handleSelectionCleared);
+        canvas.off("selection:updated", handleSelectionUpdated);
+      }
     };
-  }, [fabricOverlay]);
+  }, [viewerWindow]);
 
   return (
     <Box pl={1}>

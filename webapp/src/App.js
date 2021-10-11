@@ -49,15 +49,13 @@ const App = () => {
       <ChakraProvider theme={theme} direction="rowReverse">
         {/* <Home /> */}
         {/* <Test />  */}
-        <OsdFabricWrapper>
-          <SocketWrapper>
-            <Switch>
-              <Route path="/slide/:id">
-                <LayoutApp />
-              </Route>
-            </Switch>
-          </SocketWrapper>
-        </OsdFabricWrapper>
+        <SocketWrapper>
+          <Switch>
+            <Route path="/slide/:id">
+              <LayoutApp />
+            </Route>
+          </Switch>
+        </SocketWrapper>
       </ChakraProvider>
     </Router>
   );

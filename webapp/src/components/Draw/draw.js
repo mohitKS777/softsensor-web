@@ -12,13 +12,13 @@ import useHexRGB from "../../hooks/use-hex-rgb";
 import { updateActive } from "../../state/reducers/drawReducer";
 import { fabric } from "openseadragon-fabricjs-overlay";
 import { fonts } from "../Text/fontPicker";
-import { updateActivityFeed } from "../../state/reducers/feedReducer";
+import { updateActivityFeed } from "../../state/reducers/fabricOverlayReducer";
 import { getCanvasImage, getFontSize, getTimestamp } from "../../hooks/utility";
 import { useMediaQuery } from "@chakra-ui/media-query";
 import TypeButton from "../typeButton";
 
 const getDrawCursor = (brushSize, brushColor) => {
-  brushSize = brushSize < 12 ? 8 : brushSize;
+  brushSize = brushSize < 4 ? 8 : brushSize * 3;
   const circle = `
 		<svg
 			height="${brushSize}"
@@ -44,15 +44,16 @@ const createFreeDrawingCursor = (brushWidth, brushColor) => {
   }, crosshair`;
 };
 
-const Draw = () => {
-  const { color, fabricOverlay, viewer, activeTool } = useSelector(
+const Draw = ({ viewerId }) => {
+  const { color, viewerWindow, activeTool } = useSelector(
     (state) => state.fabricOverlayState
   );
   const { username, roomName, alias, socket } = useSelector(
     (state) => state.socketState
   );
-  const { zoomValue } = useSelector((state) => state.zoomState);
-  const { activityFeed } = useSelector((state) => state.feedState);
+
+  const { fabricOverlay, viewer, zoomValue, activityFeed } =
+    viewerWindow[viewerId];
 
   const dispatch = useDispatch();
   const { hexToRGBA } = useHexRGB();
@@ -88,7 +89,6 @@ const Draw = () => {
     const canvas = fabricOverlay.fabricCanvas();
 
     function handleMouseDown() {
-      // console.log(activeTool);
       if (!myStateRef.current.isActive) return;
       // Need this as double protection to make sure OSD isn't swallowing
       // Fabric's drawing mode for some reason
@@ -107,7 +107,6 @@ const Draw = () => {
     const canvas = fabricOverlay.fabricCanvas();
 
     const fontSize = getFontSize(screenSize, zoomValue);
-    console.log(zoomValue, fontSize);
 
     // Create new Textbox instance and add it to canvas
     const createTextbox = ({ left, top, height }) => {
@@ -164,7 +163,7 @@ const Draw = () => {
       viewer.outerTracker.setTracking(false);
       canvas.isDrawingMode = true;
       canvas.freeDrawingBrush.color = color.hex;
-      canvas.freeDrawingBrush.width = brushWidth;
+      canvas.freeDrawingBrush.width = brushWidth / (zoomValue / 40);
       canvas.renderAll();
 
       // EXAMPLE: of using an image for cursor
@@ -203,7 +202,7 @@ const Draw = () => {
     const brushWidth = myState.width.pixelWidth;
 
     canvas.freeDrawingBrush.color = color.hex;
-    canvas.freeDrawingBrush.width = brushWidth;
+    canvas.freeDrawingBrush.width = brushWidth / (zoomValue / 40);
     canvas.freeDrawingCursor = createFreeDrawingCursor(brushWidth, color.hex);
   }, [color, myState.width]);
 
@@ -238,12 +237,14 @@ const Draw = () => {
       path.set({ isExist: true });
     }
 
-    message.image = await getCanvasImage();
+    message.image = await getCanvasImage(viewerId);
 
     setPath(null);
     setTextbox(null);
 
-    dispatch(updateActivityFeed([...activityFeed, message]));
+    dispatch(
+      updateActivityFeed({ id: viewerId, feed: [...activityFeed, message] })
+    );
 
     // send annotation
     socket.emit(
@@ -258,7 +259,7 @@ const Draw = () => {
   }, [textbox]);
 
   const handleToolbarClick = () => {
-    dispatch(updateTool({ tool: isActive ? "" : "DRAW" }));
+    dispatch(updateTool({ tool: "DRAW" }));
   };
 
   return (

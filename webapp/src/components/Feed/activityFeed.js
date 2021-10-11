@@ -22,9 +22,10 @@ import ReactPDF, {
   PDFDownloadLink,
 } from "@react-pdf/renderer";
 
-const ActivityFeed = () => {
-  const { fabricOverlay } = useSelector((state) => state.fabricOverlayState);
-  const { activityFeed } = useSelector((state) => state.feedState);
+const ActivityFeed = ({ viewerId }) => {
+  const { fabricOverlay, activityFeed } = useSelector(
+    (state) => state.fabricOverlayState
+  ).viewerWindow[viewerId];
   const scrollbar = useRef(null);
 
   useEffect(() => {

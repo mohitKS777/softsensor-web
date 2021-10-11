@@ -12,12 +12,15 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { Images } from "../../services/images";
 import { Slides } from "../../services/slides";
+import { fabric } from "openseadragon-fabricjs-overlay";
 
-const ViewerContainer = () => {
+const ViewerContainer = ({ viewerId }) => {
   const params = useParams();
   const location = useLocation();
+
+  //get fabricOverlay state from redux store
   const { fabricOverlay, userCanvases } = useSelector(
-    (state) => state.fabricOverlayState
+    (state) => state.fabricOverlayState.viewerWindow[viewerId]
   );
   const [tileSource, setTileSource] = useState({});
 
@@ -27,6 +30,11 @@ const ViewerContainer = () => {
     location.state && location.state.canvasTitle
       ? location.state.canvasTitle
       : "";
+
+  useEffect(() => {
+    if (!fabricOverlay) return;
+    fabricOverlay.fabricCanvas().hoverCursor = "move";
+  }, [fabricOverlay]);
 
   //   React.useEffect(() => {
   //   const getTileSource = async (id) => {
@@ -103,7 +111,7 @@ const ViewerContainer = () => {
   // Success
   // return <Viewer tile={tileSource} />;
 
-  return <Viewer tile={target} />;
+  return <Viewer viewerId={viewerId} tile={target} />;
 };
 
 export default ViewerContainer;
