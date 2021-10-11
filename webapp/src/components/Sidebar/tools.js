@@ -16,9 +16,13 @@ import ActivityFeed from "../Feed/activityFeed";
 import PaletteOptions from "../Palette/paletteOptions";
 import UserOptions from "../UserSettings/userOptions";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { updateActiveFeed } from "../../state/reducers/feedReducer";
 =======
 >>>>>>> Feature add chat UI (#33)
+=======
+import { updateActiveFeed } from "../../state/reducers/feedReducer";
+>>>>>>> Feature add multi viewer (#36)
 
 const SidebarTools = () => {
   const { activeTool } = useSelector((state) => state.fabricOverlayState);
