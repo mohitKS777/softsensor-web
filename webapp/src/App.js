@@ -7,6 +7,10 @@ import brandPalette from "./styles/brandPalette";
 import OsdFabricWrapper from "./components/osdFabricWrapper";
 import SocketWrapper from "./components/socketWrapper";
 import LayoutApp from "./components/Layout/app";
+import LoginPage from "./components/Authenticate/loginpage";
+import CreateFirst from "./components/Authenticate/createFirst";
+import CreateLast from "./components/Authenticate/createLast";
+import Dashboard from "./components/Dashboard/dashboard";
 import "./App.css";
 // import getData from "./getData";
 import React from "react";
@@ -49,13 +53,31 @@ const App = () => {
       <ChakraProvider theme={theme} direction="rowReverse">
         {/* <Home /> */}
         {/* <Test />  */}
-        <SocketWrapper>
-          <Switch>
-            <Route path="/slide/:id">
-              <LayoutApp />
-            </Route>
-          </Switch>
-        </SocketWrapper>
+          <SocketWrapper>
+            <Switch>
+              <Route path="/slide/:id">
+                <LayoutApp />
+              </Route>
+            </Switch>
+            <Switch>
+              <Route path="/login">
+                <LoginPage />
+              </Route>
+            </Switch>
+            <Switch>
+              <Route path="/signup-first">
+                <CreateFirst />
+              </Route>
+            </Switch>
+            <Switch>
+              <Route path="/signup-last">
+                <CreateLast />
+              </Route>
+            </Switch>
+            <Route path="/robert-rogers/dashboard">
+                <Dashboard />
+              </Route>
+          </SocketWrapper>
       </ChakraProvider>
     </Router>
   );
