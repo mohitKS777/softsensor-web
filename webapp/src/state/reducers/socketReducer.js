@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import socketClient from "socket.io-client";
+import {io} from "socket.io-client";
 import rug from "random-username-generator";
 
 const SERVER = "wss://path.prr.ai/ws";
