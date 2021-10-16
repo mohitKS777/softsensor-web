@@ -68,6 +68,10 @@ const fabricOverlaySlice = createSlice({
     removeViewerWindow: (state, action) => {
       delete state.viewerWindow[action.payload.id];
     },
+    resetViewer: (state, action) => {
+      state.viewerWindow[action.payload.id].activityFeed = [];
+      state.viewerWindow[action.payload.id].zoomValue = 0;
+    },
   },
 });
 
@@ -82,6 +86,7 @@ export const {
   removeViewerWindow,
   updateZoomValue,
   updateActivityFeed,
+  resetViewer,
 } = fabricOverlaySlice.actions;
 
 export default fabricOverlaySlice.reducer;

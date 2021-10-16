@@ -107,6 +107,7 @@ const Draw = ({ viewerId }) => {
     const canvas = fabricOverlay.fabricCanvas();
 
     const fontSize = getFontSize(screenSize, zoomValue);
+    console.log(screenSize, zoomValue);
 
     // Create new Textbox instance and add it to canvas
     const createTextbox = ({ left, top, height }) => {
@@ -158,12 +159,13 @@ const Draw = ({ viewerId }) => {
 
     if (isActive) {
       const brushWidth = myState.width.pixelWidth;
+      const scaleFactor = zoomValue !== 0 ? zoomValue / 40 : 1 / 40;
       // Enable Fabric drawing; disable OSD mouseclicks
       viewer.setMouseNavEnabled(false);
       viewer.outerTracker.setTracking(false);
       canvas.isDrawingMode = true;
       canvas.freeDrawingBrush.color = color.hex;
-      canvas.freeDrawingBrush.width = brushWidth / (zoomValue / 40);
+      canvas.freeDrawingBrush.width = brushWidth / scaleFactor;
       canvas.renderAll();
 
       // EXAMPLE: of using an image for cursor
@@ -200,9 +202,10 @@ const Draw = ({ viewerId }) => {
 
     const canvas = fabricOverlay.fabricCanvas();
     const brushWidth = myState.width.pixelWidth;
+    const scaleFactor = zoomValue !== 0 ? zoomValue / 40 : 1 / 40;
 
     canvas.freeDrawingBrush.color = color.hex;
-    canvas.freeDrawingBrush.width = brushWidth / (zoomValue / 40);
+    canvas.freeDrawingBrush.width = brushWidth / scaleFactor;
     canvas.freeDrawingCursor = createFreeDrawingCursor(brushWidth, color.hex);
   }, [color, myState.width]);
 

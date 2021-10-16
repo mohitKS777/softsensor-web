@@ -32,6 +32,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   updateTool,
   updateActivityFeed,
+  resetViewer,
 } from "../state/reducers/fabricOverlayReducer";
 
 const activeStyles = {
@@ -56,8 +57,8 @@ const ImageGalleryModal = ({ viewerId }) => {
 
   const handleSelectItem = (image) => {
     clearCanvas(fabricOverlay.fabricCanvas());
-    dispatch(updateActivityFeed({ id: viewerId, feed: [] }));
     dispatch(updateTool({ tool: "Move" }));
+    dispatch(resetViewer({ id: viewerId }));
     // history.push(`/${activeWork}`);
     // history.push(`/slide/${image.id}`);
     viewer.open(image);

@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {io} from "socket.io-client";
+import { io } from "socket.io-client";
 import rug from "random-username-generator";
 
 const SERVER = "wss://path.prr.ai/ws";
 
-const socket = socketClient(SERVER, { transports: ["websocket"] });
+const socket = io(SERVER, { transports: ["websocket"] });
 
 const socketSlice = createSlice({
   name: "socket",
@@ -34,10 +34,7 @@ const socketSlice = createSlice({
   },
 });
 
-export const {
-  updateSocketDetails,
-  updateAnnotations,
-  updateGuestDetails,
-} = socketSlice.actions;
+export const { updateSocketDetails, updateAnnotations, updateGuestDetails } =
+  socketSlice.actions;
 
 export default socketSlice.reducer;

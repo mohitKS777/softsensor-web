@@ -29,7 +29,7 @@ const Square = ({ viewerId }) => {
 
   const { fabricOverlay, viewer, zoomValue, activityFeed } =
     viewerWindow[viewerId];
-  
+
   const { deselectAll } = useFabricHelpers();
   const isActive = activeTool === "Square";
 
@@ -120,10 +120,12 @@ const Square = ({ viewerId }) => {
       };
 
       // Stroke fill
+      const scaleFactor = zoomValue !== 0 ? zoomValue / 40 : 1 / 40;
+
       let fillProps = {
         fill: "rgba(0,0,0,0)",
         stroke: shapeOptions.color,
-        strokeWidth: 3 / (zoomValue / 40),
+        strokeWidth: 3 / scaleFactor,
       };
 
       newShape = new fabric.Rect({
