@@ -17,10 +17,13 @@ import {
 import { BiTime } from "react-icons/bi";
 import { IoAdd } from "react-icons/io5";
 import { AiOutlineFile, AiOutlineFolderOpen } from "react-icons/ai";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const DashboardMenu = () => {
+    const { user } = useAuth0();
+
     return (
-        <Menu defaultIsOpen={true} closeOnBlur={false} closeOnSelect={false}>
+        <Menu defaultIsOpen={true} closeOnBlur={false} closeOnSelect={false} autoSelect={false}>
             <MenuList
                 bg="#3965C6"
                 height="100vh"

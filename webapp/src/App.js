@@ -7,13 +7,12 @@ import brandPalette from "./styles/brandPalette";
 import OsdFabricWrapper from "./components/osdFabricWrapper";
 import SocketWrapper from "./components/socketWrapper";
 import LayoutApp from "./components/Layout/app";
-import LoginPage from "./components/Authenticate/loginpage";
-import CreateFirst from "./components/Authenticate/createFirst";
-import CreateLast from "./components/Authenticate/createLast";
+import Login from "./components/Authenticate/login";
 import Dashboard from "./components/Dashboard/dashboard";
 import "./App.css";
 // import getData from "./getData";
 import React from "react";
+import DashboardRedirect from "./components/Dashboard/dashboardRedirect";
 
 const theme = extendTheme({
   colors: {
@@ -47,6 +46,7 @@ const App = () => {
   // React.useEffect(() => {
   //   getData();
   // }, []);
+  
 
   return (
     <Router>
@@ -58,25 +58,16 @@ const App = () => {
               <Route path="/slide/:id">
                 <LayoutApp />
               </Route>
-            </Switch>
-            <Switch>
               <Route path="/login">
-                <LoginPage />
+                <Login />
               </Route>
-            </Switch>
-            <Switch>
-              <Route path="/signup-first">
-                <CreateFirst />
+              <Route path="/dashboard">
+                <DashboardRedirect />
               </Route>
-            </Switch>
-            <Switch>
-              <Route path="/signup-last">
-                <CreateLast />
-              </Route>
-            </Switch>
-            <Route path="/robert-rogers/dashboard">
+              <Route path="/dashboard/:id">
                 <Dashboard />
               </Route>
+            </Switch>
           </SocketWrapper>
       </ChakraProvider>
     </Router>

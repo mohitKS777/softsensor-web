@@ -1,14 +1,19 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import AltButton from "../altButton";
+import { Button } from "@chakra-ui/react";
 
 const LogoutButton = () => {
   const { logout } = useAuth0();
 
   return (
-    <AltButton onClick={() => logout({ returnTo: window.location.origin })}>
+    <Button 
+      backgroundColor="#3965C5"
+      size="sm"
+      border="1px solid white"
+      _hover={{ bg: "#66a3ff" }}
+      onClick={() => logout({ returnTo: "http://localhost:3000/login" })}>
       Log Out
-    </AltButton>
+    </Button>
   );
 };
 

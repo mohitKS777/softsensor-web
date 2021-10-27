@@ -1,20 +1,21 @@
-import React from "react";
-import { Button } from "@chakra-ui/react"
+import React, { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const LoginButton = () => {
-  const { loginWithRedirect } = useAuth0();
+const Login = () => {
+  const { isLoading, loginWithRedirect, user } = useAuth0();
 
-  return (
-    <Button
-      backgroundColor="#3965C6"
-      color="white"
-      marginBottom="1em"
-      _hover={{ bg: "#66a3ff" }}
-      onClick={() => loginWithRedirect()}>
-      Sign In
-    </Button>
-  );
+    useEffect(() => {
+      (async function login() {
+        if (!isLoading) {
+          await loginWithRedirect();
+        }
+      })();
+    }, [isLoading]);
+    return (
+      <h1>
+        Loading...
+      </h1>
+    );
 };
 
-export default LoginButton;
+export default Login;

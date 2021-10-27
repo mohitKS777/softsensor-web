@@ -17,7 +17,7 @@ const UploadFiles = () => {
             <Link variant="unstyled" fontSize="0.8em" paddingLeft={3} color="#636975">Upload Single Slide</Link>
             <Link variant="unstyled" fontSize="0.8em" paddingLeft={3} color="#636975">Upload Multiple Slides</Link>
             </Stack>
-            <Button marginLeft={3} my={5} size="sm" w="6em" backgroundColor="#3965C6" color="white">Preview</Button>
+            <Button marginLeft={3} my={5} size="sm" w="6em" backgroundColor="#3965C6" color="white" _hover={{ bg: "#66a3ff" }}>Preview</Button>
         </Flex>
     )
 };

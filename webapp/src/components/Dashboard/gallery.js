@@ -8,7 +8,7 @@ import {
 const Gallery = () => {
     return(
         <Flex height="88.3vh" width="200vh">
-            <Text m={3} color="#3965C6" textDecoration="underline">Recently Viewed</Text>
+            <Text m={3} color="#3965C6" borderColor="#3965C6">Recently Viewed</Text>
         </Flex>
     );
 };
