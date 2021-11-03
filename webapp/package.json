@@ -34,6 +34,7 @@
     "prop-types": "^15.7.2",
     "random-username-generator": "^1.0.4",
     "react": "^17.0.1",
+    "react-circular-progressbar": "^2.0.4",
     "react-custom-scrollbars": "^4.2.1",
     "react-custom-slider": "https://github.com/jonisapp/react-custom-slider.git",
     "react-device-detect": "^1.17.0",

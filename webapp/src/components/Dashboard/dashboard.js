@@ -1,21 +1,25 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
-    Box,
     Flex,
     Spacer,
-    Text
+    Text,
+    useMediaQuery
 } from "@chakra-ui/react";
+import { createBreakpoints } from "@chakra-ui/theme-tools";
 import DashboardMenu from "./menu";
 import Gallery from "./gallery";
-import UploadFiles from "./uploadfiles";
-import LogoutButton from "../Authenticate/logout";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import { generatePath, useHistory } from "react-router";
+import Search from "./search";
+import Recent from "./recent";
+import NewAssigned from "./newAssigned";
+import LastTask from "./lastTask";
+import LastReports from "./lastReports";
 
-const Dashboard = ({subClaim}) => {
+const Dashboard = ({ subClaim }) => {
     const { user } = useAuth0();
-    const data = {subClaim : subClaim}
+    const data = { subClaim: subClaim }
     // const resp = axios.post('http://localhost:3001/api/get_user_information', data, {headers : `authorization" : "bearer ${token}`})
     // const [id, setId] = useState(user?.nickname);
     // const history = useHistory();
@@ -24,20 +28,33 @@ const Dashboard = ({subClaim}) => {
     // };
     // handleProceed();
 
+    const breakpoints = createBreakpoints({
+        sm: "1280px",
+        md: "1440px",
+        lg: "1920px",
+        xl: "2560px",
+    });
+
     return (
         <>
             <DashboardMenu />
-            <Flex marginLeft="14em" height="100vh" direction="column">
-                <Flex w="250" bg="#3965C5" color="white" py={5} px={10} >
-                <Text fontSize="2em">
-                    Welcome
-                </Text>
-                <Spacer />
-                <LogoutButton />
+            <Flex marginLeft="14em" height="100vh" direction="column" backgroundColor="#eeeeee">
+                <Flex w="250" bg="#3965C5" color="white" py={5} px={10} zIndex="1" sx={{ position: '-webkit-sticky', position: 'sticky', top: '0', }}>
+                    <Text fontSize="2em">
+                        Welcome
+                    </Text>
+                    <Spacer />
+                    <Search w={300}/>
                 </Flex>
-                <Flex height="100%" direction="row">
-                    <Gallery />
-                    {/* <UploadFiles /> */}
+                <Flex height="100%" w="100%" direction="row" marginTop="20px">
+                    <Flex height="100%" w="100%" direction="column">
+                        <Recent />
+                        <NewAssigned />
+                    </Flex>
+                    <Flex height="100%" w="30%" direction="column" marginRight="20px">
+                        <LastTask />
+                        <LastReports />
+                    </Flex>
                 </Flex>
             </Flex>
         </>

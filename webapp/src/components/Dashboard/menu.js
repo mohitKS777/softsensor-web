@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
     Box,
     Button,
@@ -6,6 +6,7 @@ import {
     Flex,
     Icon,
     Image,
+    Link,
     Menu,
     MenuButton,
     MenuDivider,
@@ -15,42 +16,95 @@ import {
     Text
 } from "@chakra-ui/react";
 import { BiTime } from "react-icons/bi";
+import { BsCircleFill } from "react-icons/bs";
 import { IoAdd } from "react-icons/io5";
-import { AiOutlineFile, AiOutlineFolderOpen } from "react-icons/ai";
+import { AiOutlineFile, AiOutlineFolderOpen, AiOutlineProject } from "react-icons/ai";
 import { useAuth0 } from "@auth0/auth0-react";
+import { createBreakpoints } from "@chakra-ui/theme-tools";
+import LogoutButton from "../Authenticate/logout";
 
 const DashboardMenu = () => {
-    const { user } = useAuth0();
+    const { user, isAuthenticated } = useAuth0();
+    const [emailId, setEmailId] = useState();
+    const [userImage, setUserImage] = useState();
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            setEmailId(user?.email);
+            setUserImage(user?.picture);
+        }
+    }, [isAuthenticated]);
+
+    const breakpoints = createBreakpoints({
+        sm: "1280px",
+        md: "1440px",
+        lg: "1920px",
+        xl: "2560px",
+    });
 
     return (
         <Menu defaultIsOpen={true} closeOnBlur={false} closeOnSelect={false} autoSelect={false}>
             <MenuList
                 bg="#3965C6"
                 height="100vh"
+                width={{base: "100%", sm: "50%", md: "25%"}}
                 borderRadius="0px"
                 border="none"
-                color="white">
+                color="white"
+                sx={{ position: '-webkit-sticky', position: 'sticky', bottom: '0', top: '0'}}>
                 <Flex>
                     <Image
                         borderRadius="full"
                         boxSize="50px"
                         mx={3}
                         marginTop="1em"
-                        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-                        alt="Zoe Margut"
+                        src={userImage}
+                        alt="User"
                     />
-                    <Center marginTop="1em" color="white">Robert Rogers</Center>
+                    <Flex marginTop="1em" direction="column" width="9em">
+                        <Text color="white" >User's Name</Text>
+                        <Text fontSize="xs">{emailId}</Text>
+                        <Link fontSize="small" color="white" marginTop="10px">
+                            Manage your Account
+                        </Link>
+                    </Flex>
                 </Flex>
                 <MenuGroup>
-                    <MenuDivider marginTop="4em" mx={2} />
-                    <MenuItem _hover={{ bg: "#66a3ff" }} ><Icon as={BiTime} marginRight={2} w={5} h={7} />Recent</MenuItem>
-                    <MenuItem _hover={{ bg: "#66a3ff" }} ><Icon as={AiOutlineFile} marginRight={2} w={5} h={7} />New</MenuItem>
-                    <MenuItem _hover={{ bg: "#66a3ff" }}><Icon as={AiOutlineFolderOpen} marginRight={2} w={5} h={7} />Open</MenuItem>
+                    <MenuDivider marginTop="1em" mx={2} />
+                    <MenuItem _hover={{ bg: "#66a3ff" }} fontSize="small">
+                        <Icon as={BiTime} marginRight={2} w={5} h={7} />
+                        Recently Viewed
+                    </MenuItem>
+                    <MenuItem _hover={{ bg: "#66a3ff" }} fontSize="small">
+                        <Icon as={AiOutlineProject} marginRight={2} w={5} h={7} />
+                        Projects
+                    </MenuItem>
+                    <MenuItem _hover={{ bg: "#66a3ff" }} fontSize="small">
+                        <Icon as={AiOutlineFile} marginRight={2} w={5} h={7} />
+                        New Projects
+                    </MenuItem>
+                    <MenuItem _hover={{ bg: "#66a3ff" }} fontSize="small">
+                        <Icon as={AiOutlineFolderOpen} marginRight={2} w={5} h={7} />
+                        Open
+                    </MenuItem>
                     <MenuDivider m={2} />
-                    <MenuItem _hover={{ bg: "#66a3ff" }} fontWeight="bold">Robert Rogers</MenuItem>
-                    <MenuItem _hover={{ bg: "#66a3ff" }}>Team Project</MenuItem>
+                    <MenuItem _hover={{ bg: "#66a3ff" }} fontWeight="bold">
+                        <Icon as={BsCircleFill} marginRight={2} w={4} h={4} />
+                        User's Name
+                    </MenuItem>
+                    <MenuItem _hover={{ bg: "#66a3ff" }} fontSize="small">
+                        Team Project
+                    </MenuItem>
                     <MenuDivider m={2} />
-                    <MenuItem _hover={{ bg: "#66a3ff" }}><Icon as={IoAdd} marginRight={2} w={5} h={7} />Create New Team</MenuItem>
+                    <MenuItem _hover={{ bg: "#66a3ff" }} fontSize="small">
+                        <Icon as={IoAdd} marginRight={2} w={5} h={7} />
+                        Create New Team
+                    </MenuItem>
+                    <MenuItem _hover={{ bg: "#66a3ff" }} fontSize="small">
+                        <Icon as={BsCircleFill} marginRight={2} w={4} h={4} />
+                        Help
+                    </MenuItem>
+                    <LogoutButton />
                 </MenuGroup>
             </MenuList>
         </Menu>

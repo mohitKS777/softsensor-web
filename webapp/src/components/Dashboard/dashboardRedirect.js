@@ -30,7 +30,7 @@ const DashboardRedirect = () => {
     }, [getAccessTokenSilently])
 
     handleProceed();
-    
+
     useEffect(() => {
         if (isAuthenticated) {
             setId(user?.sub.substring(user?.sub.indexOf('|') + 1));

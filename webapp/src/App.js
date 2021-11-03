@@ -9,6 +9,7 @@ import SocketWrapper from "./components/socketWrapper";
 import LayoutApp from "./components/Layout/app";
 import Login from "./components/Authenticate/login";
 import Dashboard from "./components/Dashboard/dashboard";
+import Project from "./components/Project/project";
 import "./App.css";
 // import getData from "./getData";
 import React from "react";
@@ -66,6 +67,9 @@ const App = () => {
               </Route>
               <Route path="/dashboard/:id">
                 <Dashboard />
+              </Route>
+              <Route path="/project">
+                <Project />
               </Route>
             </Switch>
           </SocketWrapper>

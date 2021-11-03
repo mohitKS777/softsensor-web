@@ -10,6 +10,8 @@ const LogoutButton = () => {
       backgroundColor="#3965C5"
       size="sm"
       border="1px solid white"
+      marginLeft="5em"
+      marginTop="10em"
       _hover={{ bg: "#66a3ff" }}
       onClick={() => logout({ returnTo: "http://localhost:3000/login" })}>
       Log Out
