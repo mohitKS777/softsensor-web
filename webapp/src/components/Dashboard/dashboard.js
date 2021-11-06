@@ -12,8 +12,7 @@ import NewAssigned from "./newAssigned";
 import LastTask from "./lastTask";
 import LastReports from "./lastReports";
 import Newproject from "../Newproject/newproject";
-import Newslides from "../Newproject/selectslides";
-import Questionnaire from "../Newproject/questionnaire";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 const Dashboard = ({ subClaim }) => {
   const { user } = useAuth0();
