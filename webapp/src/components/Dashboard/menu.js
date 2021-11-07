@@ -20,8 +20,6 @@ import { BsCircleFill } from "react-icons/bs";
 import { IoAdd } from "react-icons/io5";
 import { AiOutlineFile, AiOutlineFolderOpen, AiOutlineProject } from "react-icons/ai";
 import { useAuth0 } from "@auth0/auth0-react";
-import { createBreakpoints } from "@chakra-ui/theme-tools";
-import LogoutButton from "../Authenticate/logout";
 
 const DashboardMenu = () => {
     const { user, isAuthenticated } = useAuth0();
@@ -35,23 +33,16 @@ const DashboardMenu = () => {
         }
     }, [isAuthenticated]);
 
-    const breakpoints = createBreakpoints({
-        sm: "1280px",
-        md: "1440px",
-        lg: "1920px",
-        xl: "2560px",
-    });
-
     return (
         <Menu defaultIsOpen={true} closeOnBlur={false} closeOnSelect={false} autoSelect={false}>
             <MenuList
                 bg="#3965C6"
                 height="100vh"
-                width={{base: "100%", sm: "50%", md: "25%"}}
+                className="dashboard__menu"
                 borderRadius="0px"
                 border="none"
                 color="white"
-                sx={{ position: '-webkit-sticky', position: 'sticky', bottom: '0', top: '0'}}>
+                position="fixed">
                 <Flex>
                     <Image
                         borderRadius="full"
@@ -104,7 +95,6 @@ const DashboardMenu = () => {
                         <Icon as={BsCircleFill} marginRight={2} w={4} h={4} />
                         Help
                     </MenuItem>
-                    <LogoutButton />
                 </MenuGroup>
             </MenuList>
         </Menu>

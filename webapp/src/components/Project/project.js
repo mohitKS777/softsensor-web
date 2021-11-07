@@ -22,6 +22,7 @@ import {
 } from '@chakra-ui/react';
 import DashboardMenu from '../Dashboard/menu';
 import Search from '../Dashboard/search';
+import LogoutButton from '../Authenticate/logout';
 import { MdOutlineKeyboardArrowRight, MdKeyboardArrowDown } from "react-icons/md";
 import { AiOutlineProject } from "react-icons/ai";
 import { BsList, BsCircleFill } from "react-icons/bs";
@@ -29,6 +30,7 @@ import { IoGridOutline, IoAdd } from "react-icons/io5";
 import { HiOutlineDotsCircleHorizontal } from "react-icons/hi";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import Header from '../Dashboard/header';
 
 const Project = ({ projectNum, projectId }) => {
     const breakpoints = createBreakpoints({
@@ -46,19 +48,7 @@ const Project = ({ projectNum, projectId }) => {
                 height="100vh"
                 direction="column"
                 backgroundColor="#eeeeee">
-                <Box
-                    w="250"
-                    bg="#3965C5"
-                    color="white"
-                    py={5}
-                    px={10}
-                    zIndex="1"
-                    sx={{ position: '-webkit-sticky', position: 'sticky', top: '0', }}>
-                    <Text fontSize="2em">
-                        Welcome
-                    </Text>
-                    <Spacer />
-                </Box>
+                <Header/>
                 <Flex w="100%" direction="row" marginTop="10px">
                     <Text color="#3965C5" borderBottom="1px solid #3965C5" m={5}>
                         Recently Viewed
@@ -73,9 +63,18 @@ const Project = ({ projectNum, projectId }) => {
                     <IconButton icon={<BsList color="#3965C5" />} size="xs" border="1px solid #3965C5" marginRight={5} marginTop={4} />
                 </Flex>
                 <Flex direction="column">
-                    <Text fontSize="3xl" fontWeight="bold" color="#3965C5" mx={9} my={2}>
-                        Project
-                    </Text>
+                    <Flex>
+                        <Text fontSize="3xl" fontWeight="bold" color="#3965C5" mx={9} my={2}>
+                            Project
+                        </Text>
+                        <Spacer/>
+                        <Button size="md" px={10} border="1px solid blue" color="#3965C5">
+                            Project Details
+                        </Button>
+                        <Button size="md" px={10} mx={4} backgroundColor="#3965C5" color="white">
+                            View Reports
+                        </Button>
+                    </Flex>
                     <HStack>
                         <Text color="#8aaeff" fontSize="sm" marginLeft={9}>
                             Oct 24, 2021 <Icon as={BsCircleFill} marginBottom={1} w={1} h={1} />

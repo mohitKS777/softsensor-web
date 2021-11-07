@@ -28,21 +28,33 @@ import ProjectLink from '../Project/projectLink';
 const Recent = () => {
     return (
         <Flex
+            className="recently__viewed"
             backgroundColor="white"
-            margin="20px"
-            width="95%"
+            marginBottom="20px"
+            marginTop="20px"
+            // width="95%"
             padding="20px"
             paddingBottom="50px"
             direction="column">
             <HStack>
-                <Text color="#3965C5" fontSize="2xl" fontWeight="bold" marginLeft="15px" marginBottom="20px">
+                <Text 
+                    className="recently__viewed__title"
+                    color="#3965C5" 
+                    fontWeight="bold" 
+                    marginLeft="15px" 
+                    marginBottom="20px"
+                    borderColor="#3965C5"
+                    borderBottom="1px"
+                    paddingBottom="10px"
+                    // fontSize="2xl"
+                >
                     Recently Viewed
                 </Text>
                 <Spacer />
                 <IconButton icon={<IoGridOutline color="#3965C5"/>} size="xs" border="1px solid #3965C5"/>
                 <IconButton icon={<BsList color="#3965C5"/>} size="xs" border="1px solid #3965C5"/>
             </HStack>
-            <Table variant="unstyled" marginTop="20px" size="sm">
+            <Table variant="unstyled" marginTop="0px" size="sm" className="recently__viewed__table">
                 <Thead>
                     <Tr margin="0px">
                         <Th color="#8aaeff">File Name</Th>
@@ -95,7 +107,7 @@ const Recent = () => {
                             </Stack>
                         </Td>
                     </Tr>
-                    <Tr borderBottom="1px solid #3965C5" _hover={{bg: "#bacfff"}}>
+                    {/* <Tr borderBottom="1px solid #3965C5" _hover={{bg: "#bacfff"}}>
                         <Td color="#3965C5" fontWeight="bold">
                             <Icon as={BiTime} marginRight={1} w={5} h={4} />
                             <ProjectLink num={3}/>
@@ -114,8 +126,8 @@ const Recent = () => {
                                 <Avatar name="Mila Maghudiya" size="sm"/>
                             </Stack>
                         </Td>
-                    </Tr>
-                    <Tr borderBottom="1px solid #3965C5" _hover={{bg: "#bacfff"}}>
+                    </Tr> */}
+                    {/* <Tr borderBottom="1px solid #3965C5" _hover={{bg: "#bacfff"}}>
                         <Td color="#3965C5" fontWeight="bold">
                             <Icon as={BiTime} marginRight={1} w={5} h={4} />
                             <ProjectLink num={4}/>
@@ -136,8 +148,8 @@ const Recent = () => {
                                 <Avatar name="Mila Maghudiya" size="sm"/>
                             </Stack>
                         </Td>
-                    </Tr>
-                    <Tr borderBottom="1px solid #3965C5" _hover={{bg: "#bacfff"}}>
+                    </Tr> */}
+                    {/* <Tr borderBottom="1px solid #3965C5" _hover={{bg: "#bacfff"}}>
                         <Td color="#3965C5" fontWeight="bold">
                             <Icon as={BiTime} marginRight={1} w={5} h={4} />
                             <ProjectLink num={5}/>
@@ -156,7 +168,7 @@ const Recent = () => {
                                 <Avatar name="Rakesh Gautam" size="sm"/>
                             </Stack>
                         </Td>
-                    </Tr>
+                    </Tr> */}
                 </Tbody>
             </Table>
         </Flex>
