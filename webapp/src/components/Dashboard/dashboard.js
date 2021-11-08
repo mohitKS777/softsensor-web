@@ -1,18 +1,20 @@
 import React, { useState } from "react";
-import { Flex, Spacer, Text, useMediaQuery } from "@chakra-ui/react";
+import {
+  Flex,
+  Spacer,
+  Text,
+  extendTheme,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import { createBreakpoints } from "@chakra-ui/theme-tools";
 import DashboardMenu from "./menu";
-import Gallery from "./gallery";
 import { useAuth0 } from "@auth0/auth0-react";
-import axios from "axios";
-import { generatePath, useHistory } from "react-router";
-import Search from "./search";
 import Recent from "./recent";
 import NewAssigned from "./newAssigned";
 import LastTask from "./lastTask";
 import LastReports from "./lastReports";
 import Newproject from "../Newproject/newproject";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Header from "./header";
 
 const Dashboard = ({ subClaim }) => {
   const { user } = useAuth0();
@@ -34,31 +36,28 @@ const Dashboard = ({ subClaim }) => {
     <>
       <DashboardMenu handleActiveOption={handleActiveOption} />
       <Flex
+        className="dashboard__body"
         marginLeft="14em"
+        width="100%"
         height="100vh"
         direction="column"
         backgroundColor="#eeeeee"
       >
-        <Flex
-          w="250"
-          bg="#3965C5"
-          color="white"
-          py={5}
-          px={10}
-          zIndex="1"
-          sx={{ position: "-webkit-sticky", position: "sticky", top: "0" }}
-        >
-          <Text fontSize="2em">Welcome</Text>
-          <Spacer />
-          <Search w={300} />
-        </Flex>
+        <Header />
         {activeOption === "recent" && (
           <Flex height="100%" w="100%" direction="row" marginTop="20px">
-            <Flex height="100%" w="100%" direction="column">
+            <Flex
+              // w="100%"
+              direction="column"
+            >
               <Recent />
               <NewAssigned />
             </Flex>
-            <Flex height="100%" w="30%" direction="column" marginRight="20px">
+            <Flex
+              // w="30%"
+              direction="column"
+              marginRight="20px"
+            >
               <LastTask />
               <LastReports />
             </Flex>

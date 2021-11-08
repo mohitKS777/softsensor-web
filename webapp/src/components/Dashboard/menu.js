@@ -59,16 +59,11 @@ const DashboardMenu = ({ handleActiveOption }) => {
       <MenuList
         bg="#3965C6"
         height="100vh"
-        width={{ base: "100%", sm: "50%", md: "25%" }}
+        className="dashboard__menu"
         borderRadius="0px"
         border="none"
         color="white"
-        sx={{
-          position: "-webkit-sticky",
-          position: "sticky",
-          bottom: "0",
-          top: "0",
-        }}
+        position="fixed"
       >
         <Flex>
           <Image
@@ -102,7 +97,7 @@ const DashboardMenu = ({ handleActiveOption }) => {
             _hover={{ bg: "#66a3ff" }}
             fontSize="small"
             name="projects"
-            // onClick={(e) => handleActiveOption(e)}
+            onClick={(e) => handleActiveOption(e)}
           >
             <Icon as={AiOutlineProject} marginRight={2} w={5} h={7} />
             Projects
@@ -137,7 +132,6 @@ const DashboardMenu = ({ handleActiveOption }) => {
             <Icon as={BsCircleFill} marginRight={2} w={4} h={4} />
             Help
           </MenuItem>
-          <LogoutButton />
         </MenuGroup>
       </MenuList>
     </Menu>
