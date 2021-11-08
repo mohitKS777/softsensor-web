@@ -10,6 +10,7 @@ import LayoutApp from "./components/Layout/app";
 import Login from "./components/Authenticate/login";
 import Dashboard from "./components/Dashboard/dashboard";
 import Project from "./components/Project/project";
+import Newproject from "./components/Newproject/newproject";
 import "./App.css";
 // import getData from "./getData";
 import React from "react";
@@ -47,32 +48,34 @@ const App = () => {
   // React.useEffect(() => {
   //   getData();
   // }, []);
-  
 
   return (
     <Router>
       <ChakraProvider theme={theme} direction="rowReverse">
         {/* <Home /> */}
         {/* <Test />  */}
-          <SocketWrapper>
-            <Switch>
-              <Route path="/slide/:id">
-                <LayoutApp />
-              </Route>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <Route path="/dashboard">
-                <DashboardRedirect />
-              </Route>
-              <Route path="/dashboard/:id">
-                <Dashboard />
-              </Route>
-              <Route path="/project">
-                <Project />
-              </Route>
-            </Switch>
-          </SocketWrapper>
+        <SocketWrapper>
+          <Switch>
+            <Route path="/slide/:id">
+              <LayoutApp />
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/dashboard">
+              <DashboardRedirect />
+            </Route>
+            <Route path="/dashboard/:id">
+              <Dashboard />
+            </Route>
+            <Route path="/project">
+              <Project />
+            </Route>
+            <Route path="/newproject">
+              <Newproject />
+            </Route>
+          </Switch>
+        </SocketWrapper>
       </ChakraProvider>
     </Router>
   );
