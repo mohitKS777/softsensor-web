@@ -12,6 +12,7 @@ import paletteReducer from "./reducers/paletteReducer";
 import zoomReducer from "./reducers/zoomReducer";
 import chatReducer from "./reducers/chatReducer";
 import viewerReducer from "./reducers/viewerReducer";
+import newProjectReducer from "./reducers/newProjectReducer";
 
 const store = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ const store = configureStore({
     zoomState: zoomReducer,
     chatState: chatReducer,
     viewerState: viewerReducer,
+    newProjectState: newProjectReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

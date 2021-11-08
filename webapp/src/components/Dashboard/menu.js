@@ -29,7 +29,7 @@ import { createBreakpoints } from "@chakra-ui/theme-tools";
 import LogoutButton from "../Authenticate/logout";
 import Newproject from "../Newproject/newproject";
 
-const DashboardMenu = () => {
+const DashboardMenu = ({ handleActiveOption }) => {
   const { user, isAuthenticated } = useAuth0();
   const [emailId, setEmailId] = useState();
   const [userImage, setUserImage] = useState();
@@ -89,15 +89,30 @@ const DashboardMenu = () => {
         </Flex>
         <MenuGroup>
           <MenuDivider marginTop="1em" mx={2} />
-          <MenuItem _hover={{ bg: "#66a3ff" }} fontSize="small">
+          <MenuItem
+            _hover={{ bg: "#66a3ff" }}
+            fontSize="small"
+            name="recent"
+            onClick={(e) => handleActiveOption(e)}
+          >
             <Icon as={BiTime} marginRight={2} w={5} h={7} />
             Recently Viewed
           </MenuItem>
-          <MenuItem _hover={{ bg: "#66a3ff" }} fontSize="small">
+          <MenuItem
+            _hover={{ bg: "#66a3ff" }}
+            fontSize="small"
+            name="projects"
+            // onClick={(e) => handleActiveOption(e)}
+          >
             <Icon as={AiOutlineProject} marginRight={2} w={5} h={7} />
             Projects
           </MenuItem>
-          <MenuItem _hover={{ bg: "#66a3ff" }} fontSize="small">
+          <MenuItem
+            _hover={{ bg: "#66a3ff" }}
+            fontSize="small"
+            name="newProject"
+            onClick={(e) => handleActiveOption(e)}
+          >
             <Icon as={AiOutlineFile} marginRight={2} w={5} h={7} />
             New Projects
           </MenuItem>

@@ -17,13 +17,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 const Dashboard = ({ subClaim }) => {
   const { user } = useAuth0();
   const data = { subClaim: subClaim };
-  // const resp = axios.post('http://localhost:3001/api/get_user_information', data, {headers : `authorization" : "bearer ${token}`})
-  // const [id, setId] = useState(user?.nickname);
-  // const history = useHistory();
-  // const handleProceed = (e) => {
-  //     id && history.push(generatePath("/dashboard/:id", { id }));
-  // };
-  // handleProceed();
+  const [activeOption, setActiveOption] = useState("recent");
 
   const breakpoints = createBreakpoints({
     sm: "1280px",
@@ -32,9 +26,13 @@ const Dashboard = ({ subClaim }) => {
     xl: "2560px",
   });
 
+  const handleActiveOption = (e) => {
+    setActiveOption(e.target.name);
+  };
+
   return (
     <>
-      <DashboardMenu />
+      <DashboardMenu handleActiveOption={handleActiveOption} />
       <Flex
         marginLeft="14em"
         height="100vh"
@@ -54,16 +52,19 @@ const Dashboard = ({ subClaim }) => {
           <Spacer />
           <Search w={300} />
         </Flex>
-        <Flex height="100%" w="100%" direction="row" marginTop="20px">
-          <Flex height="100%" w="100%" direction="column">
-            <Recent />
-            <NewAssigned />
+        {activeOption === "recent" && (
+          <Flex height="100%" w="100%" direction="row" marginTop="20px">
+            <Flex height="100%" w="100%" direction="column">
+              <Recent />
+              <NewAssigned />
+            </Flex>
+            <Flex height="100%" w="30%" direction="column" marginRight="20px">
+              <LastTask />
+              <LastReports />
+            </Flex>
           </Flex>
-          <Flex height="100%" w="30%" direction="column" marginRight="20px">
-            <LastTask />
-            <LastReports />
-          </Flex>
-        </Flex>
+        )}
+        {activeOption === "newProject" && <Newproject />}
       </Flex>
     </>
   );
