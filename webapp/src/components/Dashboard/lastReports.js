@@ -1,6 +1,7 @@
 import React from 'react';
 import {
     Button,
+    Box,
     Flex,
     HStack,
     Icon,
@@ -41,6 +42,7 @@ const LastReports = () => {
                 View All
             </Link>
             </HStack>
+            <Box overflowX="auto">
             <Table variant="unstyled" marginTop="10px" size="sm">
                 <Thead>
                     <Tr margin="0px">
@@ -88,6 +90,7 @@ const LastReports = () => {
                     </Tr>
                 </Tbody>
             </Table>
+            </Box>
         </Flex>
     );
 };

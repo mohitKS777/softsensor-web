@@ -1,3 +1,7 @@
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
 .header {
   background-color: #3963c3;
   color: white;
@@ -20,47 +24,59 @@
 }
 
 @media screen and (max-width: 2560px) {
+  .dashboard {
+    width: 100%;
+  }
   .dashboard__header {
     font-size: 2em;
-    width: 60em;
-    margin-left: 3em;
+    width: 70em;
+    margin-left: 4em;
   }
   .dashboard__menu {
-    width: 18em;
+    width: 20em;
     font-size: large;
   }
+  .dashboard__body {
+    width: fit-content;
+  }
   .recently__viewed {
-    width: 65em;
-    height: 30em;
-    margin-left: 8em;
+    width: 90em;
+    height: 40em;
+    margin-left: 10em;
     margin-right: 1em;
   }
   .recently__viewed__title {
-    font-size: 1.5em;
+    font-size: 2em;
   }
   .recently__viewed__table {
     size: "md";
   }
   .new__assign {
-    width: 65em;
-    height: 22em;
-    margin-left: 8em;
+    width: 90em;
+    height: 24em;
+    margin-left: 10em;
     margin-right: 1em;
   }
   .new__assign__title {
-    font-size: 1.5em;
+    font-size: 2em;
   }
   .last__reports {
-    width: 28em;
-    height: 22em;
+    width: 40em;
+    height: 24em;
+  }
+  .last__reports__title {
+    font-size: 1.5em;
   }
   .last__task {
-    width: 28em;
-    height: 30em;
+    width: 40em;
+    height: 40em;
+  }
+  .last__task__head {
+    font-size: 1.5em;
   }
   .last__task__img {
-    height: 15em;
-    width: 24em;
+    height: 23em;
+    width: 40em;
   }
   .logout__btn {
     margin-left: 1em;
@@ -68,6 +84,9 @@
 }
 
 @media screen and (max-width: 1920px) {
+  .dashboard {
+    width: 100%;
+  }
   .dashboard__header {
     font-size: 2em;
     width: 47em;
@@ -76,8 +95,11 @@
   .dashboard__menu {
     width: 10em;
   }
+  .dashboard__body {
+    width: fit-content;
+  }
   .recently__viewed {
-    width: 50em;
+    width: 60em;
     height: 21em;
     margin-left: 1.5em;
   }
@@ -88,7 +110,7 @@
     size: "sm";
   }
   .new__assign {
-    width: 50em;
+    width: 60em;
     height: 18em;
     margin-left: 1.5em;
   }
@@ -96,14 +118,14 @@
     font-size: large;
   }
   .last__reports {
-    width: 22em;
+    width: 27em;
     height: 18em;
   }
   .last__reports__title {
     font-size: 15px;
   }
   .last__task {
-    width: 22em;
+    width: 27em;
     height: 21em;
   }
   .last__task__img {
@@ -124,20 +146,35 @@
   .logout__btn {
     margin-left: 1em;
   }
+  .tasks__assigned {
+    width: 56em;
+  }
+  .tasks__submitted {
+    width: 56em;
+  }
+  .tasks__completed {
+    width: 56em;
+  }
 }
 
 @media screen and (max-width: 1440px) {
+  .dashboard {
+    width: 100%;
+  }
   .dashboard__header {
     font-size: 2em;
-    width: 35em;
+    width: 38em;
     margin-left: 0;
   }
   .dashboard__menu {
     width: 8em;
   }
+  .dashboard__body {
+    width: fit-content;
+  }
   .recently__viewed {
-    width: 36em;
-    height: 19em;
+    width: 50em;
+    height: 25em;
     margin-left: 1.5em;
   }
   .recently__viewed__title {
@@ -147,32 +184,32 @@
     size: "sm";
   }
   .new__assign {
-    width: 36em;
-    height: 14em;
+    width: 50em;
+    height: 18em;
     margin-left: 1.5em;
   }
   .new__assign__title {
     font-size: large;
   }
   .last__reports {
-    width: 16em;
-    height: 14em;
+    width: 21em;
+    height: 18em;
   }
   .last__reports__title {
-    font-size: 13px;
+    font-size: 1em;
   }
   .last__task {
-    width: 16em;
-    height: 19em;
+    width: 21em;
+    height: 25em;
   }
   .last__task__img {
-    height: 7em;
-    width: 12em;
+    height: 11em;
+    width: 18em;
     margin-left: 1em;
     margin-bottom: 5px;
   }
   .last__task__head {
-    font-size: 15px;
+    font-size: 1em;
   }
   .last__task__title {
     font-size: 15px;

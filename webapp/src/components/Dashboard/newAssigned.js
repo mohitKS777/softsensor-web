@@ -1,6 +1,7 @@
 import React from 'react';
 import {
     Avatar,
+    Box,
     Flex,
     Icon,
     HStack,
@@ -47,6 +48,7 @@ const NewAssigned = () => {
                 <IconButton icon={<IoGridOutline color="#3965C5" />} size="xs" border="1px solid #3965C5" />
                 <IconButton icon={<BsList color="#3965C5" />} size="xs" border="1px solid #3965C5" />
             </HStack>
+            <Box overflowX="auto">
             <Table variant="unstyled" marginTop="15px" size="sm">
                 <Thead>
                     <Tr margin="0px">
@@ -90,7 +92,7 @@ const NewAssigned = () => {
                             </Stack>
                         </Td>
                     </Tr>
-                    {/* <Tr borderBottom="1px solid #3965C5" _hover={{ bg: "#bacfff" }}>
+                    <Tr borderBottom="1px solid #3965C5" _hover={{ bg: "#bacfff" }}>
                         <Td color="#3965C5" fontWeight="bold">
                             <Icon as={AiOutlineProject} marginRight={1} w={5} h={4} />
                             Task 3
@@ -105,8 +107,8 @@ const NewAssigned = () => {
                                 <Avatar name="Mila Maghudiya" size="sm"/>
                             </Stack>
                         </Td>
-                    </Tr> */}
-                    {/* <Tr borderBottom="1px solid #3965C5" _hover={{ bg: "#bacfff" }}>
+                    </Tr>
+                    <Tr borderBottom="1px solid #3965C5" _hover={{ bg: "#bacfff" }}>
                         <Td color="#3965C5" fontWeight="bold">
                             <Icon as={AiOutlineProject} marginRight={1} w={5} h={4} />
                             Task 4
@@ -121,9 +123,10 @@ const NewAssigned = () => {
                                 <Avatar name="Mila Maghudiya" size="sm"/>
                             </Stack>
                         </Td>
-                    </Tr> */}
+                    </Tr>
                 </Tbody>
             </Table>
+            </Box>
         </Flex>
     )
 }
