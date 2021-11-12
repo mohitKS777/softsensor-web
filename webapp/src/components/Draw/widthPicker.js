@@ -13,7 +13,7 @@ const DrawWidthPicker = () => {
   const dispatch = useDispatch();
 
   return (
-    <HStack spacing={2} px={1} py={2}>
+    <HStack spacing={2} ml="30px" px={1} py={2} my={3}>
       {widths.map((widthObj) => {
         let imgSrc = require(`../../images/pen-weight-icons/${color.label}${widthObj.size}.png`);
         return (

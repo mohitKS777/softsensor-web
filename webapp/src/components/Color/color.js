@@ -71,7 +71,7 @@ const Color = () => {
   }, [viewerWindow]);
 
   return (
-    <Box pl={1}>
+    <Box px={10} my={4}>
       <ColorOptionsPanel />
     </Box>
   );

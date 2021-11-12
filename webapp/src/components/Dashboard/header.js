@@ -1,11 +1,15 @@
 import React from 'react';
 import {
     Flex,
+    IconButton,
     Text,
     Spacer
 } from "@chakra-ui/react";
 import Search from "./search";
 import LogoutButton from "../Authenticate/logout";
+import { AiOutlineBell, AiOutlineSetting, AiOutlineSearch } from "react-icons/ai";
+import { FiSettings } from "react-icons/fi";
+import { BsSearch, BsBell } from 'react-icons/bs';
 
 const Header = () => {
     return (
@@ -23,6 +27,9 @@ const Header = () => {
             <Spacer />
             <Search w={300} />
             <LogoutButton />
+            {/* <IconButton icon={<BsSearch />} backgroundColor="#3965C5" size="lg" _hover={{bg:"#4070d6"}}/>
+            <IconButton icon={<BsBell />} backgroundColor="#3965C5" size="lg" color="black" _hover={{bg:"#4070d6"}}/>
+            <IconButton icon={<FiSettings />} backgroundColor="#3965C5" size="lg" color="black" _hover={{bg:"#4070d6"}}/> */}
         </Flex>
     );
 };

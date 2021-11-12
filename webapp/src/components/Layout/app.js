@@ -3,7 +3,6 @@ import { Box, Flex } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import AdjustmentBar from "../AdjustmentBar/adjustmentBar";
 import Toolbar from "../ViewerToolbar/toolbar";
-import SidebarTools from "../Sidebar/tools";
 import ViewerContainer from "../Viewer/container";
 import ExtendibleDrawer from "./extdrawer";
 import LayoutHeader from "./header";
@@ -24,12 +23,10 @@ const LayoutApp = () => {
   return (
     <Flex as={Div100vh} h="100vh" direction="column">
       <LayoutOuterBody>
-        <LayoutAppSidebar>
-          <SidebarTools />
-        </LayoutAppSidebar>
-        <LayoutInnerBody>
           <LayoutHeader />
           <AdjustmentBar />
+        <LayoutInnerBody>
+        <LayoutAppSidebar/>
           <LayoutAppBody>
             <ViewerFactory />
           </LayoutAppBody>

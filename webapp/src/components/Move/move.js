@@ -1,5 +1,5 @@
 import React from "react";
-import { FaRegHandPaper } from "react-icons/fa";
+import { FiMove } from "react-icons/fi";
 import ToolbarButton from "../ViewerToolbar/button";
 import { useSelector, useDispatch } from "react-redux";
 import { updateTool } from "../../state/reducers/fabricOverlayReducer";
@@ -16,7 +16,7 @@ const Move = () => {
   return (
     <ToolbarButton
       label="Move"
-      icon={<FaRegHandPaper size={25} />}
+      icon={<FiMove size={25} />}
       backgroundColor={isActive ? "white" : "rgba(255,255,255, 0.5)"}
       color={isActive ? "black" : "#3963c3"}
       onClick={handleClick}

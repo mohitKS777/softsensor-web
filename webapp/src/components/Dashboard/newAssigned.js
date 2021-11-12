@@ -19,6 +19,7 @@ import {
 import { AiOutlineProject } from "react-icons/ai";
 import { BsList } from "react-icons/bs";
 import { IoGridOutline } from "react-icons/io5";
+import ProgressBar from "@ramonak/react-progress-bar";
 
 const NewAssigned = () => {
     return (
@@ -34,98 +35,129 @@ const NewAssigned = () => {
             <HStack>
                 <Text
                     className="new__assign__title"
-                    color="#3965C5"
                     // fontSize="2xl"
                     fontWeight="bold"
                     borderColor="#3965C5"
                     borderBottom="1px"
-                    paddingBottom="10px"
+                    paddingBottom="5px"
                     marginLeft="15px"
-                    width="10em">
-                    New Assigned Tasks
+                    width="11.5em">
+                    New Assigned Projects
                 </Text>
                 <Spacer />
                 <IconButton icon={<IoGridOutline color="#3965C5" />} size="xs" border="1px solid #3965C5" />
                 <IconButton icon={<BsList color="#3965C5" />} size="xs" border="1px solid #3965C5" />
             </HStack>
             <Box overflowX="auto">
-            <Table variant="unstyled" marginTop="15px" size="sm">
-                <Thead>
-                    <Tr margin="0px">
-                        <Th color="#8aaeff">File Name</Th>
-                        <Th color="#8aaeff">Source Project</Th>
-                        <Th color="#8aaeff">Project Owner</Th>
-                        <Th color="#8aaeff">Assigned Date</Th>
-                        <Th isNumeric />
-                    </Tr>
-                </Thead>
-                <Tbody>
-                    <Tr borderBottom="1px solid #3965C5" _hover={{ bg: "#bacfff" }}>
-                        <Td color="#3965C5" fontWeight="bold">
-                            <Icon as={AiOutlineProject} marginRight={1} w={5} h={4} />
-                            Task 1
-                        </Td>
-                        <Td color="#8aaeff">Project-2 Title</Td>
-                        <Td color="#8aaeff">Zoe Margot</Td>
-                        <Td color="#8aaeff">On 24th Oct</Td>
-                        <Td isNumeric>
+                <Table variant="unstyled" marginTop="15px" size="md">
+                    <Thead>
+                        <Tr margin="0px">
+                            <Th color="#8aaeff">File Name</Th>
+                            <Th color="#8aaeff">Assigned Date</Th>
+                            <Th color="#8aaeff">Project Owner</Th>
+                            <Th color="#8aaeff">Project Type</Th>
+                            <Th color="#8aaeff">No. of Slides</Th>
+                        </Tr>
+                    </Thead>
+                    <Tbody>
+                        <Tr borderBottom="1px solid #3965C5" _hover={{ bg: "#bacfff" }}>
+                            <Td color="#3965C5" fontWeight="bold">
+                                <Icon as={AiOutlineProject} marginRight={1} w={5} h={4} />
+                                Assigned Project - 1
+                            </Td>
+                            <Td color="#8aaeff">On 24th Oct</Td>
+                            <Td color="#8aaeff">Zoe Margot</Td>
+                            <Td color="#8aaeff">Single-slide Project</Td>
+                            {/* <Td isNumeric>
                             <Stack direction="row" justify="end">
                                 <Avatar name="Zoe Margot" size="sm"/>
                                 <Avatar name="Rakesh Gautam" size="sm"/>
                                 <Avatar name="Mila Maghudiya" size="sm"/>
                             </Stack>
-                        </Td>
-                    </Tr>
-                    <Tr borderBottom="1px solid #3965C5" _hover={{ bg: "#bacfff" }}>
-                        <Td color="#3965C5" fontWeight="bold">
-                            <Icon as={AiOutlineProject} marginRight={1} w={5} h={4} />
-                            Task 2
-                        </Td>
-                        <Td color="#8aaeff">Project-3 Title</Td>
-                        <Td color="#8aaeff">Rakesh Gautam</Td>
-                        <Td color="#8aaeff">On 24th Oct</Td>
-                        <Td isNumeric>
+                        </Td> */}
+                            <Td>
+                                <ProgressBar
+                                    completed={100}
+                                    customLabel="100 slides"
+                                    bgColor="#66a3ff"
+                                    labelSize="12px"
+                                    labelAlignment="left" />
+                            </Td>
+                        </Tr>
+                        <Tr borderBottom="1px solid #3965C5" _hover={{ bg: "#bacfff" }}>
+                            <Td color="#3965C5" fontWeight="bold">
+                                <Icon as={AiOutlineProject} marginRight={1} w={5} h={4} />
+                                Assigned Project - 2
+                            </Td>
+                            <Td color="#8aaeff">On 24th Oct</Td>
+                            <Td color="#8aaeff">Rakesh Gautam</Td>
+                            <Td color="#8aaeff">Multi-slide Project</Td>
+                            {/* <Td isNumeric>
                             <Stack direction="row" justify="end">
                                 <Avatar name="Zoe Margot" size="sm"/>
                                 <Avatar name="Rakesh Gautam" size="sm"/>
                                 <Avatar name="Mila Maghudiya" size="sm"/>
                             </Stack>
-                        </Td>
-                    </Tr>
-                    <Tr borderBottom="1px solid #3965C5" _hover={{ bg: "#bacfff" }}>
-                        <Td color="#3965C5" fontWeight="bold">
-                            <Icon as={AiOutlineProject} marginRight={1} w={5} h={4} />
-                            Task 3
-                        </Td>
-                        <Td color="#8aaeff">Project-2 Title</Td>
-                        <Td color="#8aaeff">Zoe Margot</Td>
-                        <Td color="#8aaeff">On 24th Oct</Td>
-                        <Td isNumeric>
+                        </Td> */}
+                            <Td>
+                                <ProgressBar
+                                    completed={100}
+                                    customLabel="1,000 slides"
+                                    bgColor="#66a3ff"
+                                    labelSize="12px"
+                                    labelAlignment="left" />
+                            </Td>
+                        </Tr>
+                        <Tr borderBottom="1px solid #3965C5" _hover={{ bg: "#bacfff" }}>
+                            <Td color="#3965C5" fontWeight="bold">
+                                <Icon as={AiOutlineProject} marginRight={1} w={5} h={4} />
+                                Assigned Project - 3
+                            </Td>
+                            <Td color="#8aaeff">On 24th Oct</Td>
+                            <Td color="#8aaeff">Zoe Margot</Td>
+                            <Td color="#8aaeff">Single-slide Project</Td>
+                            {/* <Td isNumeric>
                             <Stack direction="row" justify="end">
                                 <Avatar name="Zoe Margot" size="sm"/>
                                 <Avatar name="Rakesh Gautam" size="sm"/>
                                 <Avatar name="Mila Maghudiya" size="sm"/>
                             </Stack>
-                        </Td>
-                    </Tr>
-                    <Tr borderBottom="1px solid #3965C5" _hover={{ bg: "#bacfff" }}>
-                        <Td color="#3965C5" fontWeight="bold">
-                            <Icon as={AiOutlineProject} marginRight={1} w={5} h={4} />
-                            Task 4
-                        </Td>
-                        <Td color="#8aaeff">Project-1 Title</Td>
-                        <Td color="#8aaeff">Robert Rogers</Td>
-                        <Td color="#8aaeff">On 24th Oct</Td>
-                        <Td isNumeric>
+                        </Td> */}
+                            <Td>
+                                <ProgressBar
+                                    completed={100}
+                                    customLabel="50 slides"
+                                    bgColor="#66a3ff"
+                                    labelSize="12px"
+                                    labelAlignment="left" />
+                            </Td>
+                        </Tr>
+                        <Tr borderBottom="1px solid #3965C5" _hover={{ bg: "#bacfff" }}>
+                            <Td color="#3965C5" fontWeight="bold">
+                                <Icon as={AiOutlineProject} marginRight={1} w={5} h={4} />
+                                Assigned Project - 4
+                            </Td>
+                            <Td color="#8aaeff">On 24th Oct</Td>
+                            <Td color="#8aaeff">Robert Rogers</Td>
+                            <Td color="#8aaeff">Single-slide Project</Td>
+                            {/* <Td isNumeric>
                             <Stack direction="row" justify="end">
                                 <Avatar name="Zoe Margot" size="sm"/>
                                 <Avatar name="Rakesh Gautam" size="sm"/>
                                 <Avatar name="Mila Maghudiya" size="sm"/>
                             </Stack>
-                        </Td>
-                    </Tr>
-                </Tbody>
-            </Table>
+                        </Td> */}
+                            <Td>
+                                <ProgressBar
+                                    completed={100}
+                                    customLabel="50 slides"
+                                    bgColor="#66a3ff"
+                                    labelSize="12px"
+                                    labelAlignment="left" />
+                            </Td>
+                        </Tr>
+                    </Tbody>
+                </Table>
             </Box>
         </Flex>
     )

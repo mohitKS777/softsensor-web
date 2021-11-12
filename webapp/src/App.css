@@ -16,7 +16,6 @@ html, body {
 }
 .changeslide Button {
   border: 0.3px solid #ffffff;
-  margin-right: 16px;
 }
 .annotate p {
   font-size: small;
@@ -89,7 +88,7 @@ html, body {
   }
   .dashboard__header {
     font-size: 2em;
-    width: 47em;
+    width: 53em;
     margin-left: 0;
   }
   .dashboard__menu {
@@ -99,8 +98,8 @@ html, body {
     width: fit-content;
   }
   .recently__viewed {
-    width: 60em;
-    height: 21em;
+    width: 70em;
+    height: 25em;
     margin-left: 1.5em;
   }
   .recently__viewed__title {
@@ -110,23 +109,23 @@ html, body {
     size: "sm";
   }
   .new__assign {
-    width: 60em;
-    height: 18em;
+    width: 70em;
+    height: 25em;
     margin-left: 1.5em;
   }
   .new__assign__title {
     font-size: large;
   }
   .last__reports {
-    width: 27em;
-    height: 18em;
+    width: 30em;
+    height: 25em;
   }
   .last__reports__title {
     font-size: 15px;
   }
   .last__task {
-    width: 27em;
-    height: 21em;
+    width: 30em;
+    height: 25em;
   }
   .last__task__img {
     height: 9em;

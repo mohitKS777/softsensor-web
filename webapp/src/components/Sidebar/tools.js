@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import {
   Box,
-  Divider,
-  Wrap,
-  WrapItem,
-  Text,
-  Flex,
-  HStack,
   Button,
+  Tabs, 
+  TabList, 
+  TabPanels, 
+  Tab, 
+  TabPanel
 } from "@chakra-ui/react";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +15,10 @@ import ActivityFeed from "../Feed/activityFeed";
 import PaletteOptions from "../Palette/paletteOptions";
 import UserOptions from "../UserSettings/userOptions";
 import { updateActiveFeed } from "../../state/reducers/feedReducer";
+import Studies from "./studies";
+import Annotations from "./annotations";
+import Questions from "./questions";
+import Analysis from "./analysis";
 
 const SidebarTools = () => {
   const { activeTool } = useSelector((state) => state.fabricOverlayState);
@@ -44,43 +47,70 @@ const SidebarTools = () => {
   );
 
   return (
-    <Box w="100%" mt="50px">
-      <Box
-        backgroundColor="white"
-        borderRadius="5px"
-        pl={1}
-        px={2}
-        fontSize="sm"
-      >
-        <HStack justify="space-between">
-          <Text> Annotations</Text>
-          {/* <HStack spacing={0}>
-            <SlideToggleButton
-              label="Slide 1"
-              value="viewer1"
-              isActive={activeFeed === "viewer1"}
-              borderLeftRadius="5px"
-            />
-            <SlideToggleButton
-              label="Slide 2"
-              value="viewer2"
-              isActive={activeFeed === "viewer2"}
-              disabled={!isMultiView}
-              borderRightRadius="5px"
-            />
-          </HStack> */}
-        </HStack>
-      </Box>
-      <Box
-        h={activeDrawerTool === "Algorithm" ? "30vh" : "55vh"}
-        mt="5px"
-        mb="10px"
-      >
-        <ActivityFeed viewerId={activeFeed} />
-      </Box>
-      <UserOptions />
-      {activeDrawerTool === "Algorithm" && <PaletteOptions />}
-    </Box>
+    // <Box w="100%" mt="50px">
+    //   <Box
+    //     backgroundColor="white"
+    //     pl={1}
+    //     px={2}
+    //     fontSize="sm"
+    //   >
+    //     <HStack justify="space-between">
+    //       {/* <Text> Annotations</Text> */}
+    //       {/* <HStack spacing={0}>
+    //         <SlideToggleButton
+    //           label="Slide 1"
+    //           value="viewer1"
+    //           isActive={activeFeed === "viewer1"}
+    //           borderLeftRadius="5px"
+    //         />
+    //         <SlideToggleButton
+    //           label="Slide 2"
+    //           value="viewer2"
+    //           isActive={activeFeed === "viewer2"}
+    //           disabled={!isMultiView}
+    //           borderRightRadius="5px"
+    //         />
+    //       </HStack> */}
+    //     </HStack>
+    //   </Box>
+    //   <Box
+    //     h={activeDrawerTool === "Algorithm" ? "30vh" : "55vh"}
+    //     mt="5px"
+    //     mb="10px"
+    //   >
+    //     <ActivityFeed viewerId={activeFeed} />
+    //   </Box>
+    //   <UserOptions />
+    //   {activeDrawerTool === "Algorithm" && <PaletteOptions />}
+    // </Box>
+    // <HStack backgroundColor="rgba(255,255,255,0.2)">
+    //   <Studies />
+    //   <Annotations />
+    //   <Questions />
+    //   <Analysis />
+    // </HStack>
+    <Tabs isFitted size="10px">
+      <TabList backgroundColor="rgba(255,255,255,0.2)">
+        <Tab _focus={{ border:"none"}} _selected={{ bg: "#3965C5" }} fontSize="xs" py={2}>Studies</Tab>
+        <Tab _focus={{ border:"none"}} _selected={{ bg: "#3965C5" }} fontSize="xs" py={2} px={1}>Annotations</Tab>
+        <Tab _focus={{ border:"none"}} _selected={{ bg: "#3965C5" }} fontSize="xs" py={2}>Questions</Tab>
+        <Tab _focus={{ border:"none"}} _selected={{ bg: "#3965C5" }} fontSize="xs" py={2}>Analysis</Tab>
+      </TabList>
+      <TabPanels>
+        <TabPanel>
+          <Studies />
+        </TabPanel>
+        <TabPanel>
+          <Annotations />
+        </TabPanel>
+        <TabPanel>
+          <Questions />
+        </TabPanel>
+        <TabPanel>
+          <Analysis />
+        </TabPanel>
+      </TabPanels>
+    </Tabs>
   );
 };
 

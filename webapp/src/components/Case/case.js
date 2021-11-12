@@ -4,10 +4,10 @@ import { Box, Text, VStack } from "@chakra-ui/react";
 const Case = (props) => {
   return (
     <VStack
-      w="100%"
+      w="18em"
+      marginLeft="1em"
       color="white"
-      p="10px"
-      pr="15px"
+      p="1em"
       borderRadius="5px"
       backgroundColor="rgba(255,255,255, 0.2)"
       fontSize="xs"

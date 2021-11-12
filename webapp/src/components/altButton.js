@@ -6,10 +6,11 @@ import { TriangleDownIcon } from "@chakra-ui/icons";
 const MenuAltButton = ({ label, restProps }) => {
   return (
     <MenuButton
+      textAlign="left"
       as={Button}
-      size="md"
-      px="2"
-      py="5"
+      width="20em"
+      size="sm"
+      my={0.5}
       rightIcon={<TriangleDownIcon ml="20px" boxSize={2} />}
       variant="solid"
       backgroundColor="rgba(255,255,255, 0.2)"

@@ -29,8 +29,8 @@ const ShareLink = (restProps) => {
       <Button
         size="sm"
         variant="solid"
-        h={7}
-        px="7px"
+        h={6}
+        px="27px"
         borderRadius="4px"
         rightIcon={<FaShare color="#3963c3" />}
         backgroundColor="#DDDDDD"

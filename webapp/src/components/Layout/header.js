@@ -14,10 +14,7 @@ import {
   Spacer,
   Text,
 } from "@chakra-ui/react";
-import ZoomLevels from "../ZoomDropDown/viewerZoomLevels";
-import { HamburgerIcon } from "@chakra-ui/icons";
-import { RiShareForwardLine } from "react-icons/ri";
-import { GoRepoForked } from "react-icons/go";
+import { AiOutlineHome } from "react-icons/ai";
 import { Link as RRLink, useHistory } from "react-router-dom";
 import ImageGalleryModal from "../imageGalleryModal";
 import AltButton from "../altButton";
@@ -47,6 +44,7 @@ const LayoutHeader = () => {
           fontSize={fontSizes}
         >
           <HStack spacing={8}>
+            <IconButton icon={<AiOutlineHome />} backgroundColor="#3965C5" _hover={{bg:"#4070d6"}}/>
             <SlideInfo />
             <Files />
             <Download />

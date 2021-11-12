@@ -26,7 +26,10 @@ const Algorithm = () => {
 
   return (
     <Menu>
-      <MenuAltButton label="Algorithm" />
+      <MenuAltButton 
+        as={Button}
+        color="white"
+        label="Select Algorithm" />
       <MenuList
         mt={-2}
         p={0}
