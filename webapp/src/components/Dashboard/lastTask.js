@@ -50,11 +50,11 @@ const LastTask = () => {
                     Task Title
                 </Text>
                 <Spacer />
-                <Stack direction="row" justify="end">
+                {/* <Stack direction="row" justify="end">
                     <Avatar name="Zoe Margot" size="sm" />
                     <Avatar name="Rakesh Gautam" size="sm" />
                     <Avatar name="Mila Maghudiya" size="sm" />
-                </Stack>
+                </Stack> */}
             </HStack>
             <Text color="#8aaeff" fontSize="xs" marginLeft="15px">
                 Project Name <Icon as={BsCircleFill} mx={1} w={1} h={1} /> Oct 24, 2021
@@ -67,7 +67,7 @@ const LastTask = () => {
                     See more details
                 </Link>
                 <Spacer />
-                <Button backgroundColor="#3965c5" color="white" size="xs" marginTop="5px" w="8em" _hover={{ bg: "#66a3ff" }}>
+                <Button backgroundColor="#3965c5" color="white" size="sm" marginTop="5px" w="8em" _hover={{ bg: "#66a3ff" }}>
                     Continue
                 </Button>
             </Flex>

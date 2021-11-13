@@ -36,6 +36,7 @@ const NewAssigned = () => {
                 <Text
                     className="new__assign__title"
                     // fontSize="2xl"
+                    color="#3965C5"
                     fontWeight="bold"
                     borderColor="#3965C5"
                     borderBottom="1px"

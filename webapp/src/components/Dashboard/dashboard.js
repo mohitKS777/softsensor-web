@@ -14,6 +14,8 @@ import NewAssigned from "./newAssigned";
 import LastTask from "./lastTask";
 import LastReports from "./lastReports";
 import Header from "./header";
+import ProjectInvite from "./projectInvite";
+import Newproject from "../Newproject/newproject";
 
 const Dashboard = ({ subClaim }) => {
     const { user } = useAuth0();
@@ -46,7 +48,7 @@ const Dashboard = ({ subClaim }) => {
                         direction="column" 
                         marginRight="20px">
                         <LastTask />
-                        <LastReports />
+                        <ProjectInvite />
                     </Flex>
                 </Flex>
             </Flex>

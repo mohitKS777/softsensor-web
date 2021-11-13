@@ -21,7 +21,18 @@ html, body {
   font-size: small;
   text-align: center;
 }
-
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
 @media screen and (max-width: 2560px) {
   .dashboard {
     width: 100%;
@@ -121,23 +132,23 @@ html, body {
     height: 25em;
   }
   .last__reports__title {
-    font-size: 15px;
+    font-size: 18px;
   }
   .last__task {
     width: 30em;
     height: 25em;
   }
   .last__task__img {
-    height: 9em;
-    width: 15em;
+    height: 12em;
+    width: 19em;
     margin-left: 35px;
     margin-bottom: 5px;
   }
   .last__task__head {
-    font-size: 15px;
+    font-size: 18px;
   }
   .last__task__title {
-    font-size: 12px;
+    font-size: 15px;
   }
   .view__report {
     width: 8px;
