@@ -12,6 +12,7 @@ const ModalButton = ({ children, ...restProps }) => {
       textTransform="capitalize"
       fontSize="md"
       lineHeight="20px"
+      _focus={{ border: "none" }}
       {...restProps}
     >
       {children}

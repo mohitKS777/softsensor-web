@@ -1,55 +1,50 @@
-import React, { useEffect, useState } from 'react';
-import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import Dashboard from './dashboard';
 import { generatePath, useHistory } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUser, setToken } from "../../state/reducers/authReducer";
+import { Flex, Spinner } from "@chakra-ui/react";
+import { useGetUserInfoQuery } from "../../state/api/medicalApi";
 
 const DashboardRedirect = () => {
-    const { user, isAuthenticated, getAccessTokenSilently, isLoading } = useAuth0();
-    const [accessToken, setAccessToken] = useState();
-    const [id, setId] = useState();
-    const history = useHistory();
-    const handleProceed = () => {
-        id && history.push(generatePath("/dashboard/:id", { id }));
+  const { user, isAuthenticated, logout, getAccessTokenSilently } = useAuth0();
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { token } = useSelector((state) => state.authState);
+  const { data, error, isLoading } = useGetUserInfoQuery(
+    {
+      subClaim: user?.sub,
+    },
+    { skip: !token }
+  );
+
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    const getAccessToken = async () => {
+      try {
+        const accessToken = await getAccessTokenSilently();
+        dispatch(setToken(accessToken));
+        dispatch(updateUser(user));
+      } catch (e) {
+        console.log("error : ", e);
+        logout({ returnTo: "http://localhost:3000/login" });
+      }
     };
+    getAccessToken();
+  }, [isAuthenticated]);
 
-    useEffect(() => {
-        const getAccessToken = async () => {
-            try {
-                const accessToken = await getAccessTokenSilently({
-                    audience: `http://localhost:3001`,
-                    scope: "read:users",
-                })
-                setAccessToken(accessToken)
-            }
-            catch (e) {
-                console.log('error : ', e)
-            }
-        }
-        getAccessToken();
-    }, [getAccessTokenSilently])
+  useEffect(() => {
+    if (isLoading || !token) return;
+    const id = user?.sub.substring(user?.sub.indexOf("|") + 1);
+    if (error && error.status === 404) history.push(`/registrationForm/${id}`);
+    if (data) history.push(`/dashboard/${id}`);
+  }, [isLoading, token]);
 
-    handleProceed();
-
-    useEffect(() => {
-        if (isAuthenticated) {
-            setId(user?.sub.substring(user?.sub.indexOf('|') + 1));
-        }
-    }, [isAuthenticated]);
-
-
-    const headers = {
-        'Content-Type': 'application/json',
-        'Authorization': 'bearer' + accessToken
-    }
-    // const data = {
-    //     subClaim: `${user.sub}`
-    // }
-    // const resp = axios.post('http://localhost:3001/api/add_new_user', data, { headers: `authorization" : "bearer ${token}` })
-
-    return (
-        <Dashboard subClaim={user?.sub} />
-    );
-}
+  return (
+    <Flex justify="center" align="center" h="100vh">
+      <Spinner color="#3965C5" size="xl" thickness="4px" speed="0.65s" />
+    </Flex>
+  );
+};
 
 export default DashboardRedirect;

@@ -15,6 +15,7 @@ import "./App.css";
 // import getData from "./getData";
 import React from "react";
 import DashboardRedirect from "./components/Dashboard/dashboardRedirect";
+import UserDetails from "./components/Authenticate/userDetails";
 
 const theme = extendTheme({
   colors: {
@@ -31,6 +32,10 @@ const theme = extendTheme({
   },
   styles: {
     global: {
+      body: {
+        bg: "light",
+        color: "black",
+      },
       button: {
         fontFamily: "sans-serif",
       },
@@ -62,17 +67,17 @@ const App = () => {
             <Route path="/login">
               <Login />
             </Route>
-            <Route path="/dashboard">
-              <DashboardRedirect />
-            </Route>
             <Route path="/dashboard/:id">
               <Dashboard />
             </Route>
+            <Route path="/registrationForm/:id">
+              <UserDetails />
+            </Route>
+            <Route path="/dashboard">
+              <DashboardRedirect />
+            </Route>
             <Route path="/project">
               <Project />
-            </Route>
-            <Route path="/newproject">
-              <Newproject />
             </Route>
           </Switch>
         </SocketWrapper>

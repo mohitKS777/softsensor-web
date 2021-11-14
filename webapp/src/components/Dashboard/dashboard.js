@@ -1,59 +1,59 @@
 import React, { useState } from "react";
 import {
-    Flex,
-    Spacer,
-    Text,
-    extendTheme,
-    useMediaQuery
+  Flex,
+  Spacer,
+  Text,
+  extendTheme,
+  useMediaQuery,
 } from "@chakra-ui/react";
-import { createBreakpoints } from "@chakra-ui/theme-tools";
 import DashboardMenu from "./menu";
-import { useAuth0 } from "@auth0/auth0-react";
 import Recent from "./recent";
 import NewAssigned from "./newAssigned";
 import LastTask from "./lastTask";
 import LastReports from "./lastReports";
 import Header from "./header";
-import ProjectInvite from "./projectInvite";
 import Newproject from "../Newproject/newproject";
+import Projects from "./projects";
+import { useSelector } from "react-redux";
+import ProjectInvite from "./projectInvite";
 
-const Dashboard = ({ subClaim }) => {
-    const { user } = useAuth0();
-    const data = { subClaim: subClaim }
-    // const resp = axios.post('http://localhost:3001/api/get_user_information', data, {headers : `authorization" : "bearer ${token}`})
+const Dashboard = () => {
+  const { activeOption } = useSelector((state) => state.dashboardState);
 
-    return (
-        <Flex className="dashboard">
-            <DashboardMenu />
-            <Flex 
-                className="dashboard__body"
-                marginLeft="14em" 
-                height="100vh"
-                direction="column" 
-                backgroundColor="#eeeeee">
-                <Header />
-                <Flex 
-                    height="100%" 
-                    w="100%" 
-                    direction="row" 
-                    marginTop="20px">
-                    <Flex 
-                        // w="100%" 
-                        direction="column">
-                        <Recent />
-                        <NewAssigned />
-                    </Flex>
-                    <Flex 
-                        // w="30%" 
-                        direction="column" 
-                        marginRight="20px">
-                        <LastTask />
-                        <ProjectInvite />
-                    </Flex>
-                </Flex>
+  return (
+    <Flex className="dashboard">
+      <DashboardMenu />
+      <Flex
+        className="dashboard__body"
+        marginLeft="14em"
+        height="100vh"
+        direction="column"
+        backgroundColor="#eeeeee"
+      >
+        <Header />
+        {activeOption === "projects" && (
+          <Flex height="100%" w="100%" direction="row" marginTop="20px">
+            <Flex
+              // w="100%"
+              direction="column"
+            >
+              <Projects />
+              <NewAssigned />
             </Flex>
-        </Flex>
-    );
+            <Flex
+              // w="30%"
+              direction="column"
+              marginRight="20px"
+            >
+              <LastTask />
+              <ProjectInvite />
+            </Flex>
+          </Flex>
+        )}
+        {activeOption === "newProject" && <Newproject />}
+      </Flex>
+    </Flex>
+  );
 };
 
 export default Dashboard;

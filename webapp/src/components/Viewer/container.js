@@ -8,7 +8,7 @@ import {
   AlertDescription,
   Box,
 } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { Images } from "../../services/images";
 import { Slides } from "../../services/slides";
@@ -111,7 +111,7 @@ const ViewerContainer = ({ viewerId }) => {
   // Success
   // return <Viewer tile={tileSource} />;
 
-  return <Viewer viewerId={viewerId} tile={target} />;
+  return <Viewer viewerId={viewerId} tile={location.state.tile} />;
 };
 
 export default ViewerContainer;

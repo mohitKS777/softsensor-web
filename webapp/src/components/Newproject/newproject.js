@@ -1,4 +1,3 @@
-import { Flex } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -6,6 +5,17 @@ import {
   updateProject,
 } from "../../state/reducers/newProjectReducer";
 import "../../styles/newproject.css";
+import {
+  Radio,
+  RadioGroup,
+  Box,
+  Button,
+  Select,
+  Input,
+  Text,
+  Textarea,
+} from "@chakra-ui/react";
+import SlideFileUpload from "./slideFileUpload";
 
 const Newproject = () => {
   const [activeOption, setActiveOption] = useState("projectDetails");
@@ -26,207 +36,243 @@ const Newproject = () => {
 
   return (
     <>
-      <div>
+      <Box>
         {activeOption === "projectDetails" && (
-          <Flex>
-            <div className="div_overlay">
-              <div>
-                <button
-                  className="selected_button"
+          <Box className="div_overlay">
+            <Box>
+              <Button
+                className="selected_button"
+                name="projectDetails"
+                onClick={(e) => handleActiveOption(e)}
+                style={{ background: "#0032a0" }}
+                marginRight={3}
+              >
+                Project details
+              </Button>
+              <Button
+                className="unselected_button"
+                name="selectSlide"
+                onClick={(e) => handleActiveOption(e)}
+                style={{ background: "#ffffff" }}
+                marginRight={3}
+              >
+                Select Slides
+              </Button>
+              <Button
+                className="unselected_button"
+                name="questionnaire"
+                onClick={(e) => handleActiveOption(e)}
+                style={{ background: "#ffffff" }}
+                marginRight={3}
+              >
+                Questionnaire
+              </Button>
+            </Box>
+            <Box className="dividing_div" />
+            <Box className="form_div">
+              <Box>
+                <Text
+                  htmlFor="project_title"
+                  color="#2E519E"
+                  fontSize={17}
+                  paddingBottom={3}
+                >
+                  Project Title
+                </Text>
+                <Input
+                  type="text"
+                  id="project_title"
+                  name="project_title"
+                  value={projectDetails.project_title}
+                  width={590}
+                  borderRadius={5}
+                  bg="#0032a01a"
+                  placeholder="Eg: Digital Pathology"
+                  onChange={(e) => handleProjectDetails(e)}
+                ></Input>
+                <Text
+                  htmlFor="project_desc"
+                  paddingTop={6}
+                  color="#2E519E"
+                  fontSize={17}
+                  paddingBottom={3}
+                >
+                  Project Description
+                </Text>
+                <Textarea
+                  id="project_desc"
+                  name="project_desc"
+                  value={projectDetails.project_desc}
+                  width={590}
+                  height={150}
+                  top="0"
+                  bg="#0032a01a"
+                  resize={"none"}
+                  placeholder="Eg: Write a one- or two-paragraph explanation of what the project aims to accomplish"
+                  onChange={(e) => handleProjectDetails(e)}
+                ></Textarea>
+                <Text
+                  htmlFor="project_type"
+                  paddingTop={6}
+                  color="#2E519E"
+                  fontSize={17}
+                  paddingBottom={3}
+                >
+                  Select
+                </Text>
+                <Select
+                  variant="outline"
+                  id="project_type"
+                  name="project_type"
+                  value={projectDetails.project_type}
+                  onChange={(e) => handleProjectDetails(e)}
+                  width={540}
+                  bg="#0032a01a"
+                >
+                  <option value="Single-Slide Project">
+                    Single-Slide Project
+                  </option>
+                  <option value="Multi-Slide Project">
+                    Multi-Slide Project
+                  </option>
+                </Select>
+                <Text
+                  htmlFor="slide_type"
+                  paddingTop={6}
+                  color="#2E519E"
+                  fontSize={17}
+                  paddingBottom={3}
+                >
+                  Slide type
+                </Text>
+                <Select
+                  id="slide_type"
+                  name="slide_type"
+                  value={projectDetails.slide_type}
+                  width={540}
+                  bg="#0032a01a"
+                  onChange={(e) => handleProjectDetails(e)}
+                >
+                  <option value="H&E">H&E</option>
+                  <option value="Trichrome">Trichrome</option>
+                </Select>
+              </Box>
+            </Box>
+            <Box className="bottom_div">
+              <Button className="reset" width={127} onClick={handleReset}>
+                Reset
+              </Button>
+              <Button
+                className="savennext"
+                bg="#0032a0"
+                colorScheme="#0032a0"
+                width={127}
+                marginLeft={7}
+                onClick={() => setActiveOption("selectSlide")}
+              >
+                Next
+              </Button>
+            </Box>
+          </Box>
+        )}
+        {activeOption === "selectSlide" && (
+          <Box className="div_overlay">
+            <Box>
+              <Button
+                className="unselected_button"
+                name="projectDetails"
+                onClick={(e) => handleActiveOption(e)}
+                style={{ background: "#ffffff" }}
+                marginRight={3}
+              >
+                Project details
+              </Button>
+              <Button
+                className="selected_button"
+                name="selectSlide"
+                onClick={(e) => handleActiveOption(e)}
+                style={{ background: "#0032a0" }}
+                marginRight={3}
+              >
+                Select Slides
+              </Button>
+              <Button
+                className="unselected_button"
+                name="questionnaire"
+                onClick={(e) => handleActiveOption(e)}
+                style={{ background: "#ffffff" }}
+                marginRight={3}
+              >
+                Questionnaire
+              </Button>
+            </Box>
+            <Box className="dividing_div" />
+            <Box className="bottom_div">
+              <Button className="reset" width={127} onClick={handleReset}>
+                Reset
+              </Button>
+              <Button
+                className="savennext"
+                bg="#0032a0"
+                colorScheme="#0032a0"
+                width={127}
+                marginLeft={7}
+                onClick={() => setActiveOption("questionnaire")}
+              >
+                Next
+              </Button>
+            </Box>
+          </Box>
+        )}
+        {activeOption === "questionnaire" &&
+          projectDetails.slide_type === "H&E" && (
+            <Box className="div_overlay">
+              <Box>
+                <Button
+                  className="unselected_button"
                   name="projectDetails"
                   onClick={(e) => handleActiveOption(e)}
+                  style={{ background: "#ffffff" }}
+                  marginRight={3}
                 >
                   Project details
-                </button>
-                <button
+                </Button>
+                <Button
                   className="unselected_button"
                   name="selectSlide"
                   onClick={(e) => handleActiveOption(e)}
+                  style={{ background: "#ffffff" }}
+                  marginRight={3}
                 >
                   Select Slides
-                </button>
-                <button
-                  className="unselected_button"
+                </Button>
+                <Button
+                  className="selected_button"
                   name="questionnaire"
                   onClick={(e) => handleActiveOption(e)}
+                  style={{ background: "#0032a0" }}
+                  marginRight={3}
                 >
                   Questionnaire
-                </button>
-              </div>
-              <div className="dividing_div" />
-              <div className="form_div">
-                <div>
-                  <label
-                    htmlFor="project_title"
-                    style={{ fontSize: "14px", color: "#2E519E" }}
-                  >
-                    Project Title
-                  </label>
-                  <br />
-                  <input
-                    type="text"
-                    id="project_title"
-                    name="project_title"
-                    value={projectDetails.project_title}
-                    className="project_title_input"
-                    placeholder="Eg: Digital Pathology"
-                    onChange={(e) => handleProjectDetails(e)}
-                  ></input>
-                  <br />
-                  <label
-                    htmlFor="project_desc"
-                    style={{
-                      fontSize: "14px",
-                      color: "#2E519E",
-                      position: "relative",
-                      top: "90px",
-                    }}
-                  >
-                    Project Description
-                  </label>
-                  <br />
-                  <textarea
-                    id="project_desc"
-                    name="project_desc"
-                    value={projectDetails.project_desc}
-                    className="project_desc"
-                    placeholder="Eg: Write a one- or two-paragraph explanation of what the project aims to accomplish"
-                    onChange={(e) => handleProjectDetails(e)}
-                  ></textarea>
-                  <br />
-                  <label
-                    htmlFor="project_type"
-                    style={{
-                      fontSize: "14px",
-                      color: "#2E519E",
-                      position: "relative",
-                      top: "260px",
-                    }}
-                  >
-                    Project type
-                  </label>
-                  <br />
-                  <select
-                    id="project_type"
-                    name="project_type"
-                    value={projectDetails.project_type}
-                    className="project_type_input"
-                    onChange={(e) => handleProjectDetails(e)}
-                  >
-                    <option value="Single-Slide Project">
-                      Single-Slide Project
-                    </option>
-                    <option value="Multi-Slide Project">
-                      Multi-Slide Project
-                    </option>
-                  </select>
-                  <br />
-                  <label
-                    htmlFor="slide_type"
-                    style={{
-                      fontSize: "14px",
-                      color: "#2E519E",
-                      position: "relative",
-                      top: "325px",
-                    }}
-                  >
-                    Slide type
-                  </label>
-                  <br />
-                  <select
-                    id="slide_type"
-                    name="slide_type"
-                    value={projectDetails.slide_type}
-                    className="slide_type_input"
-                    onChange={(e) => handleProjectDetails(e)}
-                  >
-                    <option value="H&E">H&E</option>
-                  </select>
-                </div>
-              </div>
-              <div className="bottom_div">
-                <button className="reset" onClick={handleReset}>
+                </Button>
+              </Box>
+              <Box className="dividing_div" />
+              <Box className="bottom_div">
+                <Button className="reset" width={127} onClick={handleReset}>
                   Reset
-                </button>
-                <button
+                </Button>
+                <Button
                   className="savennext"
-                  onClick={() => setActiveOption("selectSlide")}
-                >
-                  Next
-                </button>
-              </div>
-            </div>
-          </Flex>
-        )}
-        {activeOption === "selectSlide" && (
-          <Flex>
-            <div className="div_overlay">
-              <button
-                className="unselected_button"
-                name="projectDetails"
-                onClick={(e) => handleActiveOption(e)}
-              >
-                Project details
-              </button>
-              <button
-                className="selected_button"
-                name="selectSlide"
-                onClick={(e) => handleActiveOption(e)}
-              >
-                Select Slides
-              </button>
-              <button
-                className="unselected_button"
-                name="questionnaire"
-                onClick={(e) => handleActiveOption(e)}
-              >
-                Questionnaire
-              </button>
-              <div className="dividing_div" />
-              <div className="bottom_div">
-                <button className="reset">Reset</button>
-                <button
-                  className="savennext"
+                  bg="#0032a0"
+                  colorScheme="#0032a0"
+                  width={127}
+                  marginLeft={7}
                   onClick={() => setActiveOption("questionnaire")}
                 >
-                  Next
-                </button>
-              </div>
-            </div>
-          </Flex>
-        )}
-        {activeOption === "questionnaire" && (
-          <Flex>
-            <div className="div_overlay">
-              <button
-                className="unselected_button"
-                name="projectDetails"
-                onClick={(e) => handleActiveOption(e)}
-              >
-                Project details
-              </button>
-              <button
-                className="unselected_button"
-                name="selectSlide"
-                onClick={(e) => handleActiveOption(e)}
-              >
-                Select Slides
-              </button>
-              <button
-                className="selected_button"
-                name="questionnaire"
-                onClick={(e) => handleActiveOption(e)}
-              >
-                Questionnaire
-              </button>
-              <div className="dividing_div" />
-              <div className="bottom_div">
-                <button className="reset" onClick={handleReset}>
-                  Reset
-                </button>
-                <button className="savennext">Create</button>
-              </div>
-              <p
+                  Share
+                </Button>
+              </Box>
+              <Text
                 style={{
                   position: "absolute",
                   left: "20px",
@@ -236,8 +282,8 @@ const Newproject = () => {
                 }}
               >
                 Project type
-              </p>
-              <p
+              </Text>
+              <Text
                 style={{
                   position: "absolute",
                   left: "20px",
@@ -248,70 +294,44 @@ const Newproject = () => {
                 }}
               >
                 H&E Slides
-              </p>
-              <div className="questions_div">
-                <p>Q.1 Biopsy adequacy</p>
-                <div>
-                  <input
-                    type="radio"
-                    id="biopsy_yes"
-                    name="biopsy_adequacy"
-                    value="yes"
-                    style={{ marginLeft: "150px" }}
-                  />
-                  <label htmlFor="biopsy_yes" style={{ paddingLeft: "5px" }}>
-                    Yes
-                  </label>
-                  <input
-                    type="radio"
-                    id="biopsy_no"
-                    name="biopsy_adequacy"
-                    value="no"
-                    style={{ marginLeft: "50px" }}
-                  />
-                  <label htmlFor="biopsy_no" style={{ paddingLeft: "5px" }}>
+              </Text>
+              <Box className="questions_div">
+                <Text>Q.1 Biopsy adequacy</Text>
+                <RadioGroup style={{ paddingLeft: "150px" }}>
+                  <Radio value="yes">Yes</Radio>
+                  <Radio value="no" style={{ marginLeft: "50px" }}>
                     No
-                  </label>
-                </div>
-                <br />
-              </div>
-              <div className="questions_div" style={{ paddingTop: "40px" }}>
-                <p style={{ paddingLeft: "30px" }}>If No, indicate why?</p>
-                <div>
-                  <input
-                    type="radio"
-                    id="if_yes"
-                    name="if_no_indicate_why"
-                    value="Not in Focus"
-                    style={{ marginLeft: "132px" }}
-                  />
-                  <label htmlFor="if_yes" style={{ paddingLeft: "5px" }}>
+                  </Radio>
+                </RadioGroup>
+              </Box>
+              <Box className="questions_div" style={{ marginTop: "40px" }}>
+                <Text style={{ paddingLeft: "30px" }}>
+                  If No, indicate why?
+                </Text>
+                <RadioGroup>
+                  <Radio value="Not in Focus" style={{ marginLeft: "66px" }}>
                     Not in Focus
-                  </label>
-                  <input
-                    type="radio"
-                    id="if_no"
-                    name="if_no_indicate_why"
+                  </Radio>
+                  <Radio
                     value="Faded/Poor stain"
-                    style={{ marginLeft: "50px" }}
-                  />
-                  <label htmlFor="if_no" style={{ paddingLeft: "5px" }}>
+                    style={{ marginLeft: "18.5px" }}
+                  >
+                    {" "}
                     Faded/Poor stain
-                  </label>
-                  <input
-                    type="radio"
-                    id="other"
-                    name="if_no_indicate_why"
-                    value="other"
-                    style={{ marginLeft: "50px" }}
-                  />
-                  <label htmlFor="other" style={{ paddingLeft: "5px" }}>
+                  </Radio>
+                  <Radio value="other" style={{ marginLeft: "30px" }}>
                     other
-                  </label>
-                </div>
-                <br />
-              </div>
-              <p
+                  </Radio>
+                  <br />
+                  <Box>
+                    <Text paddingLeft={160} paddingTop={3}>
+                      Other:
+                      <Input width={450} marginLeft={2}></Input>
+                    </Text>
+                  </Box>
+                </RadioGroup>
+              </Box>
+              <Text
                 style={{
                   paddingLeft: "18px",
                   paddingTop: "300px",
@@ -319,176 +339,282 @@ const Newproject = () => {
                 }}
               >
                 NAFLD Activity Score(NAS)
-              </p>
-              <div className="questions_div" style={{ paddingTop: "180px" }}>
-                <p>Q.1 Steatosis</p>
-                <div>
-                  <input
-                    type="radio"
-                    id="steatosis_zero"
-                    name="steatosis"
-                    value="zero"
-                    style={{ marginLeft: "169px" }}
-                  />
-                  <label
-                    htmlFor="steatosis_zero"
-                    style={{ paddingLeft: "5px" }}
+              </Text>
+              <Box className="questions_div" style={{ marginTop: "180px" }}>
+                <Text>Q.1 Steatosis</Text>
+                <RadioGroup>
+                  <Radio
+                    value="steatosis_less_than_five"
+                    style={{ marginLeft: "84px" }}
                   >
-                    0
-                  </label>
-                  <input
-                    type="radio"
-                    id="steatosis_one"
-                    name="steatosis"
-                    value="one"
+                    {"<"} 5%
+                  </Radio>
+                  <Radio
+                    value="steatosis_between_five_and_thirtythree"
+                    style={{ marginLeft: "35px" }}
+                  >
+                    5-33%
+                  </Radio>
+                  <Radio
+                    value="steatosis_between_thirtyfour_and_sixtysix"
+                    style={{ marginLeft: "40px" }}
+                  >
+                    34-66%
+                  </Radio>
+                  <Radio
+                    value="steatosis_more_than_sixtysix"
+                    style={{ marginLeft: "38px" }}
+                  >
+                    {">"} 66%
+                  </Radio>
+                </RadioGroup>
+              </Box>
+              <Box className="questions_div" style={{ marginTop: "210px" }}>
+                <Text>Q.2 Lobular inflamation</Text>
+                <RadioGroup>
+                  <Radio
+                    value="lobular_inflammation_none"
                     style={{ marginLeft: "50px" }}
-                  />
-                  <label htmlFor="steatosis_one" style={{ paddingLeft: "5px" }}>
-                    1
-                  </label>
-                  <input
-                    type="radio"
-                    id="steatosis_two"
-                    name="steatosis"
-                    value="two"
-                    style={{ marginLeft: "50px" }}
-                  />
-                  <label htmlFor="steatosis_two" style={{ paddingLeft: "5px" }}>
-                    2
-                  </label>
-                  <input
-                    type="radio"
-                    id="steatosis_three"
-                    name="steatosis"
-                    value="three"
-                    style={{ marginLeft: "50px" }}
-                  />
-                  <label
-                    htmlFor="steatosis_three"
-                    style={{ paddingLeft: "5px" }}
                   >
-                    3
-                  </label>
-                </div>
-              </div>
-              <div className="questions_div" style={{ paddingTop: "210px" }}>
-                <p>Q.2 Lobular inflamation</p>
-                <div>
-                  <input
-                    type="radio"
-                    id="lobular_inflammation_zero"
-                    name="lobular_inflammation"
-                    value="zero"
-                    style={{ marginLeft: "100px" }}
-                  />
-                  <label
-                    htmlFor="lobular_inflammation_zero"
-                    style={{ paddingLeft: "5px" }}
+                    None
+                  </Radio>
+                  <Radio
+                    value="lobular_inflammation_less_than_two"
+                    style={{ marginLeft: "33.5px" }}
                   >
-                    0
-                  </label>
-                  <input
-                    type="radio"
-                    id="lobular_inflammation_one"
-                    name="lobular_inflammation"
-                    value="one"
-                    style={{ marginLeft: "50px" }}
-                  />
-                  <label
-                    htmlFor="lobular_inflammation_one"
-                    style={{ paddingLeft: "5px" }}
+                    {"<"} 2 / 20x mag
+                  </Radio>
+                  <Radio
+                    value="lobular_inflammation_between _two_and_four"
+                    style={{ marginLeft: "14px" }}
                   >
-                    1
-                  </label>
-                  <input
-                    type="radio"
-                    id="lobular_inflammation_two"
-                    name="lobular_inflammation"
-                    value="two"
-                    style={{ marginLeft: "50px" }}
-                  />
-                  <label
-                    htmlFor="lobular_inflammation_two"
-                    style={{ paddingLeft: "5px" }}
+                    2-4 / 20x mag
+                  </Radio>
+                  <Radio
+                    value="lobular_inflammation_more_than_four"
+                    style={{ marginLeft: "17px" }}
                   >
-                    2
-                  </label>
-                  <input
-                    type="radio"
-                    id="lobular_inflammation_three"
-                    name="lobular_inflammation"
-                    value="three"
-                    style={{ marginLeft: "50px" }}
-                  />
-                  <label
-                    htmlFor="lobular_inflammation_three"
-                    style={{ paddingLeft: "5px" }}
+                    {">"} 4 / 20x mag
+                  </Radio>
+                </RadioGroup>
+              </Box>
+              <Box className="questions_div" style={{ marginTop: "240px" }}>
+                <Text>Q.3 Hepatocellular ballooning</Text>
+                <RadioGroup>
+                  <Radio
+                    value="hepatocellular_ballooning_none"
+                    style={{ marginLeft: "28px" }}
                   >
-                    3
-                  </label>
-                </div>
-              </div>
-              <div className="questions_div" style={{ paddingTop: "240px" }}>
-                <p>Q.3 Hepatocellular ballooning</p>
-                <div>
-                  <input
-                    type="radio"
-                    id="hepatocellular_ballooning_zero"
-                    name="hepatocellular_ballooning"
-                    value="zero"
-                    style={{ marginLeft: "55px" }}
-                  />
-                  <label
-                    htmlFor="hepatocellular_ballooning_zero"
-                    style={{ paddingLeft: "5px" }}
+                    None
+                  </Radio>
+                  <Radio
+                    value="hepatocellular_ballooning_few"
+                    style={{ marginLeft: "33px" }}
                   >
-                    0
-                  </label>
-                  <input
-                    type="radio"
-                    id="hepatocellular_ballooning_one"
-                    name="hepatocellular_ballooning"
-                    value="one"
-                    style={{ marginLeft: "50px" }}
-                  />
-                  <label
-                    htmlFor="hepatocellular_ballooning_one"
-                    style={{ paddingLeft: "5px" }}
+                    Few
+                  </Radio>
+                  <Radio
+                    value="hepatocellular_ballooning_many"
+                    style={{ marginLeft: "48px" }}
                   >
-                    1
-                  </label>
-                  <input
-                    type="radio"
-                    id="hepatocellular_ballooning_two"
-                    name="hepatocellular_ballooning"
-                    value="two"
-                    style={{ marginLeft: "50px" }}
-                  />
-                  <label
-                    htmlFor="hepatocellular_ballooning_two"
-                    style={{ paddingLeft: "5px" }}
+                    Many
+                  </Radio>
+                </RadioGroup>
+              </Box>
+            </Box>
+          )}
+        {activeOption === "questionnaire" &&
+          projectDetails.slide_type === "Trichrome" && (
+            <Box className="div_overlay">
+              <Box>
+                <Button
+                  className="unselected_button"
+                  name="projectDetails"
+                  onClick={(e) => handleActiveOption(e)}
+                  style={{ background: "#ffffff" }}
+                  marginRight={3}
+                >
+                  Project details
+                </Button>
+                <Button
+                  className="unselected_button"
+                  name="selectSlide"
+                  onClick={(e) => handleActiveOption(e)}
+                  style={{ background: "#ffffff" }}
+                  marginRight={3}
+                >
+                  Select Slides
+                </Button>
+                <Button
+                  className="selected_button"
+                  name="questionnaire"
+                  onClick={(e) => handleActiveOption(e)}
+                  style={{ background: "#0032a0" }}
+                  marginRight={3}
+                >
+                  Questionnaire
+                </Button>
+              </Box>
+              <Box className="dividing_div" />
+              <Box className="bottom_div">
+                <Button className="reset" width={127} onClick={handleReset}>
+                  Reset
+                </Button>
+                <Button
+                  className="savennext"
+                  bg="#0032a0"
+                  colorScheme="#0032a0"
+                  width={127}
+                  marginLeft={7}
+                  onClick={() => setActiveOption("questionnaire")}
+                >
+                  Share
+                </Button>
+              </Box>
+              <Text
+                style={{
+                  position: "absolute",
+                  left: "20px",
+                  top: "106px",
+                  fontSize: "14px",
+                  color: "#2E519E",
+                }}
+              >
+                Project type
+              </Text>
+              <Text
+                style={{
+                  position: "absolute",
+                  left: "20px",
+                  fontSize: "20px",
+                  color: "#2E519E",
+                  top: "135px",
+                }}
+                fontWeight="semibold"
+              >
+                Trichrome Slides
+              </Text>
+              <Box className="questions_div">
+                <Text>Q.1 Biopsy adequacy</Text>
+                <RadioGroup style={{ paddingLeft: "150px" }}>
+                  <Radio value="yes">Yes</Radio>
+                  <Radio value="no" style={{ marginLeft: "50px" }}>
+                    No
+                  </Radio>
+                </RadioGroup>
+              </Box>
+              <Box className="questions_div" style={{ marginTop: "40px" }}>
+                <Text style={{ paddingLeft: "30px" }}>
+                  If No, indicate why?
+                </Text>
+                <RadioGroup>
+                  <Radio value="Not in Focus" style={{ marginLeft: "66px" }}>
+                    Not in Focus
+                  </Radio>
+                  <Radio
+                    value="Faded/Poor stain"
+                    style={{ marginLeft: "18.5px" }}
                   >
-                    2
-                  </label>
-                  <input
-                    type="radio"
-                    id="hepatocellular_ballooning_three"
-                    name="hepatocellular_ballooning"
-                    value="three"
-                    style={{ marginLeft: "50px" }}
-                  />
-                  <label
-                    htmlFor="hepatocellular_ballooning_three"
-                    style={{ paddingLeft: "5px" }}
+                    {" "}
+                    Faded/Poor stain
+                  </Radio>
+                  <Radio value="other" style={{ marginLeft: "30px" }}>
+                    other
+                  </Radio>
+                  <br />
+                  <Box>
+                    <Text paddingLeft={160} paddingTop={3}>
+                      Other:
+                      <Input width={450} marginLeft={2}></Input>
+                    </Text>
+                  </Box>
+                </RadioGroup>
+              </Box>
+              <Box className="questions_div" style={{ marginTop: "140px" }}>
+                <Text>
+                  Q.2 Biopsy Length :
+                  <Input
+                    variant="flushed"
+                    width={300}
+                    marginLeft={165}
+                    height={5}
+                    placeholder="Biopsy length"
+                  ></Input>
+                </Text>
+              </Box>
+              <Box className="questions_div" style={{ marginTop: "178px" }}>
+                <Text>
+                  Q.3 Number of portal tracts :
+                  <Input
+                    variant="flushed"
+                    width={300}
+                    marginLeft={105}
+                    height={5}
+                    placeholder="Number of portal tracts"
+                  ></Input>
+                </Text>
+              </Box>
+              <Text
+                paddingTop={380}
+                paddingLeft={18}
+                color="#2E519E"
+                fontSize={20}
+                fontWeight="semibold"
+              >
+                Fibrosis Stage
+              </Text>
+              <Box className="questions_div" style={{ marginTop: "280px" }}>
+                <Text>Q.1 NASH CRN</Text>
+                <RadioGroup>
+                  <Radio value="nashcrn_none" style={{ marginLeft: "95px" }}>
+                    None
+                  </Radio>
+                  <Radio
+                    value="nashcrn_mid_zone_perisinusoidal"
+                    style={{ marginLeft: "40px" }}
                   >
-                    3
-                  </label>
-                </div>
-              </div>
-            </div>
-          </Flex>
-        )}
-      </div>
+                    Mid, Zone 3, Perisinusoidal
+                  </Radio>
+                  <Radio
+                    value="nashcrn_zone_periportal"
+                    style={{ marginLeft: "23px" }}
+                  >
+                    Zone 3 & periportal
+                  </Radio>
+                  <Radio
+                    value="nashcrn_bridging"
+                    style={{ marginLeft: "23px" }}
+                  >
+                    Bridging
+                  </Radio>
+                  <br />
+                  <Radio
+                    value="nashcrn_cirrhosis"
+                    marginTop={7}
+                    marginLeft={190}
+                  >
+                    Cirrhosis
+                  </Radio>
+                  <Radio
+                    value="nashcrn_moderate_zone_perisinusoidal"
+                    marginTop={7}
+                    marginLeft={54}
+                  >
+                    Moderate, Zone 3, Perisinusoidal
+                  </Radio>
+                  <br />
+                  <Radio
+                    value="nashcrn_portal/periportal"
+                    marginTop={7}
+                    marginLeft={190}
+                  >
+                    Portal / periportal only
+                  </Radio>
+                </RadioGroup>
+              </Box>
+            </Box>
+          )}
+      </Box>
     </>
   );
 };

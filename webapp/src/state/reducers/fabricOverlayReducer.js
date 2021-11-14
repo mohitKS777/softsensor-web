@@ -11,20 +11,22 @@ export const getLocalUserCanvases = () => {
   }
 };
 
+const defaultViewerWindow = {
+  activeUserCanvas: "",
+  fabricOverlay: null,
+  userCanvases: getLocalUserCanvases(),
+  viewer: null,
+  activityFeed: [],
+  zoomValue: 0,
+};
+
 const fabricOverlaySlice = createSlice({
   name: "fabricOverlay",
   initialState: {
     activeTool: "Move",
     color: brandColors[0],
     viewerWindow: {
-      viewer1: {
-        activeUserCanvas: "",
-        fabricOverlay: null,
-        userCanvases: getLocalUserCanvases(),
-        viewer: null,
-        activityFeed: [],
-        zoomValue: 0,
-      },
+      viewer1: defaultViewerWindow,
     },
     username: "",
     roomName: "",
@@ -72,6 +74,11 @@ const fabricOverlaySlice = createSlice({
       state.viewerWindow[action.payload.id].activityFeed = [];
       state.viewerWindow[action.payload.id].zoomValue = 0;
     },
+    resetFabricOverlay: (state, action) => {
+      state.viewerWindow[action.payload.id] = defaultViewerWindow;
+      state.activeTool = "Move";
+      state.color = brandColors[0];
+    },
   },
 });
 
@@ -87,6 +94,7 @@ export const {
   updateZoomValue,
   updateActivityFeed,
   resetViewer,
+  resetFabricOverlay,
 } = fabricOverlaySlice.actions;
 
 export default fabricOverlaySlice.reducer;

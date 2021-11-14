@@ -21,14 +21,13 @@ import {
 import { BiTime } from "react-icons/bi";
 import { BsList } from "react-icons/bs";
 import { IoGridOutline } from "react-icons/io5";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import ProjectLink from "../Project/projectLink";
 import ProgressBar from "@ramonak/react-progress-bar";
 import { useGetUserInfoQuery } from "../../state/api/medicalApi";
 import moment from "moment";
 
-const Recent = () => {
+const Projects = () => {
   const { user } = useAuth0();
   const { data } = useGetUserInfoQuery({
     subClaim: user?.sub,
@@ -53,10 +52,10 @@ const Recent = () => {
           marginBottom="20px"
           borderColor="#3965C5"
           borderBottom="1px"
-          paddingBottom="5px"
+          paddingBottom="10px"
           // fontSize="2xl"
         >
-          Recently Viewed
+          Projects
         </Text>
         <Spacer />
         <IconButton
@@ -74,7 +73,7 @@ const Recent = () => {
         <Table
           variant="unstyled"
           marginTop="0px"
-          size="md"
+          size="sm"
           className="recently__viewed__table"
         >
           <Thead>
@@ -86,7 +85,7 @@ const Recent = () => {
               <Th color="#8aaeff" isNumeric>
                 Progress
               </Th>
-              {/* <Th isNumeric /> */}
+              <Th isNumeric />
             </Tr>
           </Thead>
           <Tbody>
@@ -96,6 +95,7 @@ const Recent = () => {
                   <Tr
                     borderBottom="1px solid #3965C5"
                     _hover={{ bg: "#bacfff" }}
+                    key={project._id}
                   >
                     <Td color="#3965C5" fontWeight="bold">
                       <Icon as={BiTime} marginRight={1} w={5} h={4} />
@@ -118,7 +118,7 @@ const Recent = () => {
                                     <CircularProgressbar value="85" text="85%" styles={buildStyles({ textSize: '30px', pathColor: '#67818d', textColor: '#67818d' })} />
                                     <CircularProgressbar value="50" text="50%" styles={buildStyles({ textSize: '30px', pathColor: '#9efadb', textColor: '#9efadb' })} />
                                 </Stack> */}
-                      Single-slide Project
+                      {project?.type ? project.type : "Single Slide"}
                     </Td>
                     {/* <Td isNumeric>
                                 <Stack direction="row" justify="end">
@@ -146,4 +146,4 @@ const Recent = () => {
   );
 };
 
-export default Recent;
+export default Projects;

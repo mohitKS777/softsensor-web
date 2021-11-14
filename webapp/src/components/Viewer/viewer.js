@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useOpenSeadragon, OpenSeadragon } from "use-open-seadragon";
 import { fabric, initFabricJSOverlay } from "openseadragon-fabricjs-overlay";
 import { useDispatch, useSelector } from "react-redux";
-import { updateOverlay } from "../../state/reducers/fabricOverlayReducer";
+import {
+  updateOverlay,
+  updateUserCanvases,
+} from "../../state/reducers/fabricOverlayReducer";
 import { isBrowser } from "react-device-detect";
 import { Box } from "@chakra-ui/react";
 import ViewerControls from "./controls";
@@ -83,6 +86,13 @@ const Viewer = ({ viewerId, tile }) => {
         viewer: viewer,
       })
     );
+    return () => {
+      updateOverlay({
+        id: viewerId,
+        fabricOverlay: null,
+        viewer: null,
+      });
+    };
   }, [dispatch, viewer]);
 
   return (
@@ -100,8 +110,8 @@ const Viewer = ({ viewerId, tile }) => {
 };
 
 Viewer.propTypes = {
-  tile: PropTypes.object,
-  name: PropTypes.string,
+  tile: PropTypes.string,
+  viewerId: PropTypes.string,
 };
 
 export default Viewer;
