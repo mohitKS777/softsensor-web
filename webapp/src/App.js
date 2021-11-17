@@ -79,6 +79,9 @@ const App = () => {
             <Route path="/project">
               <Project />
             </Route>
+            <Route path="/newproject">
+              <Newproject />
+            </Route>
           </Switch>
         </SocketWrapper>
       </ChakraProvider>
