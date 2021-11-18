@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { resetNewProject } from "../../state/reducers/newProjectReducer";
+import {
+  addMembers,
+  resetNewProject,
+} from "../../state/reducers/newProjectReducer";
 import Projectdetails from "./projectdetails";
 import Selectslide from "./selectSlide";
 import Questionnaire from "./handequestionnaire";
@@ -21,19 +24,20 @@ import {
 } from "@chakra-ui/react";
 
 import { AddIcon, ChevronDownIcon, LinkIcon } from "@chakra-ui/icons";
+import { AiOutlineUserAdd } from "react-icons/ai";
 
 const Share = () => {
-  const [activeOption, setActiveOption] = useState("Share");
-  const { projectDetails } = useSelector((state) => state.newProjectState);
-  const dispatch = useDispatch();
   const [userImage, setUserImage] = useState();
+  const [value, setValue] = useState("");
+  const { members } = useSelector((state) => state.newProjectState);
+  const dispatch = useDispatch();
 
-  const handleActiveOption = (e) => {
-    setActiveOption(e.target.name);
+  const handleInput = (e) => {
+    setValue(e.target.value);
   };
-
-  const handleReset = () => {
-    dispatch(resetNewProject());
+  const handleAddMember = () => {
+    dispatch(addMembers(value));
+    setValue("");
   };
 
   return (
@@ -49,13 +53,19 @@ const Share = () => {
                 name="readers_list"
                 marginTop="18px"
                 border="1px"
+                value={value}
                 borderColor="#2e519e"
                 opacity={0.6}
                 bg="rgba(0, 50, 160, 0.1)"
+                onChange={(e) => handleInput(e)}
               ></Input>
               <InputRightElement
                 marginTop="18px"
-                children={<Icon name="add" color="blue.500" />}
+                onClick={handleAddMember}
+                cursor="pointer"
+                children={
+                  <AiOutlineUserAdd name="add" color="blue.500" size={20} />
+                }
               />
             </InputGroup>
           </Text>
@@ -63,7 +73,7 @@ const Share = () => {
           <Box marginTop={50} marginLeft={-600}>
             <Menu>
               <MenuButton
-                Icon={<LinkIcon />}
+                icon={<LinkIcon />}
                 as={Button}
                 rightIcon={<ChevronDownIcon />}
                 bg="white"
@@ -73,57 +83,43 @@ const Share = () => {
               </MenuButton>
               <MenuList>
                 <MenuItem icon={<LinkIcon />}>Anyone with the link</MenuItem>
-                <MenuItem icon={<AddIcon />}>Robert Rogers</MenuItem>
-                <MenuItem icon={<AddIcon />}>Zoe Margut</MenuItem>
+                {/* <MenuItem icon={<AddIcon />}>Robert Rogers</MenuItem>
+                <MenuItem icon={<AddIcon />}>Zoe Margut</MenuItem> */}
               </MenuList>
             </Menu>
           </Box>
-          <Box className="questions_div" width={800} marginTop={-20}>
-            <Image
-              borderRadius="full"
-              boxSize="150px"
-              src={userImage}
-              alt="User"
-            />
-            <Box width={800}>
-              <Text marginLeft={2} fontSize={16} color="#3965C6">
-                Robert Rogers(You)
-              </Text>
-              <Text
-                align="right"
-                marginTop={-6}
-                color="rgba(57, 101, 198, 0.46)"
+          {members.map((member) => {
+            return (
+              <Box
+                className="questions_div"
+                width={800}
+                marginTop={-20}
+                key={member}
               >
-                Owner
-              </Text>
-              <Text marginLeft={2} fontSize={12}>
-                User1@gmail.com
-              </Text>
-            </Box>
-          </Box>
-          <Box className="questions_div" width={800}>
-            <Image
-              borderRadius="full"
-              boxSize="150px"
-              src={userImage}
-              alt="User"
-            />
-            <Box width={800}>
-              <Text marginLeft={2} fontSize={16} color="#3965C6">
-                Zoe Margut
-              </Text>
-              <Text
-                align="right"
-                marginTop={-6}
-                color="rgba(57, 101, 198, 0.46)"
-              >
-                Reader
-              </Text>
-              <Text marginLeft={2} fontSize={12}>
-                User2@gmail.com
-              </Text>
-            </Box>
-          </Box>
+                {/* <Image
+                borderRadius="full"
+                boxSize="150px"
+                src={userImage}
+                alt="User"
+              /> */}
+                <Box width={800}>
+                  <Text marginLeft={2} fontSize={16} color="#3965C6">
+                    {member}
+                  </Text>
+                  {/* <Text
+                  align="right"
+                  marginTop={-6}
+                  color="rgba(57, 101, 198, 0.46)"
+                >
+                  Owner
+                </Text>
+                <Text marginLeft={2} fontSize={12}>
+                  User1@gmail.com
+                </Text> */}
+                </Box>
+              </Box>
+            );
+          })}
         </Box>
       </Box>
     </>

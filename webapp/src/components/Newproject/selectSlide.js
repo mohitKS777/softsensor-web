@@ -6,6 +6,7 @@ import { Box, Button } from "@chakra-ui/react";
 import Projectdetails from "./projectdetails";
 import Questionnaire from "./handequestionnaire";
 import Share from "./shareproject";
+import SlideFileUpload from "./slideFileUpload";
 
 const Selectslide = () => {
   const [activeOption, setActiveOption] = useState("selectSlide");
@@ -21,6 +22,9 @@ const Selectslide = () => {
   };
   return (
     <>
+      <Box className="form_div" w="90%">
+        <SlideFileUpload />
+      </Box>
       <Box className="bottom_div">
         <Button className="reset" width={127} onClick={handleReset}>
           Reset

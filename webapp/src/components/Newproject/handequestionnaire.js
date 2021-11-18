@@ -8,17 +8,7 @@ import Selectslide from "./selectSlide";
 import Share from "./shareproject";
 
 const Questionnaire = () => {
-  const [activeOption, setActiveOption] = useState("questionnaire");
   const { projectDetails } = useSelector((state) => state.newProjectState);
-  const dispatch = useDispatch();
-
-  const handleActiveOption = (e) => {
-    setActiveOption(e.target.name);
-  };
-
-  const handleReset = () => {
-    dispatch(resetNewProject());
-  };
 
   return (
     <>
@@ -33,7 +23,7 @@ const Questionnaire = () => {
       >
         Project type
       </Text>
-      {activeOption === "questionnaire" && projectDetails.slide_type === "H&E" && (
+      {projectDetails.slideType === "H&E" && (
         <>
           <Text
             style={{
@@ -171,132 +161,128 @@ const Questionnaire = () => {
         </>
       )}
 
-      {activeOption === "questionnaire" &&
-        projectDetails.slide_type === "Trichrome" && (
-          <>
-            <Text
-              style={{
-                position: "absolute",
-                left: "20px",
-                fontSize: "20px",
-                color: "#2E519E",
-                top: "135px",
-              }}
-              fontWeight="semibold"
-            >
-              Trichrome Slides
+      {projectDetails.slideType === "Trichrome" && (
+        <>
+          <Text
+            style={{
+              position: "absolute",
+              left: "20px",
+              fontSize: "20px",
+              color: "#2E519E",
+              top: "135px",
+            }}
+            fontWeight="semibold"
+          >
+            Trichrome Slides
+          </Text>
+          <Box className="questions_div">
+            <Text>Q.1 Biopsy adequacy</Text>
+            <RadioGroup style={{ paddingLeft: "150px" }}>
+              <Radio value="yes">Yes</Radio>
+              <Radio value="no" style={{ marginLeft: "50px" }}>
+                No
+              </Radio>
+            </RadioGroup>
+          </Box>
+          <Box className="questions_div" style={{ marginTop: "40px" }}>
+            <Text style={{ paddingLeft: "30px" }}>If No, indicate why?</Text>
+            <RadioGroup>
+              <Radio value="Not in Focus" style={{ marginLeft: "66px" }}>
+                Not in Focus
+              </Radio>
+              <Radio value="Faded/Poor stain" style={{ marginLeft: "18.5px" }}>
+                {" "}
+                Faded/Poor stain
+              </Radio>
+              <Radio value="other" style={{ marginLeft: "30px" }}>
+                other
+              </Radio>
+              <br />
+              <Box>
+                <Text paddingLeft={160} paddingTop={3}>
+                  Other:
+                  <Input width={450} marginLeft={2}></Input>
+                </Text>
+              </Box>
+            </RadioGroup>
+          </Box>
+          <Box className="questions_div" style={{ marginTop: "140px" }}>
+            <Text>
+              Q.2 Biopsy Length :
+              <Input
+                variant="flushed"
+                width={300}
+                marginLeft={165}
+                height={5}
+                placeholder="Biopsy length"
+              ></Input>
             </Text>
-            <Box className="questions_div">
-              <Text>Q.1 Biopsy adequacy</Text>
-              <RadioGroup style={{ paddingLeft: "150px" }}>
-                <Radio value="yes">Yes</Radio>
-                <Radio value="no" style={{ marginLeft: "50px" }}>
-                  No
-                </Radio>
-              </RadioGroup>
-            </Box>
-            <Box className="questions_div" style={{ marginTop: "40px" }}>
-              <Text style={{ paddingLeft: "30px" }}>If No, indicate why?</Text>
-              <RadioGroup>
-                <Radio value="Not in Focus" style={{ marginLeft: "66px" }}>
-                  Not in Focus
-                </Radio>
-                <Radio
-                  value="Faded/Poor stain"
-                  style={{ marginLeft: "18.5px" }}
-                >
-                  {" "}
-                  Faded/Poor stain
-                </Radio>
-                <Radio value="other" style={{ marginLeft: "30px" }}>
-                  other
-                </Radio>
-                <br />
-                <Box>
-                  <Text paddingLeft={160} paddingTop={3}>
-                    Other:
-                    <Input width={450} marginLeft={2}></Input>
-                  </Text>
-                </Box>
-              </RadioGroup>
-            </Box>
-            <Box className="questions_div" style={{ marginTop: "140px" }}>
-              <Text>
-                Q.2 Biopsy Length :
-                <Input
-                  variant="flushed"
-                  width={300}
-                  marginLeft={165}
-                  height={5}
-                  placeholder="Biopsy length"
-                ></Input>
-              </Text>
-            </Box>
-            <Box className="questions_div" style={{ marginTop: "178px" }}>
-              <Text>
-                Q.3 Number of portal tracts :
-                <Input
-                  variant="flushed"
-                  width={300}
-                  marginLeft={105}
-                  height={5}
-                  placeholder="Number of portal tracts"
-                ></Input>
-              </Text>
-            </Box>
-            <Text
-              paddingTop={380}
-              paddingLeft={18}
-              color="#2E519E"
-              fontSize={20}
-              fontWeight="semibold"
-            >
-              Fibrosis Stage
+          </Box>
+          <Box className="questions_div" style={{ marginTop: "178px" }}>
+            <Text>
+              Q.3 Number of portal tracts :
+              <Input
+                variant="flushed"
+                width={300}
+                marginLeft={105}
+                height={5}
+                placeholder="Number of portal tracts"
+              ></Input>
             </Text>
-            <Box className="questions_div" style={{ marginTop: "280px" }}>
-              <Text>Q.1 NASH CRN</Text>
-              <RadioGroup>
-                <Radio value="nashcrn_none" style={{ marginLeft: "95px" }}>
-                  None
-                </Radio>
-                <Radio
-                  value="nashcrn_mid_zone_perisinusoidal"
-                  style={{ marginLeft: "40px" }}
-                >
-                  Mid, Zone 3, Perisinusoidal
-                </Radio>
-                <Radio
-                  value="nashcrn_zone_periportal"
-                  style={{ marginLeft: "23px" }}
-                >
-                  Zone 3 & periportal
-                </Radio>
-                <Radio value="nashcrn_bridging" style={{ marginLeft: "23px" }}>
-                  Bridging
-                </Radio>
-                <br />
-                <Radio value="nashcrn_cirrhosis" marginTop={7} marginLeft={190}>
-                  Cirrhosis
-                </Radio>
-                <Radio
-                  value="nashcrn_moderate_zone_perisinusoidal"
-                  marginTop={7}
-                  marginLeft={54}
-                >
-                  Moderate, Zone 3, Perisinusoidal
-                </Radio>
-                <br />
-                <Radio
-                  value="nashcrn_portal/periportal"
-                  marginTop={7}
-                  marginLeft={190}
-                >
-                  Portal / periportal only
-                </Radio>
-              </RadioGroup>
-            </Box>
-          </>
-        )}
+          </Box>
+          <Text
+            paddingTop={380}
+            paddingLeft={18}
+            color="#2E519E"
+            fontSize={20}
+            fontWeight="semibold"
+          >
+            Fibrosis Stage
+          </Text>
+          <Box className="questions_div" style={{ marginTop: "280px" }}>
+            <Text>Q.1 NASH CRN</Text>
+            <RadioGroup>
+              <Radio value="nashcrn_none" style={{ marginLeft: "95px" }}>
+                None
+              </Radio>
+              <Radio
+                value="nashcrn_mid_zone_perisinusoidal"
+                style={{ marginLeft: "40px" }}
+              >
+                Mid, Zone 3, Perisinusoidal
+              </Radio>
+              <Radio
+                value="nashcrn_zone_periportal"
+                style={{ marginLeft: "23px" }}
+              >
+                Zone 3 & periportal
+              </Radio>
+              <Radio value="nashcrn_bridging" style={{ marginLeft: "23px" }}>
+                Bridging
+              </Radio>
+              <br />
+              <Radio value="nashcrn_cirrhosis" marginTop={7} marginLeft={190}>
+                Cirrhosis
+              </Radio>
+              <Radio
+                value="nashcrn_moderate_zone_perisinusoidal"
+                marginTop={7}
+                marginLeft={54}
+              >
+                Moderate, Zone 3, Perisinusoidal
+              </Radio>
+              <br />
+              <Radio
+                value="nashcrn_portal/periportal"
+                marginTop={7}
+                marginLeft={190}
+              >
+                Portal / periportal only
+              </Radio>
+            </RadioGroup>
+          </Box>
+        </>
+      )}
     </>
   );
 };

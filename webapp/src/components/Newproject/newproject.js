@@ -1,17 +1,44 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box } from "@chakra-ui/react";
+import {
+  resetNewProject,
+  updateProject,
+} from "../../state/reducers/newProjectReducer";
+import "../../styles/newproject.css";
+import {
+  Radio,
+  RadioGroup,
+  Box,
+  Button,
+  Select,
+  Input,
+  Text,
+  Textarea,
+} from "@chakra-ui/react";
+import SlideFileUpload from "./slideFileUpload";
+import {
+  useCreateProjectMutation,
+  useAddMultipleMembersToProjectMutation,
+} from "../../state/api/medicalApi";
+import { useAuth0 } from "@auth0/auth0-react";
 import Projectdetails from "./projectdetails";
 import Selectslide from "./selectSlide";
 import Questionnaire from "./handequestionnaire";
 import Share from "./shareproject";
-import { Button } from "@chakra-ui/react";
-import { resetNewProject } from "../../state/reducers/newProjectReducer";
-// import SlideFileUpload from "./slideFileUpload";
+import { MdCardMembership } from "react-icons/md";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { setActiveOption as menuOption } from "../../state/reducers/dashboardReducer";
 
 const Newproject = () => {
   const [activeOption, setActiveOption] = useState("projectDetails");
-  const { projectDetails } = useSelector((state) => state.newProjectState);
+  const { user } = useAuth0();
+  const { projectDetails, members } = useSelector(
+    (state) => state.newProjectState
+  );
+  const history = useHistory();
+  const [createProject] = useCreateProjectMutation();
+  const [addMultipleMembersToProject] =
+    useAddMultipleMembersToProjectMutation();
   const dispatch = useDispatch();
   const handleReset = () => {
     dispatch(resetNewProject());
@@ -32,6 +59,22 @@ const Newproject = () => {
   const [buttonStyleShare, setButtonStyleShare] = useState("unselected_button");
   const [buttonBackgroundShare, setButtonBackgroundShare] = useState("#ffffff");
   const [buttonText, setButtonText] = useState("Next");
+
+  const handleCreateProject = async () => {
+    const resp = await createProject({
+      subClaim: user?.sub,
+      uploadType: "multiUpload",
+      ...projectDetails,
+    });
+    await addMultipleMembersToProject({
+      subClaim: user?.sub,
+      usernames: members,
+      projectId: resp.data._id,
+    });
+    dispatch(resetNewProject());
+    dispatch(menuOption("projects"));
+    // handleActiveOptionProjectDetails();
+  };
 
   const handleActiveOptionProjectDetails = (e) => {
     setActiveOption("projectDetails");
@@ -79,7 +122,7 @@ const Newproject = () => {
     setButtonBackgroundQuestionnaire("#ffffff");
     setButtonBackgroundProjectDetails("#ffffff");
     setButtonBackgroundSelectSlide("#ffffff");
-    setButtonText("Share");
+    setButtonText("Create");
   };
 
   const setNextButton = () => {
@@ -88,81 +131,79 @@ const Newproject = () => {
       handleActiveOptionQuestionnaire();
     } else if (activeOption === "questionnaire") {
       handleActiveOptionShare();
-      setButtonText("Share");
+      setButtonText("Create");
     } else if (activeOption === "projectDetails") {
       handleActiveOptionSelectSlide();
       setButtonText("Next");
+    } else {
+      handleCreateProject();
     }
   };
 
   return (
-    <>
-      <>
-        <Box className="div_overlay">
-          <Box>
-            <Button
-              className={buttonStyleProjectDetails}
-              name="projectDetails"
-              onClick={(e) => handleActiveOptionProjectDetails(e)}
-              background={buttonBackgroundProjectDetails}
-              marginRight={3}
-            >
-              Project details
-            </Button>
-            <Button
-              className={buttonStyleSelectSlide}
-              name="selectSlide"
-              onClick={(e) => handleActiveOptionSelectSlide(e)}
-              background={buttonBackgroundSelectSlide}
-              marginRight={3}
-            >
-              Select Slides
-            </Button>
-            <Button
-              className={buttonStyleQuestionnaire}
-              name="questionnaire"
-              onClick={(e) => handleActiveOptionQuestionnaire(e)}
-              background={buttonBackgroundQuestionnaire}
-              marginRight={3}
-            >
-              Questionnaire
-            </Button>
-            <Button
-              className={buttonStyleShare}
-              name="Share"
-              onClick={(e) => handleActiveOptionShare(e)}
-              background={buttonBackgroundShare}
-              marginRight={3}
-            >
-              Share
-            </Button>
-          </Box>
-          <Box className="dividing_div" />
-          <Box>
-            {activeOption === "projectDetails" && <Projectdetails />}
-            {activeOption === "selectSlide" && <Selectslide />}
-            {activeOption === "questionnaire" && <Questionnaire />}
+    <Box className="div_overlay">
+      <Box>
+        <Button
+          className={buttonStyleProjectDetails}
+          name="projectDetails"
+          onClick={(e) => handleActiveOptionProjectDetails(e)}
+          background={buttonBackgroundProjectDetails}
+          marginRight={3}
+        >
+          Project details
+        </Button>
+        <Button
+          className={buttonStyleSelectSlide}
+          name="selectSlide"
+          onClick={(e) => handleActiveOptionSelectSlide(e)}
+          background={buttonBackgroundSelectSlide}
+          marginRight={3}
+        >
+          Select Slides
+        </Button>
+        <Button
+          className={buttonStyleQuestionnaire}
+          name="questionnaire"
+          onClick={(e) => handleActiveOptionQuestionnaire(e)}
+          background={buttonBackgroundQuestionnaire}
+          marginRight={3}
+        >
+          Questionnaire
+        </Button>
+        <Button
+          className={buttonStyleShare}
+          name="Share"
+          onClick={(e) => handleActiveOptionShare(e)}
+          background={buttonBackgroundShare}
+          marginRight={3}
+        >
+          Share
+        </Button>
+      </Box>
+      <Box className="dividing_div" />
+      <Box>
+        {activeOption === "projectDetails" && <Projectdetails />}
+        {activeOption === "selectSlide" && <Selectslide />}
+        {activeOption === "questionnaire" && <Questionnaire />}
 
-            {activeOption === "Share" && <Share />}
-          </Box>
-          <Box className="bottom_div">
-            <Button className="reset" width={127} onClick={handleReset}>
-              Reset
-            </Button>
-            <Button
-              className="savennext"
-              bg="#0032a0"
-              colorScheme="#0032a0"
-              width={127}
-              marginLeft={7}
-              onClick={() => setNextButton()}
-            >
-              {buttonText}
-            </Button>
-          </Box>
-        </Box>
-      </>
-    </>
+        {activeOption === "Share" && <Share />}
+      </Box>
+      <Box className="bottom_div">
+        <Button className="reset" width={127} onClick={handleReset}>
+          Reset
+        </Button>
+        <Button
+          className="savennext"
+          bg="#0032a0"
+          colorScheme="#0032a0"
+          width={127}
+          marginLeft={7}
+          onClick={() => setNextButton()}
+        >
+          {buttonText}
+        </Button>
+      </Box>
+    </Box>
   );
 };
 

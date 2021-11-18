@@ -146,7 +146,10 @@ const Project = () => {
                 </Text>
               </HStack>
               <Flex>
-                <TasksAssigned tasks={project?.cases} />
+                <TasksAssigned
+                  tasks={project?.cases}
+                  slideType={project?.slideType}
+                />
                 <Spacer />
                 <TeamInfo members={project?.members} />
               </Flex>

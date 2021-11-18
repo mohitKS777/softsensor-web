@@ -2,11 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   projectDetails: {
-    project_title: "",
-    project_desc: "",
-    project_type: "Single-Slide Project",
-    slide_type: "H&E",
+    projectName: "",
+    projectDescription: "",
+    projectType: "singleSlide",
+    slideType: "H&E",
+    cases: [],
   },
+  members: [],
   qna: {
     biopsy_adequacy: null,
     if_no_indicate_why: null,
@@ -23,8 +25,14 @@ const newProjectSlice = createSlice({
     updateProject: (state, action) => {
       state.projectDetails[action.payload.name] = action.payload.value;
     },
+    updateCases: (state, action) => {
+      state.projectDetails["cases"] = action.payload;
+    },
     updateQna: (state, action) => {
       state.qna[action.payload.name] = action.payload.value;
+    },
+    addMembers: (state, action) => {
+      state.members.push(action.payload);
     },
     // addQuestion: (state) => {
     //   state.questionnaire.push({ question: "", description: "", answer: "" });
@@ -48,13 +56,19 @@ const newProjectSlice = createSlice({
     // },
     resetNewProject: (state) => {
       state.projectDetails = initialState.projectDetails;
+      state.members = initialState.members;
       //   state.isAddQna = false;
       //   state.questionnaire = initialState.questionnaire;
     },
   },
 });
 
-export const { updateProject, updateQna, resetNewProject } =
-  newProjectSlice.actions;
+export const {
+  updateProject,
+  updateQna,
+  resetNewProject,
+  updateCases,
+  addMembers,
+} = newProjectSlice.actions;
 
 export default newProjectSlice.reducer;

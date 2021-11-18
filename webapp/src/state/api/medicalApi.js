@@ -10,7 +10,7 @@ const medicalApiSlice = createApi({
       return headers;
     },
   }),
-  tagTypes: ["projects"],
+  tagTypes: ["projects", "invite"],
   endpoints: (builder) => ({
     getUserInfo: builder.query({
       query: (body) => ({
@@ -18,7 +18,7 @@ const medicalApiSlice = createApi({
         method: "POST",
         body: body,
       }),
-      providesTags: ["projects"],
+      providesTags: ["projects", "invite"],
     }),
     getUserOrganzation: builder.query({
       query: (body) => {
@@ -80,6 +80,28 @@ const medicalApiSlice = createApi({
         body: body,
       }),
     }),
+    getCaseInfo: builder.query({
+      query: (body) => ({
+        url: "get_case_info",
+        method: "POST",
+        body: body,
+      }),
+    }),
+    respondToProjectInvitation: builder.mutation({
+      query: (body) => ({
+        url: "respond_to_project_invitation",
+        method: "POST",
+        body: body,
+      }),
+      invalidatesTags: ["invite"],
+    }),
+    saveQuestionnaire: builder.mutation({
+      query: (body) => ({
+        url: "save_questionnaire",
+        method: "POST",
+        body: body,
+      }),
+    }),
   }),
 });
 
@@ -94,6 +116,9 @@ export const {
   useGetProjectInfoQuery,
   useUpdateLastViewedMutation,
   useGetLastTaskQuery,
+  useGetCaseInfoQuery,
+  useRespondToProjectInvitationMutation,
+  useSaveQuestionnaireMutation,
 } = medicalApiSlice;
 
 export default medicalApiSlice;
