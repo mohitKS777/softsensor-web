@@ -30,6 +30,7 @@ RUN npm_config_unsafe_perm=true npm install -global yarn
 # # Setup React Server
 WORKDIR /usr/src/react
 COPY ./webapp/package.json ./
+COPY ./webapp/yarn.lock ./
 RUN yarn install
 COPY ./webapp ./
 RUN yarn run build
@@ -39,9 +40,11 @@ WORKDIR /usr/src
 COPY ./scripts/webapp.conf /etc/nginx/conf.d/webapp.conf
 COPY ./scripts/run.sh /usr/src/run.sh
 
-EXPOSE 8080
-EXPOSE 5000
 EXPOSE 8000
 
-CMD [ "sh", "/usr/src/run.sh" ]
+# CMD [ "sh", "/usr/src/run.sh" ]
+# ENTRYPOINT ["/usr/src/run.sh"]
+# ENTRYPOINT [ "sh", "/usr/src/run.sh" ]
+# ENTRYPOINT ["nginx"]
+CMD ["nginx", "-g", "daemon off;"]
 
