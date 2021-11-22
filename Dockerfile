@@ -28,7 +28,8 @@ RUN python3 -m pip install --upgrade -r requirements.txt
 # RUN yarn install
 
 # Setup React Server
-WORKDIR /usr/src/react
+WORKDIR /react
+RUN pwd
 COPY ./webapp ./
 RUN yarn install
 RUN yarn run build
