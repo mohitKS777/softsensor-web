@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   max-width: 100%;
   overflow-x: hidden;
 }
@@ -25,13 +26,13 @@ html, body {
   width: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: #f1f1f1;
 }
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: #888;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: #555;
 }
 @media screen and (max-width: 2560px) {
   .dashboard {
@@ -39,7 +40,7 @@ html, body {
   }
   .dashboard__header {
     font-size: 2em;
-    width: 70em;
+    width: 2200px;
     margin-left: 4em;
   }
   .dashboard__menu {
@@ -99,7 +100,7 @@ html, body {
   }
   .dashboard__header {
     font-size: 2em;
-    width: 53em;
+    width: 1700px;
     margin-left: 0;
   }
   .dashboard__menu {
@@ -235,7 +236,7 @@ html, body {
 @media screen and (max-width: 1280px) {
   .dashboard__header {
     font-size: 2em;
-    width: 830px;
+    width: 1080px;
     margin-left: 0;
   }
   .dashboard__menu {

@@ -67,8 +67,14 @@ const NewAssigned = () => {
           border="1px solid #3965C5"
         />
       </HStack>
+
       <Box overflowX="auto">
-        <Table variant="unstyled" marginTop="15px" size="md">
+        <Table
+          variant="unstyled"
+          marginTop="15px"
+          size="md"
+          className="newAssigned_table"
+        >
           <Thead>
             <Tr margin="0px">
               <Th color="#8aaeff">File Name</Th>
@@ -80,6 +86,41 @@ const NewAssigned = () => {
           </Thead>
           <Tbody>
             {userInfo?.user.projectsInvolvedIn.map((project) => {
+              <Tr
+                key={project?._id}
+                borderBottom="1px solid #3965C5"
+                _hover={{ bg: "#bacfff" }}
+              >
+                <Td color="#3965C5" fontWeight="bold">
+                  <Icon as={AiOutlineProject} marginRight={1} w={5} h={4} />
+                  {project?.name}
+                </Td>
+                <Td color="#8aaeff">
+                  On {moment(project?.assignedDate).format("DD MMM")}
+                </Td>
+                <Td color="#8aaeff">
+                  {project?.owner.firstName + project?.owner.lastName}
+                </Td>
+                <Td color="#8aaeff">Single-slide Project</Td>
+                {/* <Td isNumeric>
+                <Stack direction="row" justify="end">
+                  <Avatar name="Zoe Margot" size="sm" />
+                  <Avatar name="Rakesh Gautam" size="sm" />
+                  <Avatar name="Mila Maghudiya" size="sm" />
+                </Stack>
+              </Td> */}
+                <Td>
+                  <ProgressBar
+                    completed={
+                      project?.totalSlides ? project?.totalSlides : 100
+                    }
+                    customLabel="100 slides"
+                    bgColor="#66a3ff"
+                    labelSize="12px"
+                    labelAlignment="left"
+                  />
+                </Td>
+              </Tr>;
               return (
                 <Tr
                   key={project?._id}

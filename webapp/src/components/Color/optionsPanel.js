@@ -19,7 +19,7 @@ const ColorOptionsPanel = () => {
   const dispatch = useDispatch();
 
   return (
-    <SimpleGrid columns={4} spacingY={1} >
+    <SimpleGrid columns={4} spacingY={1}>
       {brandColors.map((brandColor) => (
         <ColorBox
           key={brandColor.label}

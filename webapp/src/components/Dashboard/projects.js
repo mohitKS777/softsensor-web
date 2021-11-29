@@ -26,6 +26,7 @@ import ProjectLink from "../Project/projectLink";
 import ProgressBar from "@ramonak/react-progress-bar";
 import { useGetUserInfoQuery } from "../../state/api/medicalApi";
 import moment from "moment";
+import "../../styles/dashboard.css";
 
 const Projects = () => {
   const { user } = useAuth0();
@@ -85,7 +86,6 @@ const Projects = () => {
               <Th color="#8aaeff" isNumeric>
                 Progress
               </Th>
-              <Th isNumeric />
             </Tr>
           </Thead>
           <Tbody>

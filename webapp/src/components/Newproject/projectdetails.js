@@ -1,14 +1,18 @@
 import { React, useState } from "react";
 import { Box, Button, Select, Input, Text, Textarea } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateProject } from "../../state/reducers/newProjectReducer";
+import {
+  resetNewProject,
+  updateProject,
+} from "../../state/reducers/newProjectReducer";
 
 const Projectdetails = () => {
+  const [activeOption, setActiveOption] = useState("projectDetails");
   const { projectDetails } = useSelector((state) => state.newProjectState);
   const dispatch = useDispatch();
 
   const handleProjectDetails = (e) => {
-    dispatch(updateProject({ name: e.target.id, value: e.target.value }));
+    dispatch(updateProject({ name: e.target.name, value: e.target.value }));
   };
 
   return (
@@ -16,7 +20,7 @@ const Projectdetails = () => {
       <Box className="form_div">
         <Box>
           <Text
-            htmlFor="projectName"
+            htmlFor="project_title"
             color="#2E519E"
             fontSize={17}
             paddingBottom={3}
@@ -25,8 +29,9 @@ const Projectdetails = () => {
           </Text>
           <Input
             type="text"
-            id="projectName"
-            value={projectDetails.projectName}
+            id="project_title"
+            name="project_title"
+            value={projectDetails.project_title}
             width={590}
             borderRadius={5}
             bg="#0032a01a"
@@ -34,7 +39,7 @@ const Projectdetails = () => {
             onChange={(e) => handleProjectDetails(e)}
           ></Input>
           <Text
-            htmlFor="projectDescription"
+            htmlFor="project_desc"
             paddingTop={6}
             color="#2E519E"
             fontSize={17}
@@ -43,8 +48,9 @@ const Projectdetails = () => {
             Project Description
           </Text>
           <Textarea
-            id="projectDescription"
-            value={projectDetails.projectDescription}
+            id="project_desc"
+            name="project_desc"
+            value={projectDetails.project_desc}
             width={590}
             height={150}
             top="0"
@@ -54,7 +60,7 @@ const Projectdetails = () => {
             onChange={(e) => handleProjectDetails(e)}
           ></Textarea>
           <Text
-            htmlFor="projectType"
+            htmlFor="project_type"
             paddingTop={6}
             color="#2E519E"
             fontSize={17}
@@ -64,17 +70,18 @@ const Projectdetails = () => {
           </Text>
           <Select
             variant="outline"
-            id="projectType"
+            id="project_type"
+            name="project_type"
             value={projectDetails.project_type}
             onChange={(e) => handleProjectDetails(e)}
             width={540}
             bg="#0032a01a"
           >
-            <option value="singleSlide">Single-Slide Project</option>
-            <option value="multiSlide">Multi-Slide Project</option>
+            <option value="Single-Slide Project">Single-Slide Project</option>
+            <option value="Multi-Slide Project">Multi-Slide Project</option>
           </Select>
           <Text
-            htmlFor="slideType"
+            htmlFor="slide_type"
             paddingTop={6}
             color="#2E519E"
             fontSize={17}
@@ -83,7 +90,8 @@ const Projectdetails = () => {
             Slide type
           </Text>
           <Select
-            id="slideType"
+            id="slide_type"
+            name="slide_type"
             value={projectDetails.slide_type}
             width={540}
             bg="#0032a01a"

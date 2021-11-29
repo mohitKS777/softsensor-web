@@ -8,7 +8,7 @@ const LayoutInnerBody = ({ children }) => {
       {children}
     </Flex>
   );
-}
+};
 
 LayoutInnerBody.propTypes = {
   children: PropTypes.node,

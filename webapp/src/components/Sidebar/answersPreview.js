@@ -79,7 +79,7 @@ const AnswersPreview = ({ answers }) => {
                   <Text>Q.1 Biopsy Adequacy</Text>
                   <Text marginTop="0.5em" marginLeft="2em">
                     <Icon as={BsCheckSquareFill} marginRight={1} w={3} h={3} />
-                    {answers.biopsy}
+                    {/* {answers.biopsy} */}
                   </Text>
                   <Text size="lg" fontWeight="bold" marginTop="1em">
                     NAFLD Activity Score (NAS)
@@ -87,17 +87,17 @@ const AnswersPreview = ({ answers }) => {
                   <Text marginTop="1em">Q.1 Steatosis</Text>
                   <Text marginTop="0.5em" marginLeft="2em">
                     <Icon as={BsCheckSquareFill} marginRight={1} w={3} h={3} />
-                    {answers.steatosis}
+                    {/* {answers.steatosis} */}
                   </Text>
                   <Text marginTop="1em">Q.2 Lobular inflammation</Text>
                   <Text marginTop="0.5em" marginLeft="2em">
                     <Icon as={BsCheckSquareFill} marginRight={1} w={3} h={3} />
-                    {answers.lobular_inflammation}
+                    {/* {answers.lobular_inflammation} */}
                   </Text>
                   <Text marginTop="1em">Q.3 Hepatocellular Ballooning</Text>
                   <Text marginTop="0.5em" marginLeft="2em">
                     <Icon as={BsCheckSquareFill} marginRight={1} w={3} h={3} />
-                    {answers.hepatocellular_ballooning}
+                    {/* {answers.hepatocellular_ballooning} */}
                   </Text>
                 </Flex>
                 <Spacer />

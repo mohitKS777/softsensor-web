@@ -1,17 +1,20 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { FaPaintBrush } from "react-icons/fa";
-import { Box } from "@chakra-ui/react";
+import { Box, HStack, Text } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   updateIsActiveTool,
   updateIsObjectSelected,
 } from "../../state/reducers/colorReducer";
+import DrawWidthPicker from "../Draw/widthPicker";
+import TypeTools from "../AdjustmentBar/typeTools";
 import ColorOptionsPanel from "./optionsPanel";
 import ToolbarButton from "../ViewerToolbar/button";
 import ToolbarOptionsPanel from "../ViewerToolbar/optionsPanel";
+import { CloseIcon } from "@chakra-ui/icons";
 
-const Color = () => {
+const Color = ({ viewerId, colorsButtonHandler }) => {
   const dispatch = useDispatch();
   const { activeTool, viewerWindow } = useSelector(
     (state) => state.fabricOverlayState
@@ -22,6 +25,11 @@ const Color = () => {
   const setMyState = (action, data) => {
     myStateRef.current = { ...myState, ...data };
     dispatch(action(data));
+  };
+  const [closeButton, setCloseButton] = useState(true);
+  const handleCloseButtonClick = () => {
+    setCloseButton(false);
+    colorsButtonHandler(false);
   };
 
   useEffect(() => {
@@ -71,9 +79,45 @@ const Color = () => {
   }, [viewerWindow]);
 
   return (
-    <Box px={10} my={4}>
-      <ColorOptionsPanel />
-    </Box>
+    <>
+      <Box
+        width="100%"
+        height="7em"
+        borderRight="0.5px solid white"
+        boxSizing="border-box"
+        borderRadius="3px"
+      >
+        <HStack
+          spacing={0}
+          align="center"
+          borderX="1px solid #ffffff50"
+          color="white"
+        >
+          <Box width="10em">
+            <CloseIcon
+              color="white"
+              transform="scale(0.8)"
+              paddingLeft="3px"
+              cursor="pointer"
+              onClick={handleCloseButtonClick}
+            />
+            <Text paddingLeft="2em" marginTop="-0.8em">
+              Color
+            </Text>
+            <Box px={10} my={4}>
+              <ColorOptionsPanel />
+            </Box>
+          </Box>
+          <Box width="10em" height="7em" borderX="1px solid #ffffff50">
+            <Text marginLeft="1em" marginTop="0.5em">
+              Width
+            </Text>
+            <DrawWidthPicker align="center" />
+          </Box>
+          <TypeTools viewerId={viewerId} />
+        </HStack>
+      </Box>
+    </>
   );
 };
 

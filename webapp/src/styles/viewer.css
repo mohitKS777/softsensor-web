@@ -1,0 +1,31 @@
+@media all and (max-width: 1280px) {
+  .sidebar_tools {
+    transform: scale(0.8);
+    margin-top: -40px;
+    margin-left: -20px;
+  }
+
+  .adjustmentbar {
+    margin-left: -118px;
+    width: 1520px;
+    margin-top: -8px;
+    height: 103px;
+  }
+  .file_fixed_button {
+    position: fixed;
+    z-index: 3;
+    margin-left: 300px;
+  }
+}
+
+.close_button_navbar {
+  color: white;
+  position: fixed;
+  right: 5px;
+  top: 20px;
+  cursor: pointer;
+  background-color: #3965c5;
+  border-radius: 3px 3px 0px 0px;
+  padding: 1px 1px 1px 1px;
+  transform: scale(1.5);
+}
