@@ -12,6 +12,13 @@ import paletteReducer from "./reducers/paletteReducer";
 import zoomReducer from "./reducers/zoomReducer";
 import chatReducer from "./reducers/chatReducer";
 import viewerReducer from "./reducers/viewerReducer";
+import projectReducer from "./reducers/projectReducer";
+import newProjectReducer from "./reducers/newProjectReducer";
+import medicalApiSlice from "./api/medicalApi";
+import { setupListeners } from "@reduxjs/toolkit/dist/query";
+import authReducer from "./reducers/authReducer";
+import dashboardReducer from "./reducers/dashboardReducer";
+import slideQnaReducer from "./reducers/slideQnaReducer";
 
 const store = configureStore({
   reducer: {
@@ -30,11 +37,17 @@ const store = configureStore({
     zoomState: zoomReducer,
     chatState: chatReducer,
     viewerState: viewerReducer,
+    newProjectState: newProjectReducer,
+    projectState: projectReducer,
+    authState: authReducer,
+    [medicalApiSlice.reducerPath]: medicalApiSlice.reducer,
+    dashboardState: dashboardReducer,
+    slideQnaState: slideQnaReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }),
+    }).concat(medicalApiSlice.middleware),
 });
 
 export default store;

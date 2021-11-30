@@ -44,13 +44,17 @@ const MultiView = () => {
     dispatch(toggleMultiView());
   };
 
+  const handleMultiView = () => {
+    dispatch(toggleMultiView());
+  };
+
   return (
     <ToolbarButton
       label="MultiView"
       icon={<BsLayoutSplit size={25} />}
       backgroundColor={isMultiView ? "white" : "rgba(255,255,255, 0.5)"}
       color={isMultiView ? "black" : "#3963c3"}
-      onClick={handleClick}
+      onClick={handleMultiView}
     />
   );
 };

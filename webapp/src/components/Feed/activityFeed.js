@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Box } from "@chakra-ui/layout";
+import { Box, Flex, Spacer } from "@chakra-ui/layout";
 import {
   Circle,
   HStack,
@@ -9,11 +9,21 @@ import {
   Icon,
   Image,
   IconButton,
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
 } from "@chakra-ui/react";
 import { Scrollbars } from "react-custom-scrollbars";
 import "../../styles/scrollBar.css";
 import { FaPaintBrush, FaShapes } from "react-icons/fa";
 import { DownloadIcon } from "@chakra-ui/icons";
+import { AiFillLock } from "react-icons/ai";
+import { HiOutlineDotsCircleHorizontal } from "react-icons/hi";
 import ReactPDF, {
   Page,
   View,
@@ -120,57 +130,80 @@ const ActivityFeed = ({ viewerId }) => {
     <>
       <Scrollbars
         ref={scrollbar}
-        style={{ width: "100%", height: "100%" }}
+        style={{ width: "100%", height: "100%", borderWidth: "0px" }}
         renderThumbVertical={(props) => (
           <div {...props} className="thumb-vertical" />
         )}
         autoHide
       >
-        <VStack w="100%" spacing={1} px="4px" pb="10px" align="center">
+        <VStack w="100%" px="4px" align="center">
           {activityFeed.map((activity, index) => (
             <Box
               as="button"
               key={index}
-              bg="#252525"
               w="100%"
-              borderRadius="5px"
+              borderBottom="1px solid #ffffff50" //ye box ka hai
               px="5px"
               pt="5px"
               pb="2px"
-              textAlign="left"
-              color="#3963c390"
-              backgroundColor="rgba(255,255,255,0.7)"
+              color="white"
+              backgroundColor="#3965C5"
               onClick={() => handleClick(activity)}
             >
               <HStack>
-                {activity.type !== "CLEAR" && (
+                {/* {activity.type !== "CLEAR" && (
                   <Icon
                     boxSize="10px"
                     mb="2px"
                     color="white"
                     as={activity.type === "path" ? FaPaintBrush : FaShapes}
                   />
-                )}
-                <Text fontSize="sm" fontWeight="600">
-                  {activity.username + " "}
-                </Text>
+                )} */}
+                <Image
+                  borderWidth="2px"
+                  borderRadius="5px"
+                  backgroundColor="white"
+                  crossOrigin="anonymous"
+                  width="40%"
+                  height="6em"
+                  src={activity.image}
+                />
+                <VStack>
+                  <Flex w="100%" verticalAlign="top" fontWeight="bold">
+                    <Text fontSize="small" textAlign="left">
+                      {activity.username + " "}
+                    </Text>
+                    <Spacer />
+                    <Icon as={AiFillLock} mr={1} ml={2} w={4} h={4} />
+                    <Icon as={HiOutlineDotsCircleHorizontal} mr={1} ml={2} w={4} h={4} />
+                  </Flex>
+                  <Box height="3em" width="100%">
+                  {activity.text && <Text fontSize="xs" textAlign="left">{activity.text}</Text>}
+                  </Box>
+                </VStack>
               </HStack>
-              <Image
-                borderWidth="2px"
-                mb="3px"
-                backgroundColor="white"
-                crossOrigin="anonymous"
-                src={activity.image}
-              />
-              {activity.text && <Text fontSize="xs">{activity.text}</Text>}
-              <HStack mt="8px" mr="10px" justify="flex-end">
+              <Table variant="unstyled" color="white" size="small"  marginTop="1em">
+                <Tbody>
+                  <Tr fontSize="sm">
+                    <Td textAlign="center">Length(um)</Td>
+                    <Td textAlign="center">Area(um<sup>2</sup>)</Td>
+                    <Td textAlign="center">Type</Td>
+                  </Tr>
+                  <Tr fontSize="sm">
+                    <Td textAlign="center">56600.8</Td>
+                    <Td textAlign="center">598398392.2</Td>
+                    <Td textAlign="center">Square</Td>
+                  </Tr>
+                </Tbody>
+              </Table>
+              {/* <HStack mt="8px" mr="10px" justify="flex-end">
                 <Text fontSize="10px" mr="5px">
                   {activity.timeStamp}
                 </Text>
                 {activity.type !== "CLEAR" && (
                   <Circle size="7px" bg={activity.color} />
                 )}
-              </HStack>
+              </HStack> */}
             </Box>
           ))}
         </VStack>

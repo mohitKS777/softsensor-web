@@ -7,9 +7,17 @@ import brandPalette from "./styles/brandPalette";
 import OsdFabricWrapper from "./components/osdFabricWrapper";
 import SocketWrapper from "./components/socketWrapper";
 import LayoutApp from "./components/Layout/app";
+import Login from "./components/Authenticate/login";
+import Dashboard from "./components/Dashboard/dashboard";
+import Project from "./components/Project/project";
+import Newproject from "./components/Newproject/newproject";
 import "./App.css";
 // import getData from "./getData";
 import React from "react";
+import DashboardRedirect from "./components/Dashboard/dashboardRedirect";
+import UserDetails from "./components/Authenticate/userDetails";
+import Recent from "./components/Dashboard/recent";
+import ViewerRedirect from "./components/Project/viewerRedirect";
 
 const theme = extendTheme({
   colors: {
@@ -26,6 +34,10 @@ const theme = extendTheme({
   },
   styles: {
     global: {
+      body: {
+        bg: "light",
+        color: "black",
+      },
       button: {
         fontFamily: "sans-serif",
       },
@@ -51,8 +63,32 @@ const App = () => {
         {/* <Test />  */}
         <SocketWrapper>
           <Switch>
-            <Route path="/slide/:id">
+            <Route path="/:id/project/:projectId/slideRedirect">
+              <ViewerRedirect />
+            </Route>
+            <Route path="/:id/project/:projectId/slide/:slideId">
               <LayoutApp />
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/:id/project/:projectId">
+              <Project />
+            </Route>
+            <Route path="/:id/dashboard/newProject">
+              <Newproject />
+            </Route>
+            <Route path="/:id/dashboard/recent">
+              <Recent />
+            </Route>
+            <Route path="/:id/dashboard/projects">
+              <Dashboard />
+            </Route>
+            <Route path="/:id/registrationForm/">
+              <UserDetails />
+            </Route>
+            <Route path="/dashboard">
+              <DashboardRedirect />
             </Route>
           </Switch>
         </SocketWrapper>

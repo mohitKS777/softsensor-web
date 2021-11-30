@@ -23,12 +23,14 @@ const TypeTools = ({ viewerId }) => {
   };
 
   return (
-    <Box w="100%">
-      <Text borderY="1px solid #ffffff50">Type</Text>
-      <HStack px={1} py={2}>
+    <Box width="11em" pb="1em">
+      <Text marginLeft="1em" marginTop="0.5em">Type</Text>
+      <HStack px={10} py={1}>
         <Line viewerId={viewerId} />
         <Square viewerId={viewerId} />
         <Circle viewerId={viewerId} />
+      </HStack>
+      <HStack px={10} py={1}>
         <Draw viewerId={viewerId} />
         <TypeText viewerId={viewerId} />
         <RemoveObject viewerId={viewerId} />

@@ -1,0 +1,17 @@
+.background_box {
+  background-color: #d5d5d5;
+  width: 100vw;
+  height: 100vh;
+}
+
+.input_label {
+  z-index: 2;
+  position: relative;
+  top: 12px;
+  left: 8px;
+  width: 82px;
+  background-color: white;
+  padding: 0px 5px 0px 5px;
+  color: rgb(78, 76, 76);
+  font-weight: 500;
+}

@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useOpenSeadragon, OpenSeadragon } from "use-open-seadragon";
 import { fabric, initFabricJSOverlay } from "openseadragon-fabricjs-overlay";
 import { useDispatch, useSelector } from "react-redux";
-import { updateOverlay } from "../../state/reducers/fabricOverlayReducer";
+import {
+  updateOverlay,
+  updateUserCanvases,
+} from "../../state/reducers/fabricOverlayReducer";
 import { isBrowser } from "react-device-detect";
 import { Box } from "@chakra-ui/react";
 import ViewerControls from "./controls";
@@ -63,7 +66,11 @@ const Viewer = ({ viewerId, tile }) => {
     viewer && viewer.destroy();
     //Initialize OpenSeadragon instance and set to viewer
     setViewer(
-      OpenSeadragon({ ...osdOptions, tileSources: tile, id: viewerId })
+      OpenSeadragon({
+        ...osdOptions,
+        tileSources: tile,
+        id: "viewer" + viewerId,
+      })
     );
     initFabricJSOverlay(OpenSeadragon, fabric);
     return () => {
@@ -83,11 +90,18 @@ const Viewer = ({ viewerId, tile }) => {
         viewer: viewer,
       })
     );
+    return () => {
+      updateOverlay({
+        id: viewerId,
+        fabricOverlay: null,
+        viewer: null,
+      });
+    };
   }, [dispatch, viewer]);
 
   return (
     <Box
-      id={viewerId}
+      id={"viewer" + viewerId}
       border={
         isMultiView && viewerId === "viewer1" ? "2px solid #68D761" : "none"
       }
@@ -100,8 +114,8 @@ const Viewer = ({ viewerId, tile }) => {
 };
 
 Viewer.propTypes = {
-  tile: PropTypes.object,
-  name: PropTypes.string,
+  tile: PropTypes.string,
+  viewerId: PropTypes.string,
 };
 
 export default Viewer;

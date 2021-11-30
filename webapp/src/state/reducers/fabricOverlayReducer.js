@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { brandColors } from "../../styles/brandPalette";
+import _ from "lodash";
 
 export const getLocalUserCanvases = () => {
   const userCanvases = window.localStorage.getItem("userCanvases");
@@ -11,21 +12,22 @@ export const getLocalUserCanvases = () => {
   }
 };
 
+const defaultViewerWindow = {
+  activeUserCanvas: "",
+  fabricOverlay: null,
+  userCanvases: getLocalUserCanvases(),
+  viewer: null,
+  activityFeed: [],
+  zoomValue: 0,
+  tile: "",
+};
+
 const fabricOverlaySlice = createSlice({
   name: "fabricOverlay",
   initialState: {
     activeTool: "Move",
     color: brandColors[0],
-    viewerWindow: {
-      viewer1: {
-        activeUserCanvas: "",
-        fabricOverlay: null,
-        userCanvases: getLocalUserCanvases(),
-        viewer: null,
-        activityFeed: [],
-        zoomValue: 0,
-      },
-    },
+    viewerWindow: {},
     username: "",
     roomName: "",
   },
@@ -56,6 +58,7 @@ const fabricOverlaySlice = createSlice({
       state.roomName = action.payload.roomName;
     },
     updateZoomValue: (state, action) => {
+      if (!_.has(state.viewerWindow, action.payload.id)) return;
       state.viewerWindow[action.payload.id].zoomValue =
         action.payload.value > 40 ? 40 : action.payload.value;
     },
@@ -63,10 +66,22 @@ const fabricOverlaySlice = createSlice({
       state.viewerWindow[action.payload.id].activityFeed = action.payload.feed;
     },
     addViewerWindow: (state, action) => {
-      state.viewerWindow[action.payload.id] = action.payload.value;
+      state.viewerWindow[action.payload.id] = {
+        ...defaultViewerWindow,
+        tile: action.payload.tile,
+      };
     },
     removeViewerWindow: (state, action) => {
       delete state.viewerWindow[action.payload.id];
+    },
+    resetViewer: (state, action) => {
+      state.viewerWindow[action.payload.id].activityFeed = [];
+      state.viewerWindow[action.payload.id].zoomValue = 0;
+    },
+    resetFabricOverlay: (state, action) => {
+      state.viewerWindow = {};
+      state.activeTool = "Move";
+      state.color = brandColors[0];
     },
   },
 });
@@ -82,6 +97,8 @@ export const {
   removeViewerWindow,
   updateZoomValue,
   updateActivityFeed,
+  resetViewer,
+  resetFabricOverlay,
 } = fabricOverlaySlice.actions;
 
 export default fabricOverlaySlice.reducer;

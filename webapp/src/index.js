@@ -8,18 +8,17 @@ import { Provider } from "react-redux";
 import store from "./state/store";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Auth0Provider
-      domain={process.env.REACT_APP_AUTH0_DOMAIN}
-      clientId={process.env.REACT_APP_AUTH0_CLIENTID}
-      redirectUri={"http://localhost:3000/slide/*"}
-    >
-      <Provider store={store}>
-        {console.log(process.env.REACT_APP_AUTH0_DOMAIN)}
-        <App />
-      </Provider>
-    </Auth0Provider>
-  </React.StrictMode>,
+  <Auth0Provider
+    domain={process.env.REACT_APP_AUTH0_DOMAIN}
+    clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
+    redirectUri={"http://localhost:3000/dashboard"}
+    audience="http://localhost:3001"
+    // scope="read:users"
+  >
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </Auth0Provider>,
   document.getElementById("root")
 );
 

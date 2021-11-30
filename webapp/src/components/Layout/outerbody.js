@@ -4,7 +4,7 @@ import { Flex } from "@chakra-ui/react";
 
 const LayoutOuterBody = ({ children }) => {
   return (
-    <Flex flexGrow={1} as="main">
+    <Flex flexGrow={1} as="main" direction="column">
       {children}
     </Flex>
   );

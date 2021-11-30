@@ -1,23 +1,6 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  Flex,
-  HStack,
-  Link,
-  IconButton,
-  Input,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Spacer,
-  Text,
-} from "@chakra-ui/react";
-import ZoomLevels from "../ZoomDropDown/viewerZoomLevels";
-import { HamburgerIcon } from "@chakra-ui/icons";
-import { RiShareForwardLine } from "react-icons/ri";
-import { GoRepoForked } from "react-icons/go";
+import { Box, Button, Flex, HStack, Link, IconButton } from "@chakra-ui/react";
+import { AiOutlineHome } from "react-icons/ai";
 import { Link as RRLink, useHistory } from "react-router-dom";
 import ImageGalleryModal from "../imageGalleryModal";
 import AltButton from "../altButton";
@@ -26,6 +9,7 @@ import SlideFeed from "../Feed/feed";
 import Palette from "../Palette/palette";
 import Download from "../Download/download";
 import Files from "../Files/files";
+import "../../styles/viewer.css";
 
 const LayoutHeader = () => {
   const history = useHistory();
@@ -38,7 +22,7 @@ const LayoutHeader = () => {
 
   return (
     <div className="header">
-      <Box className="bg-dark" as="header">
+      <Box className="bg-dark" as="header" background="#0032A0">
         <Flex
           justifyContent="space-between"
           alignItems="center"
@@ -47,8 +31,13 @@ const LayoutHeader = () => {
           fontSize={fontSizes}
         >
           <HStack spacing={8}>
+            <IconButton
+              icon={<AiOutlineHome />}
+              backgroundColor="#0032A0"
+              _hover={{ bg: "#4070d6" }}
+            />
             <SlideInfo />
-            <Files />
+            <Box width={50}></Box>
             <Download />
             <SlideFeed />
             <Palette />

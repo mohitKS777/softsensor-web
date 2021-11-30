@@ -1,107 +1,150 @@
-import React, { memo } from "react";
-import {
-  Box,
-  Center,
-  Divider,
-  Flex,
-  HStack,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Button,
-  Avatar,
-  AvatarBadge,
-  AvatarGroup,
-  Spacer,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
-import { ChevronDownIcon } from "@chakra-ui/icons";
-import { isBrowser } from "react-device-detect";
+import React, { memo, useState } from "react";
+import { Box, Flex, Button, Tr, Table, Tbody, VStack } from "@chakra-ui/react";
 import Color from "../Color/color";
-import ClearCanvas from "../clearCanvas";
-import Download from "../downloadImage";
-import ShareAnnotation from "../Share/share";
-import MyAnnotationsSave from "../annotations";
 import ImageGalleryModal from "../imageGalleryModal";
-import Login from "../Authenticate/login";
 import { useSelector } from "react-redux";
-import AltButton from "../altButton";
-import SlideSearch from "../Search/search";
-import SlideChat from "../Chat/chat";
-import ToolbarPointerControl from "../ViewerToolbar/pointerControl";
-import RemoveObject from "../removeComponents";
 import SlideUser from "../UserSettings/user";
 import Move from "../Move/move";
-import Screenshot from "../Screenshot/screenshot";
-import DrawWidthPicker from "../Draw/widthPicker";
 import Case from "../Case/case";
-import Draw from "../Draw/draw";
-import Square from "../Shape/square";
-import TypeText from "../Text/text";
 import ShareLink from "../Share/shareLink";
-import Line from "../Shape/line";
-import Arrow from "../Shape/arrow";
-import Circle from "../Shape/circle";
 import Algorithm from "../Palette/algorithm";
 import TypeTools from "./typeTools";
 import MultiView from "../MultiView/multiView";
+import GenerateReport from "../Report/generateReport";
+import ChangeCase from "../Case/changeCase";
+import "../../styles/viewer.css";
 
-const AdjustmentBar = () => {
+const AdjustmentBar = ({ dropDownOpen }) => {
   const { roomName, guestList } = useSelector((state) => state.socketState);
   const { activeDrawerTool } = useSelector((state) => state.drawerState);
   const { currentViewer } = useSelector((state) => state.viewerState);
   const viewerId = "viewer1";
   const bg = "#3965C3";
+  const [caseToggle, setCaseToggle] = useState(true);
+  const [algoToggle, setAlgoToggle] = useState(true);
+  const [toolsToggle, setToolsToggle] = useState(true);
+  const [colorsToggle, setColorsToggle] = useState(true);
+  const [shareGenToggle, setShareGenToggle] = useState(true);
 
   return (
-    <div className="adjustmentbar">
-      <Flex bgColor={bg} alignItems="center">
-        <Box ml="5px" pt="3px" pb="6px">
-          <Case />
-        </Box>
-        <Spacer />
-        <Algorithm />
-        <Spacer />
-        <ImageGalleryModal viewerId={currentViewer} />
-        <Spacer />
-        <HStack spacing={3} p="1px" alignItems="center">
-          <Move />
-          <ToolbarPointerControl viewerId={viewerId} />
-          <Screenshot />
-          <MultiView />
-        </HStack>
-        <Box
-          w="30%"
-          h="inherit"
-          className="annotate"
-          color="white"
-          mx="20px"
-          borderX="1px solid #ffffff50"
-        >
-          <Text align="center">Annotate</Text>
-          <HStack spacing={0} align="stretch">
-            <Box w="52%">
-              <Text borderY="1px solid #ffffff50">Color</Text>
-              <Color />
-            </Box>
-            <Box w="50%">
-              <Text border="1px solid #ffffff50">Width</Text>
-              <DrawWidthPicker align="end" />
-            </Box>
-            <TypeTools viewerId={viewerId} />
-          </HStack>
-        </Box>
-        <Box mr="20px">
-          <ShareLink />
-          <HStack mt="5px" justify="space-around">
-            <SlideUser />
-            <SlideChat />
-          </HStack>
-        </Box>
+    <Box className="adjustmentbar" height="7em">
+      <Flex bgColor={bg} alignItems="center" borderBottom="1px solid #ffffff50">
+        {caseToggle ? <Case changeCount={setCaseToggle} /> : ""}
+        {algoToggle ? (
+          <Box
+            display="flex"
+            width="100%"
+            height="7em"
+            borderRight="0.5px solid white"
+            boxSizing="border-box"
+            zIndex={4}
+          >
+            <Flex direction="column" marginTop="5px" marginLeft="5px">
+              {/* <ImageGalleryModal
+                viewerId={currentViewer}
+                closeToggle={setAlgoToggle}
+              /> */}
+              <ChangeCase closeToggle={setAlgoToggle} />
+            </Flex>
+          </Box>
+        ) : (
+          ""
+        )}
+        {toolsToggle ? (
+          <Move viewerId={currentViewer} toolsButtonHandler={setToolsToggle} />
+        ) : (
+          ""
+        )}
+        {colorsToggle ? (
+          <Color
+            viewerId={currentViewer}
+            colorsButtonHandler={setColorsToggle}
+          />
+        ) : (
+          ""
+        )}
+        {shareGenToggle ? (
+          <SlideUser closeButtonToggle={setShareGenToggle} />
+        ) : (
+          ""
+        )}
+        {dropDownOpen ? (
+          <Box
+            pos="fixed"
+            top="40px"
+            left="117px"
+            background="white"
+            color="black"
+            borderRadius="5px"
+            boxSizing="border-box"
+            border="5px solid white"
+            zIndex={50}
+          >
+            <Table variant="striped">
+              <Tbody>
+                <Tr
+                  onClick={() => setCaseToggle(true)}
+                  _hover={{
+                    background: "#3565C5",
+                    color: "white",
+                    minWidth: "100%",
+                    cursor: "pointer",
+                  }}
+                >
+                  Case Information
+                </Tr>
+                <Tr
+                  onClick={() => setAlgoToggle(true)}
+                  _hover={{
+                    background: "#3565C5",
+                    color: "white",
+                    minWidth: "100%",
+                    cursor: "pointer",
+                  }}
+                >
+                  Choose slides and algorithms
+                </Tr>
+                <Tr
+                  onClick={() => setColorsToggle(true)}
+                  _hover={{
+                    background: "#3565C5",
+                    color: "white",
+                    minWidth: "100%",
+                    cursor: "pointer",
+                  }}
+                >
+                  Colors, Width, Type
+                </Tr>
+                <Tr
+                  onClick={() => setToolsToggle(true)}
+                  _hover={{
+                    background: "#3565C5",
+                    color: "white",
+                    minWidth: "100%",
+                    cursor: "pointer",
+                  }}
+                >
+                  Toolbar controls
+                </Tr>
+                <Tr
+                  onClick={() => setShareGenToggle(true)}
+                  _hover={{
+                    background: "#3565C5",
+                    color: "white",
+                    minWidth: "100%",
+                    cursor: "pointer",
+                  }}
+                >
+                  Share and generate report
+                </Tr>
+              </Tbody>
+            </Table>
+          </Box>
+        ) : (
+          ""
+        )}
       </Flex>
-    </div>
+    </Box>
   );
 };
 

@@ -1,20 +1,5 @@
 import React, { useState } from "react";
 import {
-  Box,
-  Button,
-  IconButton,
-  Image,
-  Link,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Tooltip,
-  Wrap,
-  WrapItem,
   useDisclosure,
   useBreakpointValue,
   Menu,
@@ -32,14 +17,17 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   updateTool,
   updateActivityFeed,
+  resetViewer,
 } from "../state/reducers/fabricOverlayReducer";
+import { CloseIcon } from "@chakra-ui/icons";
+import Algorithm from "./Palette/algorithm";
 
 const activeStyles = {
   border: "4px",
   borderColor: "brand.green.500",
 };
 
-const ImageGalleryModal = ({ viewerId }) => {
+const ImageGalleryModal = ({ viewerId, closeToggle }) => {
   const { viewer, fabricOverlay } = useSelector(
     (state) => state.fabricOverlayState.viewerWindow[viewerId]
   );
@@ -49,6 +37,11 @@ const ImageGalleryModal = ({ viewerId }) => {
   const iconButtonSize = useBreakpointValue({ base: "md", md: "lg" });
   const { clearCanvas } = useFabricHelpers();
   const dispatch = useDispatch();
+  const [closeButton, setCloseButton] = useState(true);
+  const handleCloseButtonClick = () => {
+    setCloseButton(false);
+    closeToggle(false);
+  };
 
   const handleImageClick = (image) => {
     setActiveWork(image);
@@ -56,34 +49,45 @@ const ImageGalleryModal = ({ viewerId }) => {
 
   const handleSelectItem = (image) => {
     clearCanvas(fabricOverlay.fabricCanvas());
-    dispatch(updateActivityFeed({ id: viewerId, feed: [] }));
     dispatch(updateTool({ tool: "Move" }));
+    dispatch(resetViewer({ id: viewerId }));
     // history.push(`/${activeWork}`);
     // history.push(`/slide/${image.id}`);
     viewer.open(image);
   };
 
   return (
-    <Menu>
-      <MenuAltButton ml="15px" label="Change Slide" />
-      <MenuList
-        mt={-2}
-        pr={12}
-        backgroundColor="#EAEAEA"
-        fontSize="sm"
-        zIndex="2"
-        minW={0}
-        color="#3965C6"
-      >
-        {Images.map((image, index) => (
-          <MenuAltItem
-            key={image.id}
-            label={"Slide " + (index + 1)}
-            onClick={() => handleSelectItem(image)}
-          />
-        ))}
-      </MenuList>
-    </Menu>
+    <>
+      <CloseIcon
+        color="white"
+        transform="scale(0.8)"
+        // paddingLeft="3px"
+        cursor="pointer"
+        onClick={handleCloseButtonClick}
+        paddingBottom="2px"
+      />
+      <Menu>
+        <MenuAltButton ml="15px" label="Change Slide" />
+        <MenuList
+          mt={-2}
+          pr={12}
+          backgroundColor="#EAEAEA"
+          fontSize="sm"
+          zIndex="2"
+          minW={0}
+          color="#3965C6"
+        >
+          {Images.map((image, index) => (
+            <MenuAltItem
+              key={image.id}
+              label={"Slide " + (index + 1)}
+              onClick={() => handleSelectItem(image)}
+            />
+          ))}
+        </MenuList>
+      </Menu>
+      <Algorithm />
+    </>
 
     // <Modal
     //   isOpen={isOpen}

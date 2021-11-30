@@ -4,11 +4,11 @@ import { Flex } from "@chakra-ui/react";
 
 const LayoutInnerBody = ({ children }) => {
   return (
-    <Flex flexDirection="column" flexGrow={3} as="main">
+    <Flex flexDirection="row" flexGrow={3} as="main">
       {children}
     </Flex>
   );
-}
+};
 
 LayoutInnerBody.propTypes = {
   children: PropTypes.node,

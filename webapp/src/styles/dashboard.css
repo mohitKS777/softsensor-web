@@ -1,0 +1,52 @@
+@media all and (min-width: 2560px) {
+  .project_invitation_box {
+    font-size: 22px !important;
+  }
+  .last__reports {
+    height: 38em !important;
+  }
+  .new__assign {
+    height: 38em !important;
+  }
+}
+
+@media all and (min-width: 1920px) {
+  .project_invitation_box {
+    width: 27.5em;
+    font-size: 16px;
+  }
+}
+
+@media all and (max-width: 1440px) {
+  .project_invitation_box {
+    width: 20em;
+    margin-left: 40px;
+    font-size: 11px;
+  }
+}
+
+@media all and (max-width: 1280px) {
+  .last__reports {
+    width: 22em !important;
+    height: 19em !important;
+  }
+  .recently__viewed {
+    height: 19.3em !important;
+    margin-top: 0 !important;
+  }
+  .last__task {
+    width: 22em !important;
+    height: 19.3em !important;
+    margin-top: 0 !important;
+  }
+  .last__task__img {
+    margin-left: 5em !important;
+  }
+  .new__assign {
+    height: 19em !important;
+  }
+  .newAssigned_table {
+    position: relative;
+    margin-left: -1em !important;
+  }
+}

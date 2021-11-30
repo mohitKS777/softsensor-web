@@ -18,8 +18,6 @@ import {
 import TypeButton from "../typeButton";
 import { FaShare } from "react-icons/fa";
 import { BiLink } from "react-icons/bi";
-// import { BsPeopleCircle } from "react-icons/bs";
-import { IoSettingsOutline } from "react-icons/io5";
 
 const ShareLink = (restProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,8 +29,8 @@ const ShareLink = (restProps) => {
       <Button
         size="sm"
         variant="solid"
-        h={7}
-        px="7px"
+        h={6}
+        px="27px"
         borderRadius="4px"
         rightIcon={<FaShare color="#3963c3" />}
         backgroundColor="#DDDDDD"
@@ -67,7 +65,6 @@ const ShareLink = (restProps) => {
             padding="20px"
           >
             <Flex>
-              {/* <TypeButton icon={<BsPeopleCircle size={28} />} marginRight="10px" /> */}
               <TypeButton size={28} color="black" marginRight="10px" />
             </Flex>
           </AlertDialogHeader>
