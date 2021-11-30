@@ -118,7 +118,9 @@ const Projects = () => {
                                     <CircularProgressbar value="85" text="85%" styles={buildStyles({ textSize: '30px', pathColor: '#67818d', textColor: '#67818d' })} />
                                     <CircularProgressbar value="50" text="50%" styles={buildStyles({ textSize: '30px', pathColor: '#9efadb', textColor: '#9efadb' })} />
                                 </Stack> */}
-                      {project?.type ? project.type : "Single Slide"}
+                      {project?.type === "singleSlide"
+                        ? "Single Slide"
+                        : "Multi Slide"}
                     </Td>
                     {/* <Td isNumeric>
                                 <Stack direction="row" justify="end">

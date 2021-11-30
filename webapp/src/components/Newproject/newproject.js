@@ -1,17 +1,32 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import Projectdetails from "./projectdetails";
 import Selectslide from "./selectSlide";
-import Questionnaire from "./handequestionnaire";
+import CreateQuestionnaire from "./createQuestionnaire";
 import Share from "./shareproject";
-import { Button } from "@chakra-ui/react";
+import { MdCardMembership } from "react-icons/md";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import DashboardMenu from "../Dashboard/menu";
+import Header from "../Dashboard/header";
 import { resetNewProject } from "../../state/reducers/newProjectReducer";
-// import SlideFileUpload from "./slideFileUpload";
+import { useAuth0 } from "@auth0/auth0-react";
+import {
+  useCreateProjectMutation,
+  useAddMultipleMembersToProjectMutation,
+} from "../../state/api/medicalApi";
 
 const Newproject = () => {
   const [activeOption, setActiveOption] = useState("projectDetails");
-  const { projectDetails } = useSelector((state) => state.newProjectState);
+  const { user } = useAuth0();
+  const { projectDetails, members, questions } = useSelector(
+    (state) => state.newProjectState
+  );
+  const id = user?.sub.substring(user?.sub.indexOf("|") + 1);
+  const history = useHistory();
+  const [createProject] = useCreateProjectMutation();
+  const [addMultipleMembersToProject] =
+    useAddMultipleMembersToProjectMutation();
   const dispatch = useDispatch();
   const handleReset = () => {
     dispatch(resetNewProject());
@@ -32,6 +47,25 @@ const Newproject = () => {
   const [buttonStyleShare, setButtonStyleShare] = useState("unselected_button");
   const [buttonBackgroundShare, setButtonBackgroundShare] = useState("#ffffff");
   const [buttonText, setButtonText] = useState("Next");
+
+  const handleCreateProject = async () => {
+    const resp = await createProject({
+      subClaim: user?.sub,
+      uploadType: "multiUpload",
+      questionnaire: {
+        questions,
+      },
+      ...projectDetails,
+    });
+    await addMultipleMembersToProject({
+      subClaim: user?.sub,
+      usernames: members,
+      projectId: resp.data._id,
+    });
+    dispatch(resetNewProject());
+    history.push(`/${id}/dashboard/projects`);
+    // handleActiveOptionProjectDetails();
+  };
 
   const handleActiveOptionProjectDetails = (e) => {
     setActiveOption("projectDetails");
@@ -97,7 +131,14 @@ const Newproject = () => {
 
   return (
     <>
-      <>
+      <DashboardMenu />
+      <Box
+        marginLeft="14em"
+        height="100vh"
+        direction="column"
+        backgroundColor="#eeeeee"
+      >
+        <Header />
         <Box className="div_overlay">
           <Box>
             <Button
@@ -141,8 +182,7 @@ const Newproject = () => {
           <Box>
             {activeOption === "projectDetails" && <Projectdetails />}
             {activeOption === "selectSlide" && <Selectslide />}
-            {activeOption === "questionnaire" && <Questionnaire />}
-
+            {activeOption === "questionnaire" && <CreateQuestionnaire />}
             {activeOption === "Share" && <Share />}
           </Box>
           <Box className="bottom_div">
@@ -154,14 +194,14 @@ const Newproject = () => {
               bg="#0032a0"
               colorScheme="#0032a0"
               width={127}
-              marginLeft={-150}
+              marginLeft={7}
               onClick={() => setNextButton()}
             >
               {buttonText}
             </Button>
           </Box>
         </Box>
-      </>
+      </Box>
     </>
   );
 };

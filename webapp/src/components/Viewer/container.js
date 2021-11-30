@@ -19,7 +19,7 @@ const ViewerContainer = ({ viewerId }) => {
   const location = useLocation();
 
   //get fabricOverlay state from redux store
-  const { fabricOverlay, userCanvases } = useSelector(
+  const { fabricOverlay, userCanvases, tile } = useSelector(
     (state) => state.fabricOverlayState.viewerWindow[viewerId]
   );
   const [tileSource, setTileSource] = useState({});
@@ -111,7 +111,7 @@ const ViewerContainer = ({ viewerId }) => {
   // Success
   // return <Viewer tile={tileSource} />;
 
-  return <Viewer viewerId={viewerId} tile={location.state.tile} />;
+  return <Viewer viewerId={viewerId} tile={tile} />;
 };
 
 export default ViewerContainer;

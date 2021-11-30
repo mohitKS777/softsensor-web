@@ -18,6 +18,7 @@ import medicalApiSlice from "./api/medicalApi";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import authReducer from "./reducers/authReducer";
 import dashboardReducer from "./reducers/dashboardReducer";
+import slideQnaReducer from "./reducers/slideQnaReducer";
 
 const store = configureStore({
   reducer: {
@@ -41,6 +42,7 @@ const store = configureStore({
     authState: authReducer,
     [medicalApiSlice.reducerPath]: medicalApiSlice.reducer,
     dashboardState: dashboardReducer,
+    slideQnaState: slideQnaReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -66,7 +66,11 @@ const Viewer = ({ viewerId, tile }) => {
     viewer && viewer.destroy();
     //Initialize OpenSeadragon instance and set to viewer
     setViewer(
-      OpenSeadragon({ ...osdOptions, tileSources: tile, id: viewerId })
+      OpenSeadragon({
+        ...osdOptions,
+        tileSources: tile,
+        id: "viewer" + viewerId,
+      })
     );
     initFabricJSOverlay(OpenSeadragon, fabric);
     return () => {
@@ -97,7 +101,7 @@ const Viewer = ({ viewerId, tile }) => {
 
   return (
     <Box
-      id={viewerId}
+      id={"viewer" + viewerId}
       border={
         isMultiView && viewerId === "viewer1" ? "2px solid #68D761" : "none"
       }

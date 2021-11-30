@@ -147,14 +147,18 @@ const Project = () => {
               </HStack>
               <Flex>
                 <TasksAssigned
+                  ownerId={project?.owner.subClaim}
+                  members={project?.members}
+                  progress={project?.projectProgress}
                   tasks={project?.cases}
                   slideType={project?.slideType}
+                  questionnaire={project?.questionnaire}
                 />
                 <Spacer />
                 <TeamInfo members={project?.members} />
               </Flex>
-              <TasksSubmitted />
-              <TasksCompleted />
+              {/* <TasksSubmitted ownerId={project?.owner.subClaim} />
+              <TasksCompleted ownerId={project?.owner.subClaim} /> */}
             </Flex>
           </>
         )}

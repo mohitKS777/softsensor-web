@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { questions } from "../../components/Qna/questions";
 
 const initialState = {
   projectDetails: {
@@ -8,6 +9,7 @@ const initialState = {
     slideType: "H&E",
     cases: [],
   },
+  questions: questions["H&E"],
   members: [],
   qna: {
     biopsy_adequacy: null,
@@ -24,6 +26,8 @@ const newProjectSlice = createSlice({
   reducers: {
     updateProject: (state, action) => {
       state.projectDetails[action.payload.name] = action.payload.value;
+      if (action.payload.name === "slideType")
+        state.questions = questions[action.payload.value];
     },
     updateCases: (state, action) => {
       state.projectDetails["cases"] = action.payload;

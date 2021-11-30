@@ -107,7 +107,6 @@ const Draw = ({ viewerId }) => {
     const canvas = fabricOverlay.fabricCanvas();
 
     const fontSize = getFontSize(screenSize, zoomValue);
-    console.log(screenSize, zoomValue);
 
     // Create new Textbox instance and add it to canvas
     const createTextbox = ({ left, top, height }) => {

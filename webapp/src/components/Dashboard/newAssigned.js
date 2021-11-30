@@ -138,7 +138,7 @@ const NewAssigned = () => {
                     On {moment(project?.assignedDate).format("DD MMM")}
                   </Td>
                   <Td color="#8aaeff">
-                    {project?.owner.firstName + project?.owner.lastName}
+                    {`${project?.owner.firstName}  ${project?.owner.lastName}`}
                   </Td>
                   <Td color="#8aaeff">Single-slide Project</Td>
                   {/* <Td isNumeric>

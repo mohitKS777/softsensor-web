@@ -2,8 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { io } from "socket.io-client";
 import rug from "random-username-generator";
 
-// const SERVER = "wss://path.prr.ai/ws";
-const SERVER = "http://localhost:8080";
+const SERVER = "wss://path.prr.ai/ws";
 
 const socket = io(SERVER, { transports: ["websocket"] });
 

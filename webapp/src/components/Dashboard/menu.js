@@ -27,28 +27,13 @@ import {
 import { useAuth0 } from "@auth0/auth0-react";
 import { useGetUserInfoQuery } from "../../state/api/medicalApi";
 import { useDispatch } from "react-redux";
-import { setActiveOption } from "../../state/reducers/dashboardReducer";
 
 const DashboardMenu = () => {
   const { user } = useAuth0();
-  const {
-    data: userInfo,
-    error,
-    isLoading,
-  } = useGetUserInfoQuery({
+  const { data: userInfo } = useGetUserInfoQuery({
     subClaim: user?.sub,
   });
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const history = useHistory();
-
-  const handleActiveOption = (e) => {
-    dispatch(setActiveOption(e.target.name));
-    if (location.pathname === "/project") {
-      const id = user?.sub.substring(user?.sub.indexOf("|") + 1);
-      history.push(`/dashboard/${id}`);
-    }
-  };
+  const id = user?.sub.substring(user?.sub.indexOf("|") + 1);
 
   return (
     <Menu
@@ -77,7 +62,6 @@ const DashboardMenu = () => {
           />
           <Flex marginTop="1em" direction="column" width="9em">
             <Text color="white">
-              {" "}
               {userInfo?.user.firstName + " " + userInfo?.user.lastName}
             </Text>
             <Text fontSize="xs">{userInfo?.user.emailAddress}</Text>
@@ -88,33 +72,45 @@ const DashboardMenu = () => {
         </Flex>
         <MenuGroup>
           <MenuDivider marginTop="1em" mx={2} />
-          <MenuItem
-            _hover={{ bg: "#66a3ff" }}
-            fontSize="small"
-            name="recent"
-            onClick={(e) => handleActiveOption(e)}
+          <Link
+            as={RouteLink}
+            to={`/${id}/dashboard/recent`}
+            _hover={{ textDecoration: "none" }}
           >
-            <Icon as={BiTime} marginRight={2} w={5} h={7} />
-            Recently Viewed
-          </MenuItem>
-          <MenuItem
-            _hover={{ bg: "#66a3ff" }}
-            fontSize="small"
-            name="projects"
-            onClick={(e) => handleActiveOption(e)}
+            <MenuItem _hover={{ bg: "#66a3ff" }} fontSize="small" name="recent">
+              <Icon as={BiTime} marginRight={2} w={5} h={7} />
+              Recently Viewed
+            </MenuItem>
+          </Link>
+          <Link
+            as={RouteLink}
+            to={`/${id}/dashboard/projects`}
+            _hover={{ textDecoration: "none" }}
           >
-            <Icon as={AiOutlineProject} marginRight={2} w={5} h={7} />
-            Projects
-          </MenuItem>
-          <MenuItem
-            _hover={{ bg: "#66a3ff" }}
-            fontSize="small"
-            name="newProject"
-            onClick={(e) => handleActiveOption(e)}
+            <MenuItem
+              _hover={{ bg: "#66a3ff" }}
+              fontSize="small"
+              name="projects"
+            >
+              <Icon as={AiOutlineProject} marginRight={2} w={5} h={7} />
+              Projects
+            </MenuItem>
+          </Link>
+          <Link
+            as={RouteLink}
+            to={`/${id}/dashboard/newProject`}
+            _hover={{ textDecoration: "none" }}
           >
-            <Icon as={AiOutlineFile} marginRight={2} w={5} h={7} />
-            New Projects
-          </MenuItem>
+            <MenuItem
+              _hover={{ bg: "#66a3ff" }}
+              fontSize="small"
+              name="newProject"
+            >
+              <Icon as={AiOutlineFile} marginRight={2} w={5} h={7} />
+              New Projects
+            </MenuItem>
+          </Link>
+
           <MenuItem _hover={{ bg: "#66a3ff" }} fontSize="small">
             <Icon as={AiOutlineFolderOpen} marginRight={2} w={5} h={7} />
             Open

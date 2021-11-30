@@ -49,7 +49,7 @@ export const getFontSize = (screenSize, zoomValue) => {
 
 export const getCanvasImage = async (viewerId) => {
   const canvas = await html2canvas(
-    document.querySelector(`#${viewerId} .openseadragon-canvas`),
+    document.querySelector(`#${"viewer" + viewerId} .openseadragon-canvas`),
     {
       backgroundColor: null,
       logging: true,

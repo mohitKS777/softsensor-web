@@ -1,5 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  addMembers,
+  resetNewProject,
+} from "../../state/reducers/newProjectReducer";
+import Projectdetails from "./projectdetails";
+import Selectslide from "./selectSlide";
+import Questionnaire from "./createQuestionnaire";
 import "../../styles/newproject.css";
 import {
   Box,
@@ -14,13 +21,15 @@ import {
   MenuButton,
   Image,
   Icon,
+  Avatar,
+  HStack,
 } from "@chakra-ui/react";
 
 import { AddIcon, ChevronDownIcon, LinkIcon } from "@chakra-ui/icons";
 
 const Share = () => {
   const [activeOption, setActiveOption] = useState("Share");
-  const { projectDetails } = useSelector((state) => state.newProjectState);
+  const { members } = useSelector((state) => state.newProjectState);
   const dispatch = useDispatch();
   const [userImage, setUserImage] = useState();
 
@@ -61,12 +70,40 @@ const Share = () => {
               </MenuButton>
               <MenuList>
                 <MenuItem icon={<LinkIcon />}>Anyone with the link</MenuItem>
-                <MenuItem icon={<AddIcon />}>Robert Rogers</MenuItem>
-                <MenuItem icon={<AddIcon />}>Zoe Margut</MenuItem>
+                {/* <MenuItem icon={<AddIcon />}>Robert Rogers</MenuItem>
+                <MenuItem icon={<AddIcon />}>Zoe Margut</MenuItem> */}
               </MenuList>
             </Menu>
           </Box>
-          <Box className="questions_div" width={800} marginTop={-20}>
+          {members.map((member) => {
+            return (
+              <HStack key={member}>
+                <Avatar
+                  size="sm"
+                  borderRadius="full"
+                  // src={userImage}
+                  alt="User"
+                  mt={3}
+                />
+                <Text marginLeft={2} fontSize={16} color="#3965C6" pt={2}>
+                  {member}
+                </Text>
+                <Box width={800}>
+                  {/* <Text
+                    align="right"
+                    marginTop={-6}
+                    color="rgba(57, 101, 198, 0.46)"
+                  >
+                    Owner
+                  </Text>
+                  <Text marginLeft={2} fontSize={12}>
+                    User1@gmail.com
+                  </Text> */}
+                </Box>
+              </HStack>
+            );
+          })}
+          {/* <Box className="questions_div" width={800} marginTop={-20}>
             <Image
               borderRadius="full"
               boxSize="150px"
@@ -97,39 +134,7 @@ const Share = () => {
                 User1@gmail.com
               </Text>
             </Box>
-          </Box>
-          <Box className="questions_div" width={800}>
-            <Image
-              borderRadius="full"
-              boxSize="150px"
-              src={userImage}
-              alt="User"
-            />
-            <Box width={800}>
-              <Text
-                marginLeft={2}
-                fontSize={16}
-                width="200px"
-                display="inline-block"
-                color="#3965C6"
-              >
-                Zoe Margut
-              </Text>
-              <Text
-                align="right"
-                marginTop={-6}
-                position="relative"
-                display="inline-flex"
-                marginLeft={300}
-                color="rgba(57, 101, 198, 0.46)"
-              >
-                Reader
-              </Text>
-              <Text marginLeft={2} fontSize={12}>
-                User2@gmail.com
-              </Text>
-            </Box>
-          </Box>
+          </Box> */}
         </Box>
       </Box>
     </>

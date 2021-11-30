@@ -10,7 +10,7 @@ const medicalApiSlice = createApi({
       return headers;
     },
   }),
-  tagTypes: ["projects", "invite"],
+  tagTypes: ["projects", "invite", "lastTask", "response"],
   endpoints: (builder) => ({
     getUserInfo: builder.query({
       query: (body) => ({
@@ -35,6 +35,7 @@ const medicalApiSlice = createApi({
         method: "POST",
         body: body,
       }),
+      providesTags: ["response"],
     }),
     addNewUser: builder.mutation({
       query: (body) => ({
@@ -75,10 +76,19 @@ const medicalApiSlice = createApi({
     }),
     getLastTask: builder.query({
       query: (body) => ({
-        url: "get_case_info",
+        url: "get_user_last_case",
         method: "POST",
         body: body,
       }),
+      providesTags: ["lastTask"],
+    }),
+    updateLastTask: builder.mutation({
+      query: (body) => ({
+        url: "update_last_worked_case",
+        method: "POST",
+        body: body,
+      }),
+      invalidatesTags: ["lastTask"],
     }),
     getCaseInfo: builder.query({
       query: (body) => ({
@@ -97,10 +107,19 @@ const medicalApiSlice = createApi({
     }),
     saveQuestionnaire: builder.mutation({
       query: (body) => ({
-        url: "save_questionnaire",
+        url: "save_questionnaire_response",
         method: "POST",
         body: body,
       }),
+      invalidatesTags: ["response"],
+    }),
+    getQuestionnaireResponse: builder.query({
+      query: (body) => ({
+        url: "get_questionnaire_response",
+        method: "POST",
+        body: body,
+      }),
+      providesTags: ["response"],
     }),
   }),
 });
@@ -119,6 +138,8 @@ export const {
   useGetCaseInfoQuery,
   useRespondToProjectInvitationMutation,
   useSaveQuestionnaireMutation,
+  useUpdateLastTaskMutation,
+  useGetQuestionnaireResponseQuery,
 } = medicalApiSlice;
 
 export default medicalApiSlice;

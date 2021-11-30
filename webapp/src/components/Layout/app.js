@@ -24,16 +24,28 @@ import useKeyboardEvents from "../../hooks/use-keyboard-events";
 import { fabric } from "openseadragon-fabricjs-overlay";
 import ViewerFactory from "../Viewer/viewerFactory";
 import { resetFabricOverlay } from "../../state/reducers/fabricOverlayReducer";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useUpdateLastTaskMutation } from "../../state/api/medicalApi";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import { resetViewerIds } from "../../state/reducers/viewerReducer";
 import "../../styles/viewer.css";
 import Files from "../Files/files";
 
 const LayoutApp = () => {
   // const { handleEvent } = useKeyboardEvents();
   const dispatch = useDispatch();
+  const { user } = useAuth0();
+  const location = useLocation();
+  const [updateLastTask] = useUpdateLastTaskMutation();
 
   useEffect(() => {
     return () => {
-      dispatch(resetFabricOverlay({ id: "viewer1" }));
+      dispatch(resetViewerIds());
+      dispatch(resetFabricOverlay());
+      updateLastTask({
+        subClaim: user?.sub,
+        caseId: location?.state.caseId,
+      });
     };
   }, []);
 
@@ -53,10 +65,7 @@ const LayoutApp = () => {
     <Flex as={Div100vh} h="100vh" direction="column">
       <LayoutOuterBody>
         <LayoutHeader />
-        <Files
-          dropDownToggle={setDropDownOpen}
-          dropDownVar={dropDownOpen}
-        />{" "}
+        <Files dropDownToggle={setDropDownOpen} dropDownVar={dropDownOpen} />
         {navbar ? (
           <>
             <ChevronUpIcon

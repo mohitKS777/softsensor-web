@@ -45,7 +45,7 @@ const UserDetails = () => {
         userType: "doctor",
       });
       const id = user?.sub.substring(user?.sub.indexOf("|") + 1);
-      history.push(`/dashboard/${id}`);
+      history.push(`/${id}/dashboard/projects`);
     } catch (err) {
       console.error("Failed to save the post: ", err);
     }

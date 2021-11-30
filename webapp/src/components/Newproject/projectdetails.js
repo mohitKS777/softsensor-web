@@ -77,8 +77,8 @@ const Projectdetails = () => {
             width={540}
             bg="#0032a01a"
           >
-            <option value="Single-Slide Project">Single-Slide Project</option>
-            <option value="Multi-Slide Project">Multi-Slide Project</option>
+            <option value="singleSlide">Single-Slide Project</option>
+            <option value="multiSlide">Multi-Slide Project</option>
           </Select>
           <Text
             htmlFor="slide_type"

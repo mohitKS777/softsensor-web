@@ -3,12 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const viewerSlice = createSlice({
   name: "viewer",
   initialState: {
-    viewerIds: ["viewer1"],
-    currentViewer: "viewer1",
+    viewerIds: [],
+    currentViewer: "",
     isMultiView: false,
   },
   reducers: {
     addViewer: (state, action) => {
+      if (!state.currentViewer) state.currentViewer = action.payload;
       state.viewerIds.push(action.payload);
     },
     removeViewer: (state, action) => {
@@ -22,10 +23,19 @@ const viewerSlice = createSlice({
     toggleMultiView: (state) => {
       state.isMultiView = !state.isMultiView;
     },
+    resetViewerIds: (state) => {
+      state.viewerIds = [];
+      state.currentViewer = "";
+    },
   },
 });
 
-export const { addViewer, removeViewer, updateCurrentViewer, toggleMultiView } =
-  viewerSlice.actions;
+export const {
+  addViewer,
+  removeViewer,
+  updateCurrentViewer,
+  toggleMultiView,
+  resetViewerIds,
+} = viewerSlice.actions;
 
 export default viewerSlice.reducer;

@@ -20,11 +20,36 @@ import {
   Td,
 } from "@chakra-ui/react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import ProgressBar from "@ramonak/react-progress-bar";
 import { AiOutlineProject } from "react-icons/ai";
 import PropTypes from "prop-types";
 import { Link as RouteLink } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import moment from "moment";
+import _ from "lodash";
 
-const TasksAssigned = ({ tasks, slideType }) => {
+const TasksAssigned = ({
+  ownerId,
+  members,
+  progress,
+  tasks,
+  questionnaire,
+}) => {
+  const { user } = useAuth0();
+  const id = user?.sub.substring(user?.sub.indexOf("|") + 1);
+  const taskProgresss = {};
+  progress?.map((task) => {
+    task.casesCompleted.map((c) => {
+      if (_.has(taskProgresss, c)) taskProgresss[c] += 1;
+      else taskProgresss[c] = 1;
+    });
+  });
+  console.log(
+    _.has(taskProgresss, "61a5d5350c7123d6fb3a6f74")
+      ? taskProgresss["61a5d5350c7123d6fb3a6f74"]
+      : 0
+  );
+
   return (
     <Box className="tasks__assigned">
       <Table variant="unstyled" marginTop="20px" mx={5} size="sm">
@@ -32,10 +57,7 @@ const TasksAssigned = ({ tasks, slideType }) => {
           <Tr margin="0px" textAlign="center">
             <Th color="#8aaeff">File Name</Th>
             <Th color="#8aaeff">Task Assigned</Th>
-            <Th color="#8aaeff">Progress</Th>
-            <Th color="#8aaeff" textAlign="center">
-              Status
-            </Th>
+            {ownerId === user?.sub ? <Th color="#8aaeff">Status</Th> : <></>}
             <Th isNumeric />
           </Tr>
         </Thead>
@@ -56,12 +78,10 @@ const TasksAssigned = ({ tasks, slideType }) => {
                     <Link
                       as={RouteLink}
                       to={{
-                        pathname: `/slide/${task?.slides[0]._id}`,
+                        pathname: `/${id}/project/${task?.projectId}/slideRedirect`,
                         state: {
-                          viewerId: task?.slides[0]._id,
-                          tile: task?.slides[0].awsImageBucketUrl,
-                          projectId: task?.projectId,
-                          slideType: slideType,
+                          caseId: task?._id,
+                          questionnaire: questionnaire,
                         },
                       }}
                     >
@@ -71,39 +91,66 @@ const TasksAssigned = ({ tasks, slideType }) => {
                     <Text display="inline-block">{task?.name}</Text>
                   )}
                 </Td>
-                <Td color="#8aaeff">{}</Td>
-                <Td justifyContent="center">
-                  <Stack direction="row" style={{ width: "120px" }}>
-                    <CircularProgressbar
-                      value="75"
-                      text="75%"
-                      styles={buildStyles({
-                        textSize: "30px",
-                        pathColor: "#fe740d",
-                        textColor: "#fe740d",
-                      })}
+                <Td color="#8aaeff">{moment(task?.createdAt).fromNow()}</Td>
+                {ownerId === user?.sub ? (
+                  /*  <Td justifyContent="center">
+                    <Stack direction="row" style={{ width: "120px" }}>
+                      <CircularProgressbar
+                        value="75"
+                        text="75%"
+                        styles={buildStyles({
+                          textSize: "30px",
+                          pathColor: "#fe740dp",
+                          textColor: "#fe740d",
+                        })}
+                      />
+                      <CircularProgressbar
+                        value="85"
+                        text="85%"
+                        styles={buildStyles({
+                          textSize: "30px",
+                          pathColor: "#67818d",
+                          textColor: "#67818d",
+                        })}
+                      />
+                      <CircularProgressbar
+                        value="50"
+                        text="50%"
+                        styles={buildStyles({
+                          textSize: "30px",
+                          pathColor: "#9efadb",
+                          textColor: "#9efadb",
+                        })}
+                      />
+                    </Stack>
+                  </Td>*/
+                  <Td>
+                    <ProgressBar
+                      width="150px"
+                      completed={
+                        _.has(taskProgresss, task?._id)
+                          ? taskProgresss[task?.id]
+                          : 0
+                      }
+                      maxCompleted={members.length}
+                      customLabel={
+                        _.has(taskProgresss, task?._id)
+                          ? taskProgresss[task?._id] === members.length
+                            ? "Completed"
+                            : `${taskProgresss[task?._id]} / ${
+                                members.length
+                              } Submitted`
+                          : " "
+                      }
+                      bgColor="#3965C5"
+                      labelSize="10px"
+                      labelAlignment="center"
                     />
-                    <CircularProgressbar
-                      value="85"
-                      text="85%"
-                      styles={buildStyles({
-                        textSize: "30px",
-                        pathColor: "#67818d",
-                        textColor: "#67818d",
-                      })}
-                    />
-                    <CircularProgressbar
-                      value="50"
-                      text="50%"
-                      styles={buildStyles({
-                        textSize: "30px",
-                        pathColor: "#9efadb",
-                        textColor: "#9efadb",
-                      })}
-                    />
-                  </Stack>
-                </Td>
-                <Td>
+                  </Td>
+                ) : (
+                  <></>
+                )}
+                {/* <Td>
                   <Text
                     color="#3965C5"
                     py="5px"
@@ -113,14 +160,22 @@ const TasksAssigned = ({ tasks, slideType }) => {
                   >
                     Ongoing
                   </Text>
-                </Td>
-                <Td isNumeric>
-                  <Stack direction="row" justify="end">
-                    <Avatar name="Zoe Margot" size="sm" />
-                    <Avatar name="Rakesh Gautam" size="sm" />
-                    <Avatar name="Mila Maghudiya" size="sm" />
-                  </Stack>
-                </Td>
+                </Td>  */}
+                {ownerId === user?.sub ? (
+                  <Td isNumeric>
+                    <Stack direction="row" justify="end">
+                      {members?.map((member) => (
+                        <Avatar
+                          key={member._id}
+                          name={`${member.firstName} ${member.lastName}`}
+                          size="sm"
+                        />
+                      ))}
+                    </Stack>
+                  </Td>
+                ) : (
+                  <></>
+                )}
               </Tr>
             );
           })}

@@ -36,8 +36,8 @@ const DashboardRedirect = () => {
   useEffect(() => {
     if (isLoading || !token) return;
     const id = user?.sub.substring(user?.sub.indexOf("|") + 1);
-    if (error && error.status === 404) history.push(`/registrationForm/${id}`);
-    if (data) history.push(`/dashboard/${id}`);
+    if (error && error.status === 404) history.push(`/${id}/registrationForm`);
+    if (data) history.push(`/${id}/dashboard/projects`);
   }, [isLoading, token]);
 
   return (

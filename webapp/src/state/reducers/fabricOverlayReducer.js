@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { brandColors } from "../../styles/brandPalette";
+import _ from "lodash";
 
 export const getLocalUserCanvases = () => {
   const userCanvases = window.localStorage.getItem("userCanvases");
@@ -18,6 +19,7 @@ const defaultViewerWindow = {
   viewer: null,
   activityFeed: [],
   zoomValue: 0,
+  tile: "",
 };
 
 const fabricOverlaySlice = createSlice({
@@ -25,9 +27,7 @@ const fabricOverlaySlice = createSlice({
   initialState: {
     activeTool: "Move",
     color: brandColors[0],
-    viewerWindow: {
-      viewer1: defaultViewerWindow,
-    },
+    viewerWindow: {},
     username: "",
     roomName: "",
   },
@@ -58,6 +58,7 @@ const fabricOverlaySlice = createSlice({
       state.roomName = action.payload.roomName;
     },
     updateZoomValue: (state, action) => {
+      if (!_.has(state.viewerWindow, action.payload.id)) return;
       state.viewerWindow[action.payload.id].zoomValue =
         action.payload.value > 40 ? 40 : action.payload.value;
     },
@@ -65,7 +66,10 @@ const fabricOverlaySlice = createSlice({
       state.viewerWindow[action.payload.id].activityFeed = action.payload.feed;
     },
     addViewerWindow: (state, action) => {
-      state.viewerWindow[action.payload.id] = action.payload.value;
+      state.viewerWindow[action.payload.id] = {
+        ...defaultViewerWindow,
+        tile: action.payload.tile,
+      };
     },
     removeViewerWindow: (state, action) => {
       delete state.viewerWindow[action.payload.id];
@@ -75,7 +79,7 @@ const fabricOverlaySlice = createSlice({
       state.viewerWindow[action.payload.id].zoomValue = 0;
     },
     resetFabricOverlay: (state, action) => {
-      state.viewerWindow[action.payload.id] = defaultViewerWindow;
+      state.viewerWindow = {};
       state.activeTool = "Move";
       state.color = brandColors[0];
     },

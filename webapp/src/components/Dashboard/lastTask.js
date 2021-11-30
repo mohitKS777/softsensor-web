@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Avatar,
   Button,
@@ -10,19 +10,34 @@ import {
   Spacer,
   Stack,
   Text,
+  Spinner,
 } from "@chakra-ui/react";
 import { BsCircleFill } from "react-icons/bs";
 import { useGetLastTaskQuery } from "../../state/api/medicalApi";
 import { useAuth0 } from "@auth0/auth0-react";
 import moment from "moment";
 import { Link as RouteLink } from "react-router-dom";
+import { lastIndexOf } from "lodash";
 
 const LastTask = () => {
   const { user } = useAuth0();
-  const { data: task, error } = useGetLastTaskQuery({
+  const {
+    data: { recentCaseWorkedOn } = {},
+    error,
+    isLoading,
+  } = useGetLastTaskQuery({
     subClaim: user?.sub,
-    caseId: "617f533fae58c647e8bd0da2",
   });
+  const id = user?.sub.substring(user?.sub.indexOf("|") + 1);
+  const [url, setUrl] = useState("");
+
+  useEffect(() => {
+    if (!recentCaseWorkedOn) return;
+    const slideUrl = recentCaseWorkedOn?.slides[0].awsImageBucketUrl;
+    setUrl(
+      slideUrl.substring(0, slideUrl.lastIndexOf(".")) + "_files/8/0_0.jpeg"
+    );
+  }, [recentCaseWorkedOn]);
 
   return (
     <Flex
@@ -45,16 +60,15 @@ const LastTask = () => {
       >
         Last Task
       </Text>
-      {error ? (
+      {isLoading ? (
+        <Flex justify="center" align="center" h="100vh">
+          <Spinner color="#3965C5" size="xl" thickness="4px" speed="0.65s" />
+        </Flex>
+      ) : error || !recentCaseWorkedOn ? (
         <Text> No Task Available</Text>
       ) : (
         <>
-          <Image
-            className="last__task__img"
-            src="https://med-ai-data.s3.amazonaws.com/b_cell_nh/g-1/g-1_files/8/0_0.jpeg"
-            marginTop="10px"
-            // htmlHeight="50px"
-          />
+          <Image className="last__task__img" src={url} marginTop="10px" />
           <HStack>
             <Text
               className="last__task__title"
@@ -64,7 +78,7 @@ const LastTask = () => {
               marginTop="10px"
               paddingBottom="10px"
             >
-              {task?.name}
+              {recentCaseWorkedOn?.name}
             </Text>
             <Spacer />
             {/* <Stack direction="row" justify="end">
@@ -75,10 +89,13 @@ const LastTask = () => {
           </HStack>
           <Text color="#8aaeff" fontSize="xs" marginLeft="15px">
             Project Name <Icon as={BsCircleFill} mx={1} w={1} h={1} />{" "}
-            {moment(task?.createdAt).format("MMM DD, YYYY")}
+            {moment(recentCaseWorkedOn?.createdAt).format("MMM DD, YYYY")}
           </Text>
           <Text color="#8aaeff" fontSize="xs" marginLeft="15px">
-            Created by Piyush Lamba
+            {`Created by ${
+              recentCaseWorkedOn?.caseOwner.firstName +
+              recentCaseWorkedOn?.caseOwner.lastName
+            }`}
           </Text>
           <Flex>
             <Link
@@ -93,11 +110,10 @@ const LastTask = () => {
             <Link
               as={RouteLink}
               to={{
-                pathname: `/slide/${task?.slides[0]._id}`,
+                pathname: `/${id}/project/${recentCaseWorkedOn?.projectId}/slideRedirect`,
                 state: {
-                  viewerId: task?.slides[0]._id,
-                  tile: task?.slides[0].awsImageBucketUrl,
-                  projectId: task?.projectId,
+                  caseId: recentCaseWorkedOn?._id,
+                  questionnaire: recentCaseWorkedOn?.questionnaire,
                 },
               }}
               _hover={{ textDecoration: "none" }}

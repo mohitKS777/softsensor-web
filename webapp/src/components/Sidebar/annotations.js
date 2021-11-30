@@ -11,7 +11,9 @@ import { updateActiveFeed } from "../../state/reducers/feedReducer";
 const Annotations = () => {
   const { activeTool } = useSelector((state) => state.fabricOverlayState);
   const { activeDrawerTool } = useSelector((state) => state.drawerState);
-  const { isMultiView } = useSelector((state) => state.viewerState);
+  const { isMultiView, currentViewer } = useSelector(
+    (state) => state.viewerState
+  );
   const { activeFeed } = useSelector((state) => state.feedState);
   const dispatch = useDispatch();
 
@@ -66,7 +68,7 @@ const Annotations = () => {
           mt="5px"
           mb="10px"
         >
-          <ActivityFeed viewerId={activeFeed} />
+          <ActivityFeed viewerId={currentViewer} />
         </Box>
         {activeDrawerTool === "Algorithm" && <PaletteOptions />}
       </Box>

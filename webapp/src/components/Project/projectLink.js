@@ -7,13 +7,13 @@ import Project from "./project";
 
 const ProjectLink = ({ projectName, projectId }) => {
   const { user } = useAuth0();
-  const [accessToken, setAccessToken] = useState();
-  const [id, setId] = useState();
   const history = useHistory();
-  const handleProceed = () => {
-    const id = user?.sub.substring(user?.sub.indexOf("|") + 1);
-    history.push(generatePath("/dashboard/:id/:projectId", { id, projectId }));
-  };
+  const id = user?.sub.substring(user?.sub.indexOf("|") + 1);
+
+  // const handleProceed = () => {
+  //   const id = user?.sub.substring(user?.sub.indexOf("|") + 1);
+  //   history.push(generatePath("/dashboard/:id/:projectId", { id, projectId }));
+  // };
   const handleClick = () => {
     return <Project projectName={projectName} projectId={projectId} />;
   };
@@ -22,7 +22,10 @@ const ProjectLink = ({ projectName, projectId }) => {
     <>
       <Link
         as={RouteLink}
-        to={{ pathname: "/project", state: { projectId: projectId } }}
+        to={{
+          pathname: `/${id}/project/${projectId}`,
+          state: { projectId: projectId },
+        }}
       >
         {projectName}
       </Link>

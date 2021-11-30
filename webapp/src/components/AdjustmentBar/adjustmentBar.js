@@ -6,6 +6,12 @@ import { useSelector } from "react-redux";
 import SlideUser from "../UserSettings/user";
 import Move from "../Move/move";
 import Case from "../Case/case";
+import ShareLink from "../Share/shareLink";
+import Algorithm from "../Palette/algorithm";
+import TypeTools from "./typeTools";
+import MultiView from "../MultiView/multiView";
+import GenerateReport from "../Report/generateReport";
+import ChangeCase from "../Case/changeCase";
 import "../../styles/viewer.css";
 
 const AdjustmentBar = ({ dropDownOpen }) => {
@@ -34,22 +40,26 @@ const AdjustmentBar = ({ dropDownOpen }) => {
             zIndex={4}
           >
             <Flex direction="column" marginTop="5px" marginLeft="5px">
-              <ImageGalleryModal
+              {/* <ImageGalleryModal
                 viewerId={currentViewer}
                 closeToggle={setAlgoToggle}
-              />
+              /> */}
+              <ChangeCase closeToggle={setAlgoToggle} />
             </Flex>
           </Box>
         ) : (
           ""
         )}
         {toolsToggle ? (
-          <Move viewerId={viewerId} toolsButtonHandler={setToolsToggle} />
+          <Move viewerId={currentViewer} toolsButtonHandler={setToolsToggle} />
         ) : (
           ""
         )}
         {colorsToggle ? (
-          <Color viewerId={viewerId} colorsButtonHandler={setColorsToggle} />
+          <Color
+            viewerId={currentViewer}
+            colorsButtonHandler={setColorsToggle}
+          />
         ) : (
           ""
         )}
