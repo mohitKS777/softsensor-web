@@ -54,6 +54,7 @@ jobs:
             sed -i "s|\$REACT_APP_AUTH0_DOMAIN|${{secrets.REACT_APP_AUTH0_DOMAIN}}|g" docker-compose.yml
             sed -i "s|\$REACT_APP_AUTH0_CLIENT_ID|${{secrets.REACT_APP_AUTH0_CLIENT_ID}}|g" docker-compose.yml
             sed -i "s|\$REACT_APP_AUTH0_REDIRECT_URI|${{secrets.REACT_APP_AUTH0_REDIRECT_URI}}|g" docker-compose.yml
+            sed -i "s|\$REACT_APP_AUTH0_AUDIENCE|${{secrets.REACT_APP_AUTH0_AUDIENCE}}|g" docker-compose.yml
             /usr/bin/aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}
             /usr/bin/docker pull $IMAGE
             /usr/bin/docker-compose up -d
