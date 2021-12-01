@@ -9,10 +9,12 @@ import store from "./state/store";
 
 ReactDOM.render(
   <Auth0Provider
-    domain={process.env.REACT_APP_AUTH0_DOMAIN}
-    clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
+//     domain={process.env.REACT_APP_AUTH0_DOMAIN}
+//     clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
 //     redirectUri={process.env.REACT_APP_AUTH0_REDIRECT_URI}
 //     audience={process.env.REACT_APP_AUTH0_AUDIENCE}
+    domain="dev-nhdn0k34.us.auth0.com"
+    clientId="29nMTRiTlCyikc6IcKpsunU1uyMDhpYp"
     redirectUri="https://path.prr.ai/dashboard"
     audience="https://path.prr.ai"
     // scope="read:users"
