@@ -31,7 +31,9 @@ RUN npm_config_unsafe_perm=true npm install -global yarn
 WORKDIR /usr/src/react
 COPY ./webapp/package.json ./
 ## COPY ./webapp/yarn.lock .
-RUN yarn install
+##RUN yarn install
+RUN yarn cache clean
+RUN yarn 
 COPY ./webapp ./
 RUN yarn run build
 
