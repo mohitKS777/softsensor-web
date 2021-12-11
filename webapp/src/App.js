@@ -69,9 +69,6 @@ const App = () => {
             <Route path="/:id/project/:projectId/slide/:slideId">
               <LayoutApp />
             </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
             <Route path="/:id/project/:projectId">
               <Project />
             </Route>
@@ -89,6 +86,9 @@ const App = () => {
             </Route>
             <Route path="/dashboard">
               <DashboardRedirect />
+            </Route>
+            <Route path="/">
+              <Login />
             </Route>
           </Switch>
         </SocketWrapper>

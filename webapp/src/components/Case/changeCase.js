@@ -1,8 +1,17 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { Box, Flex, VStack, Text, HStack, Button } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  VStack,
+  Text,
+  HStack,
+  Button,
+  IconButton,
+} from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { useGetProjectInfoQuery } from "../../state/api/medicalApi";
+import { isCaseViewable } from "../../hooks/utility";
 import { CloseIcon, ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import "../../styles/viewer.css";
 
@@ -80,13 +89,20 @@ const ChangeCase = ({ closeToggle }) => {
           Slides
         </Text>
         <Flex justifyContent="space-between">
-          <ChevronLeftIcon
+          <IconButton
+            icon={<ChevronLeftIcon />}
             color="#fff"
-            marginTop="25px"
+            variant="unstyled"
+            marginTop="15px"
             cursor="pointer"
+            minW={0}
+            _focus={{ background: "none" }}
             disabled={
               currentCaseIndex - 1 < 0 ||
-              project?.cases[currentCaseIndex - 1].slides.length === 0
+              !isCaseViewable(
+                project?.type,
+                project?.cases[currentCaseIndex - 1].slides.length
+              )
             }
             onClick={() => handleChangeClick(currentCaseIndex - 1)}
           />
@@ -103,17 +119,27 @@ const ChangeCase = ({ closeToggle }) => {
             align="left"
             spacing={-1}
           >
-            <Text>Accession Number: {currentCaseIndex + 1}</Text>
-            <Text>{project.slideType}</Text>
-            <Text>{project.name}</Text>
+            <Text>
+              Accession Number:{" "}
+              {project?.cases[currentCaseIndex].slides[0].slideName}
+            </Text>
+            <Text>{project?.slideType}</Text>
+            <Text>{project?.name}</Text>
           </VStack>
-          <ChevronRightIcon
+          <IconButton
+            icon={<ChevronRightIcon />}
+            variant="unstyled"
             color="#fff"
             cursor="pointer"
-            marginTop="25px"
+            minW={0}
+            marginTop="15px"
+            _focus={{ background: "none", border: "none" }}
             disabled={
               currentCaseIndex + 1 === project?.cases.length ||
-              project?.cases[currentCaseIndex + 1].slides.length === 0
+              !isCaseViewable(
+                project?.type,
+                project?.cases[currentCaseIndex + 1].slides.length
+              )
             }
             onClick={() => handleChangeClick(currentCaseIndex + 1)}
             title="Next Slide"

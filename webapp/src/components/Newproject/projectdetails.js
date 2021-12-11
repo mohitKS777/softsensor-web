@@ -30,8 +30,8 @@ const Projectdetails = () => {
           <Input
             type="text"
             id="project_title"
-            name="project_title"
-            value={projectDetails.project_title}
+            name="projectName"
+            value={projectDetails.projectName}
             width={590}
             borderRadius={5}
             bg="#0032a01a"
@@ -49,8 +49,8 @@ const Projectdetails = () => {
           </Text>
           <Textarea
             id="project_desc"
-            name="project_desc"
-            value={projectDetails.project_desc}
+            name="projectDescription"
+            value={projectDetails.projectDescription}
             width={590}
             height={150}
             top="0"
@@ -66,13 +66,13 @@ const Projectdetails = () => {
             fontSize={17}
             paddingBottom={3}
           >
-            Select
+            Project Type
           </Text>
           <Select
             variant="outline"
             id="project_type"
-            name="project_type"
-            value={projectDetails.project_type}
+            name="projectType"
+            value={projectDetails.projectType}
             onChange={(e) => handleProjectDetails(e)}
             width={540}
             bg="#0032a01a"
@@ -87,12 +87,12 @@ const Projectdetails = () => {
             fontSize={17}
             paddingBottom={3}
           >
-            Slide type
+            Slide Type
           </Text>
           <Select
             id="slide_type"
-            name="slide_type"
-            value={projectDetails.slide_type}
+            name="slideType"
+            value={projectDetails.slideType}
             width={540}
             bg="#0032a01a"
             onChange={(e) => handleProjectDetails(e)}

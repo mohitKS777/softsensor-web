@@ -23,15 +23,49 @@ import {
   Icon,
   Avatar,
   HStack,
+  VStack,
+  Spacer,
+  Divider,
 } from "@chakra-ui/react";
 
 import { AddIcon, ChevronDownIcon, LinkIcon } from "@chakra-ui/icons";
+import { AiOutlineUserAdd } from "react-icons/ai";
+import {
+  useGetUserInfoQuery,
+  useSearchUserMutation,
+} from "../../state/api/medicalApi";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Share = () => {
-  const [activeOption, setActiveOption] = useState("Share");
-  const { members } = useSelector((state) => state.newProjectState);
-  const dispatch = useDispatch();
   const [userImage, setUserImage] = useState();
+  const { user } = useAuth0();
+  const { data } = useGetUserInfoQuery({
+    subClaim: user?.sub,
+  });
+  const [value, setValue] = useState("");
+  const [isInvalidUser, setIsInvalidUser] = useState(false);
+  const { membersInfo } = useSelector((state) => state.newProjectState);
+  const [searchUser] = useSearchUserMutation();
+  const dispatch = useDispatch();
+
+  const handleInput = (e) => {
+    setValue(e.target.value);
+    if (isInvalidUser) setIsInvalidUser(false);
+  };
+  const handleAddMember = async () => {
+    if (!value || value === data?.user.emailAddress) {
+      setIsInvalidUser(true);
+      return;
+    }
+    const info = await searchUser({
+      subClaim: user?.sub,
+      searchObject: { emailAddress: value },
+    });
+    if (info.data.length > 0)
+      dispatch(addMembers({ email: value, info: info.data[0] }));
+    setValue("");
+    setIsInvalidUser(info.data.length === 0);
+  };
 
   return (
     <>
@@ -49,18 +83,30 @@ const Share = () => {
                 borderColor="#2e519e"
                 opacity={0.6}
                 bg="rgba(0, 50, 160, 0.1)"
-              ></Input>
+                value={value}
+                type="email"
+                onChange={(e) => handleInput(e)}
+              />
               <InputRightElement
                 marginTop="18px"
-                children={<Icon name="add" color="blue.500" />}
+                onClick={handleAddMember}
+                cursor="pointer"
+                children={
+                  <AiOutlineUserAdd name="add" color="blue.500" size={20} />
+                }
               />
             </InputGroup>
+            {isInvalidUser && (
+              <Text mt={2} ml={2} fontSize={16}>
+                Not a valid user
+              </Text>
+            )}
           </Text>
           <br />
           <Box marginTop={50} marginLeft={-600}>
             <Menu>
               <MenuButton
-                Icon={<LinkIcon />}
+                icon={<LinkIcon />}
                 as={Button}
                 rightIcon={<ChevronDownIcon />}
                 bg="white"
@@ -75,66 +121,59 @@ const Share = () => {
               </MenuList>
             </Menu>
           </Box>
-          {members.map((member) => {
-            return (
-              <HStack key={member}>
-                <Avatar
-                  size="sm"
-                  borderRadius="full"
-                  // src={userImage}
-                  alt="User"
-                  mt={3}
-                />
-                <Text marginLeft={2} fontSize={16} color="#3965C6" pt={2}>
-                  {member}
+          <Box
+            className="questions_div"
+            w={550}
+            display="block"
+            marginTop={-20}
+          >
+            <HStack alignItems="center">
+              <Avatar
+                size="md"
+                borderRadius="full"
+                name={`${data?.user.firstName} ${data?.user.lastName}`}
+                // src={userImage}
+                alt="User"
+                mt={3}
+              />
+              <VStack ml={2} align="flex-start" spacing={0} whiteSpace="nowrap">
+                <Text fontSize={16} color="#3965C6" pt={2}>
+                  {`${data?.user.firstName} ${data?.user.lastName} (You)`}
                 </Text>
-                <Box width={800}>
-                  {/* <Text
-                    align="right"
-                    marginTop={-6}
-                    color="rgba(57, 101, 198, 0.46)"
+                <Text fontSize={12}>{data?.user.emailAddress}</Text>
+              </VStack>
+              <Spacer />
+              <Text>Owner</Text>
+            </HStack>
+            <Divider mt={4} bgColor="black" border="none" h="0.1px" w={550} />
+            {membersInfo.map((member) => {
+              return (
+                <HStack key={member._id}>
+                  <Avatar
+                    size="md"
+                    borderRadius="full"
+                    name={`${member.firstName} ${member.lastName}`}
+                    // src={userImage}
+                    alt="User"
+                    mt={3}
+                  />
+                  <VStack
+                    ml={2}
+                    align="flex-start"
+                    spacing={0}
+                    whiteSpace="nowrap"
                   >
-                    Owner
-                  </Text>
-                  <Text marginLeft={2} fontSize={12}>
-                    User1@gmail.com
-                  </Text> */}
-                </Box>
-              </HStack>
-            );
-          })}
-          {/* <Box className="questions_div" width={800} marginTop={-20}>
-            <Image
-              borderRadius="full"
-              boxSize="150px"
-              src={userImage}
-              alt="User"
-            />
-            <Box width={800}>
-              <Text
-                marginLeft={2}
-                fontSize={16}
-                width="200px"
-                display="inline-block"
-                color="#3965C6"
-              >
-                Robert Rogers(You)
-              </Text>
-              <Text
-                align="right"
-                marginTop={-6}
-                position="relative"
-                display="inline-flex"
-                marginLeft={300}
-                color="rgba(57, 101, 198, 0.46)"
-              >
-                Owner
-              </Text>
-              <Text marginLeft={2} fontSize={12}>
-                User1@gmail.com
-              </Text>
-            </Box>
-          </Box> */}
+                    <Text fontSize={16} color="#3965C6" pt={2}>
+                      {`${member.firstName} ${member.lastName}`}
+                    </Text>
+                    <Text fontSize={12}>{member.email}</Text>
+                  </VStack>
+                  <Spacer />
+                  <Text>Reader</Text>
+                </HStack>
+              );
+            })}
+          </Box>
         </Box>
       </Box>
     </>

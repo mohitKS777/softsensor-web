@@ -18,9 +18,8 @@ const medicalApiSlice = createApi({
         method: "POST",
         body: body,
       }),
-      providesTags: ["projects", "invite"],
     }),
-    getUserOrganzation: builder.query({
+    getUserOrganization: builder.query({
       query: (body) => {
         return {
           url: "get_user_organization",
@@ -121,13 +120,50 @@ const medicalApiSlice = createApi({
       }),
       providesTags: ["response"],
     }),
+    getUserInvitations: builder.query({
+      query: (body) => ({
+        url: "get_user_invitations",
+        method: "POST",
+        body: body,
+      }),
+      providesTags: ["invite"],
+    }),
+    addMultipleMembersToProjectByEmail: builder.mutation({
+      query: (body) => ({
+        url: "add_multiple_members_to_project_by_email",
+        method: "POST",
+        body: body,
+      }),
+    }),
+    searchUser: builder.mutation({
+      query: (body) => ({
+        url: "search_user",
+        method: "POST",
+        body: body,
+      }),
+    }),
+    getUserOwnedProjects: builder.query({
+      query: (body) => ({
+        url: "get_user_owned_projects",
+        method: "POST",
+        body: body,
+      }),
+      providesTags: ["projects"],
+    }),
+    getUserProjects: builder.query({
+      query: (body) => ({
+        url: "get_user_projects",
+        method: "POST",
+        body: body,
+      }),
+      providesTags: ["invite"],
+    }),
   }),
 });
 
 export const {
-  useTestApiQuery,
   useGetUserInfoQuery,
-  useGetUserOrganzationQuery,
+  useGetUserOrganizationQuery,
   useAddNewUserMutation,
   useCreateProjectMutation,
   useAddMultipleMembersToProjectMutation,
@@ -140,6 +176,11 @@ export const {
   useSaveQuestionnaireMutation,
   useUpdateLastTaskMutation,
   useGetQuestionnaireResponseQuery,
+  useGetUserInvitationsQuery,
+  useSearchUserMutation,
+  useAddMultipleMembersToProjectByEmailMutation,
+  useGetUserOwnedProjectsQuery,
+  useGetUserProjectsQuery,
 } = medicalApiSlice;
 
 export default medicalApiSlice;

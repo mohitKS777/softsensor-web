@@ -11,13 +11,9 @@ const initialState = {
   },
   questions: questions["H&E"],
   members: [],
-  qna: {
-    biopsy_adequacy: null,
-    if_no_indicate_why: null,
-    steatosis: null,
-    lobular_inflammation: null,
-    hepatocellular_ballooning: null,
-  },
+  membersInfo: [],
+  slides: [],
+  uploadedFile: "",
 };
 
 const newProjectSlice = createSlice({
@@ -36,31 +32,23 @@ const newProjectSlice = createSlice({
       state.qna[action.payload.name] = action.payload.value;
     },
     addMembers: (state, action) => {
-      state.members.push(action.payload);
+      state.members.push(action.payload.email);
+      state.membersInfo.push({
+        ...action.payload.info,
+        email: action.payload.email,
+      });
     },
-    // addQuestion: (state) => {
-    //   state.questionnaire.push({ question: "", description: "", answer: "" });
-    // },
-    // removeQuestion: (state, action) => {
-    //   state.questionnaire.splice(action.payload.id, 1);
-    // },
-    // updateQuestion: (state, action) => {
-    //   state.questionnaire[action.payload.index].question =
-    //     action.payload.question;
-    // },
-    // updateDescription: (state, action) => {
-    //   state.questionnaire[action.payload.index].description =
-    //     action.payload.description;
-    // },
-    // updateAnswer: (state, action) => {
-    //   state.questionnaire[action.payload.index].answer = action.payload.answer;
-    // },
-    // updateisAddQna: (state, action) => {
-    //   state.isAddQna = action.payload;
-    // },
+    updateFile: (state, action) => {
+      state.uploadedFile = action.payload;
+    },
+    addSlides: (state, action) => {
+      state.slides = action.payload;
+      console.log(state.slides);
+    },
     resetNewProject: (state) => {
       state.projectDetails = initialState.projectDetails;
       state.members = initialState.members;
+      state.membersInfo = initialState.membersInfo;
       //   state.isAddQna = false;
       //   state.questionnaire = initialState.questionnaire;
     },
@@ -73,6 +61,9 @@ export const {
   resetNewProject,
   updateCases,
   addMembers,
+  updateFile,
+  addMembersInfo,
+  addSlides,
 } = newProjectSlice.actions;
 
 export default newProjectSlice.reducer;

@@ -29,13 +29,21 @@ import { useGetUserInfoQuery } from "../../state/api/medicalApi";
 import moment from "moment";
 import DashboardMenu from "../Dashboard/menu";
 import Header from "../Dashboard/header";
+import { useDispatch } from "react-redux";
+import { getAccessToken } from "../../hooks/utility";
+import Loading from "../Loading/loading";
+import useUserAuthentication from "../../hooks/useUserAuthentication";
 
 const Recent = () => {
   const { user } = useAuth0();
-  const { data } = useGetUserInfoQuery({
+  const { isLoading } = useGetUserInfoQuery({
     subClaim: user?.sub,
   });
-  return (
+  const isUserAuthenticated = useUserAuthentication();
+
+  return !isUserAuthenticated || isLoading ? (
+    <Loading />
+  ) : (
     <>
       <DashboardMenu />
       <Box

@@ -19,18 +19,20 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { BsCheckSquareFill } from "react-icons/bs";
+import { BsCheckSquareFill, BsFillXSquareFill } from "react-icons/bs";
 import {
   useGetProjectInfoQuery,
   useSaveQuestionnaireMutation,
 } from "../../state/api/medicalApi";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import {
   addResponse,
   resetResponse,
 } from "../../state/reducers/slideQnaReducer";
 import { useDispatch, useSelector } from "react-redux";
+import { getUserId, isCaseViewable } from "../../hooks/utility";
+import _ from "lodash";
 
 const AnswersPreview = ({ questionnaire }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,6 +40,7 @@ const AnswersPreview = ({ questionnaire }) => {
   const cancelRef = useRef();
   const { user } = useAuth0();
   const location = useLocation();
+  const history = useHistory();
   const { response, qna } = useSelector((state) => state.slideQnaState);
   const { currentViewer } = useSelector((state) => state.viewerState);
   const dispatch = useDispatch();
@@ -58,6 +61,33 @@ const AnswersPreview = ({ questionnaire }) => {
       caseId: location?.state.caseId,
       responses: response,
     });
+
+    // find index of current case
+    const currentIndex = project?.cases.findIndex(
+      (projectCase) => projectCase._id === location?.state.caseId
+    );
+
+    if (
+      currentIndex + 1 === project?.cases.length ||
+      !isCaseViewable(
+        project?.type,
+        project?.cases[currentIndex + 1].slides.length
+      )
+    )
+      history.goBack();
+    else {
+      const id = getUserId(user);
+      history.replace({
+        pathname: `/${id}/project/${location?.state.projectId}/slideRedirect`,
+        state: {
+          caseId: project?.cases[currentIndex + 1]._id,
+          projectId: location?.state.projectId,
+          slides: project?.cases[currentIndex + 1].slides,
+          slideType: project?.slideType,
+          questionnaire: project?.questionnaire,
+        },
+      });
+    }
     dispatch(resetResponse());
     onClose();
   };
@@ -112,12 +142,17 @@ const AnswersPreview = ({ questionnaire }) => {
                     <Text>{`Q${index + 1} ${question.questionText}`}</Text>
                     <Text marginTop="0.5em" marginLeft="2em">
                       <Icon
-                        as={BsCheckSquareFill}
+                        as={
+                          qna[question._id]
+                            ? BsCheckSquareFill
+                            : BsFillXSquareFill
+                        }
                         marginRight={1}
+                        color={qna[question._id] ? "#3965C6" : "red.400"}
                         w={3}
                         h={3}
                       />
-                      {qna[question._id]}
+                      {qna[question._id] ? qna[question._id] : "Required Field"}
                     </Text>
                   </Box>
                 ))}
@@ -161,8 +196,12 @@ const AnswersPreview = ({ questionnaire }) => {
                     backgroundColor="#3965C5"
                     _hover={{ bg: "#66a3ff" }}
                     onClick={finalSubmit}
+                    disabled={
+                      questionnaire?.questions.length !==
+                      _.keys(response).length
+                    }
                   >
-                    Submit
+                    Save & Next
                   </Button>
                 </HStack>
               </Flex>

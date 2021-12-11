@@ -43,6 +43,11 @@ import {
   useUpdateLastViewedMutation,
 } from "../../state/api/medicalApi";
 import { useLocation } from "react-router-dom";
+import moment from "moment";
+import { getAccessToken } from "../../hooks/utility";
+import Loading from "../Loading/loading";
+import { useDispatch } from "react-redux";
+import useUserAuthentication from "../../hooks/useUserAuthentication";
 import "../../styles/dashboard.css";
 
 const Project = () => {
@@ -53,6 +58,7 @@ const Project = () => {
     projectId: location.state.projectId,
   });
   const [updateLastViewed] = useUpdateLastViewedMutation();
+  const isUserAuthenticated = useUserAuthentication();
 
   useEffect(() => {
     if (!project) return;
@@ -61,7 +67,9 @@ const Project = () => {
     };
   }, [project]);
 
-  return (
+  return !isUserAuthenticated || isLoading ? (
+    <Loading />
+  ) : (
     <>
       <DashboardMenu />
       <Box
@@ -135,15 +143,11 @@ const Project = () => {
               </Flex>
               <HStack>
                 <Text color="#8aaeff" fontSize="sm" marginLeft={9}>
-                  Oct 24, 2021
+                  {moment(project?.lastUpdated).format("DD MMM, YYYY")}
                   <Icon as={BsCircleFill} marginBottom={1} mx={2} w={1} h={1} />
                 </Text>
                 <Text color="#8aaeff" fontSize="sm" mx={0}>
-                  Created by
-                  {" " +
-                    project?.owner.firstName +
-                    " " +
-                    project?.owner.lastName}
+                  {`Created by ${project?.owner.firstName} ${project?.owner.lastName}`}
                 </Text>
               </HStack>
               <Flex>
@@ -152,7 +156,7 @@ const Project = () => {
                   members={project?.members}
                   progress={project?.projectProgress}
                   tasks={project?.cases}
-                  slideType={project?.slideType}
+                  projectType={project?.type}
                   questionnaire={project?.questionnaire}
                 />
                 <Spacer />

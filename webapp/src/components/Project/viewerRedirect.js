@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Flex, Spinner } from "@chakra-ui/react";
 import _ from "lodash";
@@ -20,19 +20,22 @@ const ViewerRedirect = () => {
     subClaim: user?.sub,
     caseId: caseId,
   });
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    if (!viewerWindow || _.keys(viewerWindow).length === task?.slides.length)
-      return;
+    if (!viewerWindow || _.keys(viewerWindow).length !== 0) return;
+    const viewerIds = [];
+    const viewerWindows = [];
     task?.slides.map((slide) => {
-      dispatch(addViewer(slide._id));
-      dispatch(
-        addViewerWindow({ id: slide._id, tile: slide.awsImageBucketUrl })
-      );
+      viewerIds.push(slide._id);
+      viewerWindows.push({ id: slide._id, tile: slide.awsImageBucketUrl });
     });
+    dispatch(addViewer(viewerIds));
+    dispatch(addViewerWindow(viewerWindows));
+    setIsReady(true);
   }, [viewerWindow, task]);
 
-  return _.keys(viewerWindow).length === task?.slides.length ? (
+  return isReady && _.keys(viewerWindow).length === task?.slides.length ? (
     <Redirect
       to={{
         pathname: `/${id}/project/${task?.projectId}/slide/${task?.slides[0]._id}`,

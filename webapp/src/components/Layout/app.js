@@ -30,6 +30,7 @@ import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { resetViewerIds } from "../../state/reducers/viewerReducer";
 import "../../styles/viewer.css";
 import Files from "../Files/files";
+import { resetResponse } from "../../state/reducers/slideQnaReducer";
 
 const LayoutApp = () => {
   // const { handleEvent } = useKeyboardEvents();
@@ -42,6 +43,7 @@ const LayoutApp = () => {
     return () => {
       dispatch(resetViewerIds());
       dispatch(resetFabricOverlay());
+      dispatch(resetResponse());
       updateLastTask({
         subClaim: user?.sub,
         caseId: location?.state.caseId,
