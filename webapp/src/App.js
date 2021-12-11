@@ -69,9 +69,12 @@ const App = () => {
             <Route path="/:id/project/:projectId/slide/:slideId">
               <LayoutApp />
             </Route>
+<<<<<<< HEAD
+=======
             <Route path="/login">
               <Login />
             </Route>
+>>>>>>> 075ab2e6e9f9f202cb7c1373b6aa1da46abf5594
             <Route path="/:id/project/:projectId">
               <Project />
             </Route>
@@ -90,6 +93,12 @@ const App = () => {
             <Route path="/dashboard">
               <DashboardRedirect />
             </Route>
+<<<<<<< HEAD
+            <Route path="/">
+              <Login />
+            </Route>
+=======
+>>>>>>> 075ab2e6e9f9f202cb7c1373b6aa1da46abf5594
           </Switch>
         </SocketWrapper>
       </ChakraProvider>

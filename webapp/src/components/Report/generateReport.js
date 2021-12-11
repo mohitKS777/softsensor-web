@@ -1,32 +1,20 @@
-import React from 'react';
-import {
-    Button
-} from "@chakra-ui/react";
+import React from "react";
+import { EditIcon, CloseIcon } from "@chakra-ui/icons";
+import TypeButton from "../typeButton";
 
 const GenerateReport = () => {
-    return (
-        <Button
-        size="sm"
-        variant="solid"
-        h={6}
-        px="7px"
-        borderRadius="4px"
-        backgroundColor="#DDDDDD"
-        _hover={{
-          backgroundColor: "white",
-        }}
-        _focus={{
-          backgroundColor: "white",
-          border: "none",
-        }}
-        color="#3963c3"
-        fontFamily="sans-serif"
-        textTransform="capitalize"
-        fontSize="xs"
-      >
-        Generate Report
-      </Button>
-    )
-}
+  return (
+    <TypeButton
+      icon={<EditIcon color="white" />}
+      label="Generate Report"
+      backgroundColor="#3963c3"
+      border="0.5px solid rgba(255, 255, 255, 0.5)"
+      title="generate report"
+      transform="scale(1.5)"
+      pl="2px"
+      pb="2px"
+    />
+  );
+};
 
 export default GenerateReport;

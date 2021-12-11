@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Button } from "@chakra-ui/react";
 import Projectdetails from "./projectdetails";
@@ -14,7 +14,11 @@ import { useAuth0 } from "@auth0/auth0-react";
 import {
   useCreateProjectMutation,
   useAddMultipleMembersToProjectMutation,
+  useGetUserInfoQuery,
 } from "../../state/api/medicalApi";
+import Loading from "../Loading/loading";
+import { getAccessToken, getUserId } from "../../hooks/utility";
+import useUserAuthentication from "../../hooks/useUserAuthentication";
 
 const Newproject = () => {
   const [activeOption, setActiveOption] = useState("projectDetails");
@@ -22,8 +26,12 @@ const Newproject = () => {
   const { projectDetails, members, questions } = useSelector(
     (state) => state.newProjectState
   );
-  const id = user?.sub.substring(user?.sub.indexOf("|") + 1);
+  const isUserAuthenticated = useUserAuthentication();
+  const id = getUserId(user);
   const history = useHistory();
+  const { isLoading } = useGetUserInfoQuery({
+    subClaim: user?.sub,
+  });
   const [createProject] = useCreateProjectMutation();
   const [addMultipleMembersToProject] =
     useAddMultipleMembersToProjectMutation();
@@ -101,7 +109,7 @@ const Newproject = () => {
     setButtonBackgroundProjectDetails("#ffffff");
     setButtonBackgroundSelectSlide("#ffffff");
     setButtonBackgroundShare("#ffffff");
-    setButtonText("Share");
+    setButtonText("Next");
   };
   const handleActiveOptionShare = (e) => {
     setActiveOption("Share");
@@ -113,7 +121,7 @@ const Newproject = () => {
     setButtonBackgroundQuestionnaire("#ffffff");
     setButtonBackgroundProjectDetails("#ffffff");
     setButtonBackgroundSelectSlide("#ffffff");
-    setButtonText("Share");
+    setButtonText("Create");
   };
 
   const setNextButton = () => {
@@ -122,14 +130,18 @@ const Newproject = () => {
       handleActiveOptionQuestionnaire();
     } else if (activeOption === "questionnaire") {
       handleActiveOptionShare();
-      setButtonText("Share");
+      setButtonText("Create");
     } else if (activeOption === "projectDetails") {
       handleActiveOptionSelectSlide();
       setButtonText("Next");
+    } else {
+      handleCreateProject();
     }
   };
 
-  return (
+  return !isUserAuthenticated || isLoading ? (
+    <Loading />
+  ) : (
     <>
       <DashboardMenu />
       <Box
@@ -193,8 +205,9 @@ const Newproject = () => {
               className="savennext"
               bg="#0032a0"
               colorScheme="#0032a0"
+              color="white"
               width={127}
-              marginLeft={7}
+              marginLeft="-100px"
               onClick={() => setNextButton()}
             >
               {buttonText}

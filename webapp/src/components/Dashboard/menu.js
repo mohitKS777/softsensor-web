@@ -27,13 +27,14 @@ import {
 import { useAuth0 } from "@auth0/auth0-react";
 import { useGetUserInfoQuery } from "../../state/api/medicalApi";
 import { useDispatch } from "react-redux";
+import { getUserId } from "../../hooks/utility";
 
 const DashboardMenu = () => {
   const { user } = useAuth0();
   const { data: userInfo } = useGetUserInfoQuery({
     subClaim: user?.sub,
   });
-  const id = user?.sub.substring(user?.sub.indexOf("|") + 1);
+  const userId = getUserId(user);
 
   return (
     <Menu
@@ -74,7 +75,7 @@ const DashboardMenu = () => {
           <MenuDivider marginTop="1em" mx={2} />
           <Link
             as={RouteLink}
-            to={`/${id}/dashboard/recent`}
+            to={`/${userId}/dashboard/recent`}
             _hover={{ textDecoration: "none" }}
           >
             <MenuItem _hover={{ bg: "#66a3ff" }} fontSize="small" name="recent">
@@ -84,7 +85,7 @@ const DashboardMenu = () => {
           </Link>
           <Link
             as={RouteLink}
-            to={`/${id}/dashboard/projects`}
+            to={`/${userId}/dashboard/projects`}
             _hover={{ textDecoration: "none" }}
           >
             <MenuItem
@@ -98,7 +99,7 @@ const DashboardMenu = () => {
           </Link>
           <Link
             as={RouteLink}
-            to={`/${id}/dashboard/newProject`}
+            to={`/${userId}/dashboard/newProject`}
             _hover={{ textDecoration: "none" }}
           >
             <MenuItem

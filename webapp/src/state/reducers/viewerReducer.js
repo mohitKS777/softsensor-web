@@ -9,8 +9,15 @@ const viewerSlice = createSlice({
   },
   reducers: {
     addViewer: (state, action) => {
+<<<<<<< HEAD
+      action.payload.map((id) => {
+        if (!state.currentViewer) state.currentViewer = id;
+        state.viewerIds.push(id);
+      });
+=======
       if (!state.currentViewer) state.currentViewer = action.payload;
       state.viewerIds.push(action.payload);
+>>>>>>> 075ab2e6e9f9f202cb7c1373b6aa1da46abf5594
     },
     removeViewer: (state, action) => {
       state.viewerIds = state.viewerIds.filter(

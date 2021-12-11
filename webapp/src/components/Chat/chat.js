@@ -33,6 +33,8 @@ const SlideChat = () => {
         backgroundColor={isActive ? "white" : "#3963c3"}
         border="0.5px solid rgba(255, 255, 255, 0.5)"
         label="Chat"
+        title="Chat"
+        transform="scale(1.5)"
       />
       <MessageBox isOpen={isOpen} onClose={close} />
     </>

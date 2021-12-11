@@ -1,4 +1,5 @@
 import html2canvas from "html2canvas";
+import PreviewSlides from "../components/Newproject/previewSlides";
 
 export const getTimestamp = () => {
   return new Intl.DateTimeFormat("en-US", {
@@ -59,4 +60,24 @@ export const getCanvasImage = async (viewerId) => {
     }
   );
   return canvas.toDataURL("image/png");
+};
+
+// check if case has enough slides for a particular project type
+// for single slide - 1 and for multi slide more than 1
+export const isCaseViewable = (projectType, numOfSlides) => {
+  if (projectType === "singleSlide" && numOfSlides !== 1) return false;
+  if (projectType === "multiSlide" && numOfSlides < 2) return false;
+  return true;
+};
+
+// to get id (number) from user subclaim
+export const getUserId = (user) => {
+  return user?.sub.substring(user?.sub.indexOf("|") + 1);
+};
+
+// extract slide url from .dzi file
+export const getSlideUrl = (url) => {
+  return url
+    ? url.substring(0, url.lastIndexOf(".")) + "_files/8/0_0.jpeg"
+    : "";
 };

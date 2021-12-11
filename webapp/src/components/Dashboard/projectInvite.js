@@ -16,13 +16,15 @@ import "../../styles/dashboard.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import {
   useGetUserInfoQuery,
+  useGetUserInvitationsQuery,
   useRespondToProjectInvitationMutation,
 } from "../../state/api/medicalApi";
 import moment from "moment";
+import Loading from "../Loading/loading";
 
 const ProjectInvite = () => {
   const { user } = useAuth0();
-  const { data: userInfo } = useGetUserInfoQuery({
+  const { data: invites, isLoading } = useGetUserInvitationsQuery({
     subClaim: user?.sub,
   });
   const [respondToProjectInvitation] = useRespondToProjectInvitationMutation();
@@ -66,66 +68,72 @@ const ProjectInvite = () => {
           View All
         </Link>
       </HStack>
-      <Box className="project_invitation_box">
-        <VStack marginLeft="1em">
-          {userInfo?.user.projectInvitations.map((invite) => {
-            return (
-              <Flex
-                key={invite._id}
-                width="26.5em"
-                paddingY="1em"
-                borderBottom="1px solid #3965C5"
-              >
-                <VStack>
-                  <Text width="100%" color="#3965C5" textAlign="left">
-                    {invite.project.name}
-                  </Text>
-                  <HStack width="100%">
-                    <Text color="#8aaeff" fontSize="xs">
-                      {invite.sender.firstName + " " + invite.sender.lastName}
-                      <Icon as={BsCircleFill} w={1} h={1} ml={1} />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <Box className="project_invitation_box">
+          <VStack marginLeft="1em">
+            {invites?.projectInvitations.map((invite) => {
+              return (
+                <Flex
+                  key={invite._id}
+                  width="26.5em"
+                  paddingY="1em"
+                  borderBottom="1px solid #3965C5"
+                >
+                  <VStack>
+                    <Text width="100%" color="#3965C5" textAlign="left">
+                      {invite.project?.name}
                     </Text>
-                    <Text color="#8aaeff" fontSize="xs">
-                      {moment(invite?.createdAt).fromNow()}
-                    </Text>
-                  </HStack>
-                  <Link
-                    width="100%"
-                    color="#3965C5"
-                    textAlign="left"
-                    fontSize="sm"
-                  >
-                    Details <Icon as={MdKeyboardArrowRight} h={3} />
-                  </Link>
-                </VStack>
-                <Spacer />
-                <VStack marginRight="1em">
-                  <Button
-                    size="sm"
-                    width="8em"
-                    color="white"
-                    backgroundColor="#3965C5"
-                    _hover={{ bg: "#66a3ff" }}
-                    onClick={() => acceptInvite(invite)}
-                  >
-                    Accept
-                  </Button>
-                  <Button
-                    size="sm"
-                    width="8em"
-                    color="#3965C5"
-                    backgroundColor="white"
-                    border="1px solid #3965C5"
-                    onClick={() => declineInvite(invite)}
-                  >
-                    Decline
-                  </Button>
-                </VStack>
-              </Flex>
-            );
-          })}
-        </VStack>
-      </Box>
+                    <HStack width="100%">
+                      <Text color="#8aaeff" fontSize="xs">
+                        {invite.sender?.firstName +
+                          " " +
+                          invite.sender?.lastName}
+                        <Icon as={BsCircleFill} w={1} h={1} ml={1} />
+                      </Text>
+                      <Text color="#8aaeff" fontSize="xs">
+                        {moment(invite.createdAt).fromNow()}
+                      </Text>
+                    </HStack>
+                    <Link
+                      width="100%"
+                      color="#3965C5"
+                      textAlign="left"
+                      fontSize="sm"
+                    >
+                      Details <Icon as={MdKeyboardArrowRight} h={3} />
+                    </Link>
+                  </VStack>
+                  <Spacer />
+                  <VStack marginRight="1em">
+                    <Button
+                      size="sm"
+                      width="8em"
+                      color="white"
+                      backgroundColor="#3965C5"
+                      _hover={{ bg: "#66a3ff" }}
+                      onClick={() => acceptInvite(invite)}
+                    >
+                      Accept
+                    </Button>
+                    <Button
+                      size="sm"
+                      width="8em"
+                      color="#3965C5"
+                      backgroundColor="white"
+                      border="1px solid #3965C5"
+                      onClick={() => declineInvite(invite)}
+                    >
+                      Decline
+                    </Button>
+                  </VStack>
+                </Flex>
+              );
+            })}
+          </VStack>
+        </Box>
+      )}
     </Flex>
   );
 };

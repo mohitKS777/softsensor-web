@@ -5,7 +5,7 @@ import ToolbarButton from "../ViewerToolbar/button";
 import { useSelector, useDispatch } from "react-redux";
 import { updateActiveDrawerTool } from "../../state/reducers/drawerReducer";
 import TypeButton from "../typeButton";
-import { Box, Flex, VStack } from "@chakra-ui/react";
+import { Box, Flex, HStack } from "@chakra-ui/react";
 import SlideChat from "../Chat/chat";
 import ShareLink from "../Share/shareLink";
 import GenerateReport from "../Report/generateReport";
@@ -29,7 +29,7 @@ const SlideUser = ({ closeButtonToggle }) => {
   return (
     <Box
       width="100%"
-      height="7em"
+      height="6em"
       borderRight="0.5px solid white"
       boxSizing="border-box"
       borderRadius="3px"
@@ -37,27 +37,33 @@ const SlideUser = ({ closeButtonToggle }) => {
     >
       <CloseIcon
         color="white"
-        transform="scale(0.8)"
-        paddingLeft="3px"
+        transform="scale(0.5)"
         cursor="pointer"
         onClick={handleCloseButtonClick}
+        marginInline="calc(100% - 18px)"
+        marginTop="-8px"
       />
-      <Flex marginRight="20px" marginLeft="60px" mt="10px">
-        <VStack mx={1} justify="space-around">
-          <TypeButton
-            onClick={handleToolbarClick}
-            icon={<HiUserGroup color="white" />}
-            label="User Settings"
-            backgroundColor="#3963c3"
-            border="0.5px solid rgba(255, 255, 255, 0.5)"
-          />
-          <SlideChat />
-        </VStack>
-        <VStack mx={1} justify="space-around">
-          <ShareLink />
-          <GenerateReport />
-        </VStack>
-      </Flex>
+      <HStack
+        marginRight="40px"
+        marginLeft="30px"
+        mt="10px"
+        direction="row"
+        spacing={5}
+        className="user_toolbar_box"
+      >
+        <TypeButton
+          onClick={handleToolbarClick}
+          icon={<HiUserGroup color="white" />}
+          label="User Settings"
+          backgroundColor="#3963c3"
+          border="0.5px solid rgba(255, 255, 255, 0.5)"
+          transform="scale(1.5)"
+        />
+        <SlideChat />
+        <GenerateReport />
+        <Box></Box>
+        <ShareLink />
+      </HStack>
     </Box>
   );
 };

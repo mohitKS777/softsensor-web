@@ -10,8 +10,9 @@ import Circle from "../Shape/circle";
 import RemoveObject from "../removeComponents";
 import { useSelector } from "react-redux";
 import { fabric } from "openseadragon-fabricjs-overlay";
+import { CloseIcon } from "@chakra-ui/icons";
 
-const TypeTools = ({ viewerId }) => {
+const TypeTools = ({ viewerId, typeToolsButtonHandler }) => {
   const { fabricOverlay } = useSelector(
     (state) => state.fabricOverlayState.viewerWindow[viewerId]
   );
@@ -22,10 +23,36 @@ const TypeTools = ({ viewerId }) => {
     }
   };
 
+  const handleCloseButtonClick = () => {
+    typeToolsButtonHandler(false);
+  };
+
   return (
-    <Box width="11em" pb="1em">
-      <Text marginLeft="1em" marginTop="0.5em">Type</Text>
-      <HStack px={10} py={1}>
+    <Box
+      width="100%"
+      height="6em"
+      borderRight="0.5px solid white"
+      boxSizing="border-box"
+      borderRadius="3px"
+    >
+      <CloseIcon
+        color="white"
+        transform="scale(0.5)"
+        cursor="pointer"
+        onClick={handleCloseButtonClick}
+        marginInline="calc(100% - 18px)"
+        marginTop="-8px"
+      />
+      <Text marginLeft="2em" color="#fff" marginTop="-10px">
+        Type
+      </Text>
+      <HStack
+        paddingLeft="55px"
+        paddingTop="5px"
+        transform="scale(1.1)"
+        pos="absolute"
+        className="typetools_toolbar_box"
+      >
         <Line viewerId={viewerId} />
         <Square viewerId={viewerId} />
         <Circle viewerId={viewerId} />

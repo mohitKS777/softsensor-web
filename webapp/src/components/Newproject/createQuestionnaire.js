@@ -12,7 +12,6 @@ const CreateQuestionnaire = () => {
   const { projectDetails, questions } = useSelector(
     (state) => state.newProjectState
   );
-  console.log(questions);
 
   return (
     <Box pos="absolute" left="40px" top="106px" color="#2E519E">

@@ -3,7 +3,11 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const medicalApiSlice = createApi({
   reducerPath: "medicalApi",
   baseQuery: fetchBaseQuery({
+<<<<<<< HEAD
+    baseUrl: "https://ssl-portal-node-backend.client.zivost.com/api",
+=======
     baseUrl: "https://ssl-portal-node-backend.client.zivost.com/api/",
+>>>>>>> 075ab2e6e9f9f202cb7c1373b6aa1da46abf5594
     prepareHeaders: (headers, { getState }) => {
       const token = getState().authState.token;
       if (token) headers.set("authorization", `Bearer ${token}`);
@@ -18,9 +22,14 @@ const medicalApiSlice = createApi({
         method: "POST",
         body: body,
       }),
+<<<<<<< HEAD
+    }),
+    getUserOrganization: builder.query({
+=======
       providesTags: ["projects", "invite"],
     }),
     getUserOrganzation: builder.query({
+>>>>>>> 075ab2e6e9f9f202cb7c1373b6aa1da46abf5594
       query: (body) => {
         return {
           url: "get_user_organization",
@@ -121,13 +130,59 @@ const medicalApiSlice = createApi({
       }),
       providesTags: ["response"],
     }),
+<<<<<<< HEAD
+    getUserInvitations: builder.query({
+      query: (body) => ({
+        url: "get_user_invitations",
+        method: "POST",
+        body: body,
+      }),
+      providesTags: ["invite"],
+    }),
+    addMultipleMembersToProjectByEmail: builder.mutation({
+      query: (body) => ({
+        url: "add_multiple_members_to_project_by_email",
+        method: "POST",
+        body: body,
+      }),
+    }),
+    searchUser: builder.mutation({
+      query: (body) => ({
+        url: "search_user",
+        method: "POST",
+        body: body,
+      }),
+    }),
+    getUserOwnedProjects: builder.query({
+      query: (body) => ({
+        url: "get_user_owned_projects",
+        method: "POST",
+        body: body,
+      }),
+      providesTags: ["projects"],
+    }),
+    getUserProjects: builder.query({
+      query: (body) => ({
+        url: "get_user_projects",
+        method: "POST",
+        body: body,
+      }),
+      providesTags: ["invite"],
+    }),
+=======
+>>>>>>> 075ab2e6e9f9f202cb7c1373b6aa1da46abf5594
   }),
 });
 
 export const {
+<<<<<<< HEAD
+  useGetUserInfoQuery,
+  useGetUserOrganizationQuery,
+=======
   useTestApiQuery,
   useGetUserInfoQuery,
   useGetUserOrganzationQuery,
+>>>>>>> 075ab2e6e9f9f202cb7c1373b6aa1da46abf5594
   useAddNewUserMutation,
   useCreateProjectMutation,
   useAddMultipleMembersToProjectMutation,
@@ -140,6 +195,14 @@ export const {
   useSaveQuestionnaireMutation,
   useUpdateLastTaskMutation,
   useGetQuestionnaireResponseQuery,
+<<<<<<< HEAD
+  useGetUserInvitationsQuery,
+  useSearchUserMutation,
+  useAddMultipleMembersToProjectByEmailMutation,
+  useGetUserOwnedProjectsQuery,
+  useGetUserProjectsQuery,
+=======
+>>>>>>> 075ab2e6e9f9f202cb7c1373b6aa1da46abf5594
 } = medicalApiSlice;
 
 export default medicalApiSlice;

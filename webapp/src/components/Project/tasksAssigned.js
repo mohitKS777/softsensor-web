@@ -27,16 +27,23 @@ import { Link as RouteLink } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import moment from "moment";
 import _ from "lodash";
+import { isCaseViewable } from "../../hooks/utility";
+import "../../styles/projectDetails.css";
 
 const TasksAssigned = ({
   ownerId,
   members,
   progress,
   tasks,
+  projectType,
   questionnaire,
 }) => {
   const { user } = useAuth0();
   const id = user?.sub.substring(user?.sub.indexOf("|") + 1);
+  const slidesPerCase = {
+    singleSlide: 1,
+    multiSlide: 2,
+  };
   const taskProgresss = {};
   progress?.map((task) => {
     task.casesCompleted.map((c) => {
@@ -44,14 +51,9 @@ const TasksAssigned = ({
       else taskProgresss[c] = 1;
     });
   });
-  console.log(
-    _.has(taskProgresss, "61a5d5350c7123d6fb3a6f74")
-      ? taskProgresss["61a5d5350c7123d6fb3a6f74"]
-      : 0
-  );
 
   return (
-    <Box className="tasks__assigned">
+    <Box className="tasks__assigned" width="100%" marginInlineEnd="50px">
       <Table variant="unstyled" marginTop="20px" mx={5} size="sm">
         <Thead>
           <Tr margin="0px" textAlign="center">
@@ -68,13 +70,19 @@ const TasksAssigned = ({
                 key={task._id}
                 borderBottom="1px solid #3965C5"
                 _hover={{
-                  bg: task?.slides.length === 0 ? "red.300" : "#bacfff",
+                  bg: isCaseViewable(projectType, task?.slides.length)
+                    ? "#bacfff"
+                    : "red.300",
                 }}
-                bgColor={task?.slides.length === 0 ? "red.100" : "none"}
+                bgColor={
+                  isCaseViewable(projectType, task?.slides.length)
+                    ? "none"
+                    : "red.100"
+                }
               >
                 <Td color="#3965C5" fontWeight="bold">
                   <Icon as={AiOutlineProject} marginRight={1} w={5} h={4} />
-                  {task?.slides.length > 0 ? (
+                  {isCaseViewable(projectType, task?.slides.length) ? (
                     <Link
                       as={RouteLink}
                       to={{
@@ -91,7 +99,9 @@ const TasksAssigned = ({
                     <Text display="inline-block">{task?.name}</Text>
                   )}
                 </Td>
-                <Td color="#8aaeff">{moment(task?.createdAt).fromNow()}</Td>
+                <Td color="#8aaeff">
+                  {moment(task?.createdAt).format("DD MMM, YYYY")}
+                </Td>
                 {ownerId === user?.sub ? (
                   /*  <Td justifyContent="center">
                     <Stack direction="row" style={{ width: "120px" }}>
@@ -145,10 +155,11 @@ const TasksAssigned = ({
                       bgColor="#3965C5"
                       labelSize="10px"
                       labelAlignment="center"
+                      baseBgColor="rgba(0, 50, 160, 0.5)"
                     />
                   </Td>
                 ) : (
-                  <></>
+                  <> </>
                 )}
                 {/* <Td>
                   <Text

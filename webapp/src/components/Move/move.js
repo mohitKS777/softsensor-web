@@ -7,7 +7,7 @@ import ToolbarPointerControl from "../ViewerToolbar/pointerControl";
 import { useSelector, useDispatch } from "react-redux";
 import { updateTool } from "../../state/reducers/fabricOverlayReducer";
 import { CloseIcon } from "@chakra-ui/icons";
-import { Box, HStack } from "@chakra-ui/react";
+import { Box, HStack, Flex } from "@chakra-ui/react";
 import { useState } from "react";
 
 const Move = ({ viewerId, toolsButtonHandler }) => {
@@ -28,25 +28,26 @@ const Move = ({ viewerId, toolsButtonHandler }) => {
     <>
       <Box
         width="100%"
-        height="7em"
+        height="6em"
         borderRight="0.5px solid white"
         boxSizing="border-box"
         borderRadius="3px"
       >
         <CloseIcon
           color="white"
-          transform="scale(0.8)"
-          paddingLeft="3px"
+          transform="scale(0.5)"
           cursor="pointer"
           onClick={handleCloseButtonClick}
+          marginInline="calc(100% - 18px)"
+          marginTop="-8px"
         />
         <br />
-        <HStack
-          spacing={3}
-          p="1px"
+        <Flex
+          direction="row"
           alignItems="center"
-          marginLeft="15px"
-          marginTop="5px"
+          justifyContent="space-evenly"
+          marginTop="-2px"
+          className="move_toolbar_box"
         >
           <ToolbarButton
             label="Move"
@@ -58,7 +59,7 @@ const Move = ({ viewerId, toolsButtonHandler }) => {
           <ToolbarPointerControl viewerId={viewerId} />
           <Screenshot />
           <MultiView />
-        </HStack>
+        </Flex>
       </Box>
     </>
   );

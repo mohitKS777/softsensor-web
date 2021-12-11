@@ -8,7 +8,7 @@ const TypeButton = (restProps) => {
       variant="unstyled"
       pl="6px"
       p="10px"
-      borderRadius="3px"
+      borderRadius="8px"
       _focus={{
         border: "none",
       }}

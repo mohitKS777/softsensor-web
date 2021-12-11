@@ -107,18 +107,19 @@ const SidebarTools = () => {
             _selected={{ bg: "#3965C5" }}
             fontSize="xs"
             py={2}
-            px={1}
           >
-            Annotations
+            Questions
           </Tab>
-          <Tab
+          {/* <Tab
             _focus={{ border: "none" }}
             _selected={{ bg: "#3965C5" }}
             fontSize="xs"
             py={2}
+            px={1}
           >
-            Questions
+            Annotations
           </Tab>
+
           <Tab
             _focus={{ border: "none" }}
             _selected={{ bg: "#3965C5" }}
@@ -126,21 +127,21 @@ const SidebarTools = () => {
             py={2}
           >
             Analysis
-          </Tab>
+          </Tab> */}
         </TabList>
         <TabPanels>
           <TabPanel>
             <Studies />
           </TabPanel>
           <TabPanel>
-            <Annotations />
-          </TabPanel>
-          <TabPanel>
             <Questions />
           </TabPanel>
-          <TabPanel>
+          {/* <TabPanel>
+            <Annotations />
+          </TabPanel> */}
+          {/* <TabPanel>
             <Analysis />
-          </TabPanel>
+          </TabPanel> */}
         </TabPanels>
       </Tabs>
     </Box>

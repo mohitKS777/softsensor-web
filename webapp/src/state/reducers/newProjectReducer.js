@@ -11,6 +11,11 @@ const initialState = {
   },
   questions: questions["H&E"],
   members: [],
+<<<<<<< HEAD
+  membersInfo: [],
+  slides: [],
+  uploadedFile: "",
+=======
   qna: {
     biopsy_adequacy: null,
     if_no_indicate_why: null,
@@ -18,6 +23,7 @@ const initialState = {
     lobular_inflammation: null,
     hepatocellular_ballooning: null,
   },
+>>>>>>> 075ab2e6e9f9f202cb7c1373b6aa1da46abf5594
 };
 
 const newProjectSlice = createSlice({
@@ -36,6 +42,25 @@ const newProjectSlice = createSlice({
       state.qna[action.payload.name] = action.payload.value;
     },
     addMembers: (state, action) => {
+<<<<<<< HEAD
+      state.members.push(action.payload.email);
+      state.membersInfo.push({
+        ...action.payload.info,
+        email: action.payload.email,
+      });
+    },
+    updateFile: (state, action) => {
+      state.uploadedFile = action.payload;
+    },
+    addSlides: (state, action) => {
+      state.slides = action.payload;
+      console.log(state.slides);
+    },
+    resetNewProject: (state) => {
+      state.projectDetails = initialState.projectDetails;
+      state.members = initialState.members;
+      state.membersInfo = initialState.membersInfo;
+=======
       state.members.push(action.payload);
     },
     // addQuestion: (state) => {
@@ -61,6 +86,7 @@ const newProjectSlice = createSlice({
     resetNewProject: (state) => {
       state.projectDetails = initialState.projectDetails;
       state.members = initialState.members;
+>>>>>>> 075ab2e6e9f9f202cb7c1373b6aa1da46abf5594
       //   state.isAddQna = false;
       //   state.questionnaire = initialState.questionnaire;
     },
@@ -73,6 +99,12 @@ export const {
   resetNewProject,
   updateCases,
   addMembers,
+<<<<<<< HEAD
+  updateFile,
+  addMembersInfo,
+  addSlides,
+=======
+>>>>>>> 075ab2e6e9f9f202cb7c1373b6aa1da46abf5594
 } = newProjectSlice.actions;
 
 export default newProjectSlice.reducer;

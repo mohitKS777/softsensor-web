@@ -1,5 +1,5 @@
 import React, { memo, useState } from "react";
-import { Box, Flex, Button, Tr, Table, Tbody, VStack } from "@chakra-ui/react";
+import { Box, Flex, VStack, Collapse, Text } from "@chakra-ui/react";
 import Color from "../Color/color";
 import ImageGalleryModal from "../imageGalleryModal";
 import { useSelector } from "react-redux";
@@ -25,16 +25,16 @@ const AdjustmentBar = ({ dropDownOpen }) => {
   const [toolsToggle, setToolsToggle] = useState(true);
   const [colorsToggle, setColorsToggle] = useState(true);
   const [shareGenToggle, setShareGenToggle] = useState(true);
+  const [typeToolsToggle, setTypeToolsToggle] = useState(true);
 
   return (
-    <Box className="adjustmentbar" height="7em">
+    <Box className="adjustmentbar" height="6em">
       <Flex bgColor={bg} alignItems="center" borderBottom="1px solid #ffffff50">
         {caseToggle ? <Case changeCount={setCaseToggle} /> : ""}
         {algoToggle ? (
           <Box
-            display="flex"
             width="100%"
-            height="7em"
+            height="6em"
             borderRight="0.5px solid white"
             boxSizing="border-box"
             zIndex={4}
@@ -63,12 +63,20 @@ const AdjustmentBar = ({ dropDownOpen }) => {
         ) : (
           ""
         )}
+        {typeToolsToggle ? (
+          <TypeTools
+            viewerId={currentViewer}
+            typeToolsButtonHandler={setTypeToolsToggle}
+          />
+        ) : (
+          ""
+        )}
         {shareGenToggle ? (
           <SlideUser closeButtonToggle={setShareGenToggle} />
         ) : (
           ""
         )}
-        {dropDownOpen ? (
+        <Collapse in={dropDownOpen} animateOpacity style={{ zIndex: "10" }}>
           <Box
             pos="fixed"
             top="40px"
@@ -76,73 +84,48 @@ const AdjustmentBar = ({ dropDownOpen }) => {
             background="white"
             color="black"
             borderRadius="5px"
-            boxSizing="border-box"
             border="5px solid white"
-            zIndex={50}
           >
-            <Table variant="striped">
-              <Tbody>
-                <Tr
-                  onClick={() => setCaseToggle(true)}
-                  _hover={{
-                    background: "#3565C5",
-                    color: "white",
-                    minWidth: "100%",
-                    cursor: "pointer",
-                  }}
-                >
-                  Case Information
-                </Tr>
-                <Tr
-                  onClick={() => setAlgoToggle(true)}
-                  _hover={{
-                    background: "#3565C5",
-                    color: "white",
-                    minWidth: "100%",
-                    cursor: "pointer",
-                  }}
-                >
-                  Choose slides and algorithms
-                </Tr>
-                <Tr
-                  onClick={() => setColorsToggle(true)}
-                  _hover={{
-                    background: "#3565C5",
-                    color: "white",
-                    minWidth: "100%",
-                    cursor: "pointer",
-                  }}
-                >
-                  Colors, Width, Type
-                </Tr>
-                <Tr
-                  onClick={() => setToolsToggle(true)}
-                  _hover={{
-                    background: "#3565C5",
-                    color: "white",
-                    minWidth: "100%",
-                    cursor: "pointer",
-                  }}
-                >
-                  Toolbar controls
-                </Tr>
-                <Tr
-                  onClick={() => setShareGenToggle(true)}
-                  _hover={{
-                    background: "#3565C5",
-                    color: "white",
-                    minWidth: "100%",
-                    cursor: "pointer",
-                  }}
-                >
-                  Share and generate report
-                </Tr>
-              </Tbody>
-            </Table>
+            <VStack>
+              <Text
+                onClick={() => setCaseToggle(true)}
+                className="file_menu_option"
+              >
+                Case Information
+              </Text>
+              <Text
+                onClick={() => setAlgoToggle(true)}
+                className="file_menu_option"
+              >
+                Choose slides and algorithms
+              </Text>
+              <Text
+                onClick={() => setColorsToggle(true)}
+                className="file_menu_option"
+              >
+                Colors, Width
+              </Text>
+              <Text
+                onClick={() => setTypeToolsToggle(true)}
+                className="file_menu_option"
+              >
+                Type of tools
+              </Text>
+              <Text
+                onClick={() => setToolsToggle(true)}
+                className="file_menu_option"
+              >
+                Toolbar controls
+              </Text>
+              <Text
+                onClick={() => setShareGenToggle(true)}
+                className="file_menu_option"
+              >
+                Share and generate report
+              </Text>
+            </VStack>
           </Box>
-        ) : (
-          ""
-        )}
+        </Collapse>
       </Flex>
     </Box>
   );

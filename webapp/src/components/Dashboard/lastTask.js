@@ -18,6 +18,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import moment from "moment";
 import { Link as RouteLink } from "react-router-dom";
 import { lastIndexOf } from "lodash";
+import Loading from "../Loading/loading";
 
 const LastTask = () => {
   const { user } = useAuth0();
@@ -61,9 +62,7 @@ const LastTask = () => {
         Last Task
       </Text>
       {isLoading ? (
-        <Flex justify="center" align="center" h="100vh">
-          <Spinner color="#3965C5" size="xl" thickness="4px" speed="0.65s" />
-        </Flex>
+        <Loading />
       ) : error || !recentCaseWorkedOn ? (
         <Text> No Task Available</Text>
       ) : (
@@ -78,7 +77,7 @@ const LastTask = () => {
               marginTop="10px"
               paddingBottom="10px"
             >
-              {recentCaseWorkedOn?.name}
+              {recentCaseWorkedOn?.slides[0].slideName}
             </Text>
             <Spacer />
             {/* <Stack direction="row" justify="end">
@@ -88,7 +87,8 @@ const LastTask = () => {
                 </Stack> */}
           </HStack>
           <Text color="#8aaeff" fontSize="xs" marginLeft="15px">
-            Project Name <Icon as={BsCircleFill} mx={1} w={1} h={1} />{" "}
+            {recentCaseWorkedOn?.name}
+            <Icon as={BsCircleFill} mx={1} w={1} h={1} />{" "}
             {moment(recentCaseWorkedOn?.createdAt).format("MMM DD, YYYY")}
           </Text>
           <Text color="#8aaeff" fontSize="xs" marginLeft="15px">
