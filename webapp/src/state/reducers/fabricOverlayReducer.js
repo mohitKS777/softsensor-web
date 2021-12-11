@@ -66,12 +66,19 @@ const fabricOverlaySlice = createSlice({
       state.viewerWindow[action.payload.id].activityFeed = action.payload.feed;
     },
     addViewerWindow: (state, action) => {
+<<<<<<< HEAD
       action.payload.map((window) => {
         state.viewerWindow[window.id] = {
           ...defaultViewerWindow,
           tile: window.tile,
         };
       });
+=======
+      state.viewerWindow[action.payload.id] = {
+        ...defaultViewerWindow,
+        tile: action.payload.tile,
+      };
+>>>>>>> 075ab2e6e9f9f202cb7c1373b6aa1da46abf5594
     },
     removeViewerWindow: (state, action) => {
       delete state.viewerWindow[action.payload.id];

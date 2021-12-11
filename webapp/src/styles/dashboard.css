@@ -8,12 +8,15 @@
   .new__assign {
     height: 38em !important;
   }
+<<<<<<< HEAD
   .projects_page {
     margin-top: 140px;
     margin-left: 450px;
     margin-right: 370px;
     transform: scale(1.4);
   }
+=======
+>>>>>>> 075ab2e6e9f9f202cb7c1373b6aa1da46abf5594
 }
 
 @media all and (min-width: 1920px) {
@@ -29,12 +32,15 @@
     margin-left: 40px;
     font-size: 11px;
   }
+<<<<<<< HEAD
   .newAssigned_table {
     font-size: small !important;
   }
   .recently__viewed__table {
     font-size: small !important;
   }
+=======
+>>>>>>> 075ab2e6e9f9f202cb7c1373b6aa1da46abf5594
 }
 
 @media all and (max-width: 1280px) {

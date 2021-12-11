@@ -646,4 +646,18 @@ export const Images = [
         "https://med-ai-data.s3.amazonaws.com/lymphoma/bc-gc-1/slide_files/",
     },
   },
+  {
+    id: 14,
+    Image: {
+      Format: "jpeg",
+      Overlap: "1",
+      TileSize: "254",
+      xmlns: "http://schemas.microsoft.com/deepzoom/2008",
+      Size: {
+        Height: "38693",
+        Width: "35817",
+      },
+      Url: "https://med-ai-data.s3.amazonaws.com/tst/test1/test_files/",
+    },
+  },
 ];

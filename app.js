@@ -7,6 +7,7 @@ const path = require("path");
 const { spawn } = require("child_process");
 
 app.use(cors());
+//app.options('*', cors()) 
 
 let guestList = [];
 
