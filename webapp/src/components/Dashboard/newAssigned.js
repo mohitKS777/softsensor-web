@@ -24,6 +24,7 @@ import { useGetUserInfoQuery } from "../../state/api/medicalApi";
 import { useAuth0 } from "@auth0/auth0-react";
 import moment from "moment";
 import ProjectLink from "../Project/projectLink";
+import "../../styles/dashboard.css";
 
 const NewAssigned = () => {
   const { user } = useAuth0();

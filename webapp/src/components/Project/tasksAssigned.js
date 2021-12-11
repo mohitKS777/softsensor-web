@@ -27,6 +27,7 @@ import { Link as RouteLink } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import moment from "moment";
 import _ from "lodash";
+import "../../styles/projectDetails.css";
 
 const TasksAssigned = ({
   ownerId,
@@ -51,7 +52,7 @@ const TasksAssigned = ({
   );
 
   return (
-    <Box className="tasks__assigned">
+    <Box className="tasks__assigned" width="100%" marginInlineEnd="50px">
       <Table variant="unstyled" marginTop="20px" mx={5} size="sm">
         <Thead>
           <Tr margin="0px" textAlign="center">
@@ -145,10 +146,11 @@ const TasksAssigned = ({
                       bgColor="#3965C5"
                       labelSize="10px"
                       labelAlignment="center"
+                      baseBgColor="rgba(0, 50, 160, 0.5)"
                     />
                   </Td>
                 ) : (
-                  <></>
+                  <> </>
                 )}
                 {/* <Td>
                   <Text

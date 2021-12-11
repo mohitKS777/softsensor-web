@@ -15,20 +15,24 @@ const Case = (props) => {
       {closeButton ? (
         <Box
           width="100%"
-          height="7em"
+          height="6em"
           borderRight="0.5px solid white"
           boxSizing="border-box"
           borderRadius="3px"
+          paddingLeft="10px"
+          paddingRight="10px"
         >
           <CloseIcon
             onClick={handleCloseButtonClick}
             color="white"
-            transform="scale(0.8)"
-            paddingLeft="3px"
+            transform="scale(0.5)"
             cursor="pointer"
+            marginInline="calc(100% - 12px)"
+            marginTop="-8px"
           />
 
           <VStack
+            marginTop="-7px"
             marginLeft="4px"
             marginRight="4px"
             color="white"
@@ -39,6 +43,7 @@ const Case = (props) => {
             fontWeight="100"
             align="left"
             spacing={-1}
+            className="case_toolbar_box"
           >
             <Text>Slide Info/Case</Text>
             <Text>History</Text>

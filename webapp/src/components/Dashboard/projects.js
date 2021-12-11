@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import {
@@ -33,6 +34,7 @@ const Projects = () => {
   const { data } = useGetUserInfoQuery({
     subClaim: user?.sub,
   });
+
   return (
     <Flex
       className="recently__viewed"
@@ -131,11 +133,12 @@ const Projects = () => {
                             </Td> */}
                     <Td>
                       <ProgressBar
+                        className="dashboard_progressbar"
                         completed={80}
                         customLabel="40/50 Completed"
                         bgColor="darkblue"
                         baseBgColor="#66a3ff"
-                        labelSize="12px"
+                        labelSize="0.5vw"
                       />
                     </Td>
                   </Tr>

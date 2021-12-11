@@ -129,10 +129,14 @@
 @media all and (min-width: 2560px) {
   .div_overlay {
     left: 600px;
+    width: 1000px;
     top: 300px;
     font-size: large;
     transform: scale(1.3);
     position: fixed;
+  }
+  .dividing_div {
+    width: 850px;
   }
 }
 
@@ -150,8 +154,9 @@
 @media all and (max-width: 1440px) {
   .div_overlay {
     width: 800px;
-    left: 255px;
-    top: 120px;
+    left: 220px;
+    top: 90px;
+    transform: scale(0.85);
   }
 
   .dividing_div {
@@ -170,7 +175,7 @@
     height: 700px;
     position: fixed;
     top: 50px;
-    left: 200px;
+    left: 150px;
     transform: scale(0.7);
   }
 }

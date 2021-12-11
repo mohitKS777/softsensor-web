@@ -13,6 +13,7 @@ import ColorOptionsPanel from "./optionsPanel";
 import ToolbarButton from "../ViewerToolbar/button";
 import ToolbarOptionsPanel from "../ViewerToolbar/optionsPanel";
 import { CloseIcon } from "@chakra-ui/icons";
+import "../../styles/viewer.css";
 
 const Color = ({ viewerId, colorsButtonHandler }) => {
   const dispatch = useDispatch();
@@ -82,39 +83,37 @@ const Color = ({ viewerId, colorsButtonHandler }) => {
     <>
       <Box
         width="100%"
-        height="7em"
+        height="6em"
         borderRight="0.5px solid white"
         boxSizing="border-box"
         borderRadius="3px"
       >
+        <CloseIcon
+          color="white"
+          transform="scale(0.5)"
+          cursor="pointer"
+          onClick={handleCloseButtonClick}
+          marginInline="calc(100% - 18px)"
+          marginTop="-8px"
+        />
         <HStack
           spacing={0}
           align="center"
-          borderX="1px solid #ffffff50"
           color="white"
+          className="color_toolbar_box"
         >
-          <Box width="10em">
-            <CloseIcon
-              color="white"
-              transform="scale(0.8)"
-              paddingLeft="3px"
-              cursor="pointer"
-              onClick={handleCloseButtonClick}
-            />
-            <Text paddingLeft="2em" marginTop="-0.8em">
-              Color
-            </Text>
+          <Box width="100%" marginTop="-2.5em">
+            <Text paddingLeft="2em">Color</Text>
             <Box px={10} my={4}>
               <ColorOptionsPanel />
             </Box>
           </Box>
-          <Box width="10em" height="7em" borderX="1px solid #ffffff50">
-            <Text marginLeft="1em" marginTop="0.5em">
+          <Box width="10em" height="6em">
+            <Text marginLeft="1em" marginTop="-1.2em">
               Width
             </Text>
             <DrawWidthPicker align="center" />
           </Box>
-          <TypeTools viewerId={viewerId} />
         </HStack>
       </Box>
     </>

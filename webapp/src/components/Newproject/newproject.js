@@ -194,7 +194,7 @@ const Newproject = () => {
               bg="#0032a0"
               colorScheme="#0032a0"
               width={127}
-              marginLeft={7}
+              marginLeft="-100px"
               onClick={() => setNextButton()}
             >
               {buttonText}

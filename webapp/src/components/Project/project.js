@@ -43,6 +43,7 @@ import {
   useUpdateLastViewedMutation,
 } from "../../state/api/medicalApi";
 import { useLocation } from "react-router-dom";
+import "../../styles/dashboard.css";
 
 const Project = () => {
   const { user } = useAuth0();
@@ -67,7 +68,7 @@ const Project = () => {
         marginLeft="14em"
         height="100vh"
         direction="column"
-        backgroundColor="#eeeeee"
+        backgroundColor="#ffffff"
       >
         <Header />
         {isLoading ? (
@@ -75,7 +76,7 @@ const Project = () => {
             <Spinner color="#3965C5" size="xl" thickness="4px" speed="0.65s" />
           </Flex>
         ) : (
-          <>
+          <Box className="projects_page">
             <Flex w="100%" direction="row" marginTop="10px">
               <Text color="#3965C5" borderBottom="1px solid #3965C5" m={5}>
                 Recently Viewed
@@ -155,12 +156,15 @@ const Project = () => {
                   questionnaire={project?.questionnaire}
                 />
                 <Spacer />
-                <TeamInfo members={project?.members} />
+                <TeamInfo
+                  members={project?.members}
+                  projectOwner={project.owner}
+                />
               </Flex>
               {/* <TasksSubmitted ownerId={project?.owner.subClaim} />
               <TasksCompleted ownerId={project?.owner.subClaim} /> */}
             </Flex>
-          </>
+          </Box>
         )}
       </Box>
     </>

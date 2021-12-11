@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const medicalApiSlice = createApi({
   reducerPath: "medicalApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://54.90.225.93:3001/api/",
+    baseUrl: "https://ssl-portal-node-backend.client.zivost.com/api",
     prepareHeaders: (headers, { getState }) => {
       const token = getState().authState.token;
       if (token) headers.set("authorization", `Bearer ${token}`);

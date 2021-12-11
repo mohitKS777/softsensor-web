@@ -8,6 +8,12 @@
   .new__assign {
     height: 38em !important;
   }
+  .projects_page {
+    margin-top: 140px;
+    margin-left: 450px;
+    margin-right: 370px;
+    transform: scale(1.4);
+  }
 }
 
 @media all and (min-width: 1920px) {
@@ -22,6 +28,12 @@
     width: 20em;
     margin-left: 40px;
     font-size: 11px;
+  }
+  .newAssigned_table {
+    font-size: small !important;
+  }
+  .recently__viewed__table {
+    font-size: small !important;
   }
 }
 

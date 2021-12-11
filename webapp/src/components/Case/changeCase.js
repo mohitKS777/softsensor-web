@@ -1,9 +1,10 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { Button, HStack } from "@chakra-ui/react";
+import { Box, Flex, VStack, Text, HStack, Button } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { useGetProjectInfoQuery } from "../../state/api/medicalApi";
-import { CloseIcon } from "@chakra-ui/icons";
+import { CloseIcon, ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import "../../styles/viewer.css";
 
 const ChangeCase = ({ closeToggle }) => {
   const { user } = useAuth0();
@@ -35,37 +36,90 @@ const ChangeCase = ({ closeToggle }) => {
       },
     });
   };
+  console.log(project);
 
   return (
     <>
       <CloseIcon
         color="white"
-        transform="scale(0.8)"
-        // paddingLeft="3px"
+        transform="scale(0.5)"
         cursor="pointer"
         onClick={handleCloseButtonClick}
-        paddingBottom="2px"
+        marginTop="-5px"
+        marginInline="calc(100% - 18px)"
       />
-      <HStack>
-        <Button
-          disabled={
-            currentCaseIndex - 1 < 0 ||
-            project?.cases[currentCaseIndex - 1].slides.length === 0
-          }
-          onClick={() => handleChangeClick(currentCaseIndex - 1)}
+      <Box className="slidesdetails_toolbar_box">
+        <Text
+          className="slidenumber"
+          pos="fixed"
+          marginInline="calc(11.5%)"
+          fontSize="35px"
+          marginTop="5px"
+          color="#fff"
         >
-          Prev
-        </Button>
-        <Button
-          disabled={
-            currentCaseIndex + 1 === project?.cases.length ||
-            project?.cases[currentCaseIndex + 1].slides.length === 0
-          }
-          onClick={() => handleChangeClick(currentCaseIndex + 1)}
+          {currentCaseIndex + 1}
+        </Text>
+        <Text
+          className="slidetotal"
+          pos="fixed"
+          marginInline="calc(12.6%)"
+          fontSize="20px"
+          marginTop="20px"
+          color="#fff"
         >
-          Next
-        </Button>
-      </HStack>
+          /{project.cases.length}
+        </Text>
+        <Text
+          className="slidenumber"
+          pos="fixed"
+          marginInline="calc(11.5%)"
+          fontSize="15px"
+          marginTop="40px"
+          color="#fff"
+        >
+          Slides
+        </Text>
+        <Flex justifyContent="space-between">
+          <ChevronLeftIcon
+            color="#fff"
+            marginTop="25px"
+            cursor="pointer"
+            disabled={
+              currentCaseIndex - 1 < 0 ||
+              project?.cases[currentCaseIndex - 1].slides.length === 0
+            }
+            onClick={() => handleChangeClick(currentCaseIndex - 1)}
+          />
+          <VStack
+            width="100%"
+            marginLeft="4px"
+            marginRight="4px"
+            color="white"
+            p="1em"
+            borderRadius="5px"
+            backgroundColor="rgba(255,255,255, 0.2)"
+            fontSize="xs"
+            fontWeight="100"
+            align="left"
+            spacing={-1}
+          >
+            <Text>Accession Number: {currentCaseIndex + 1}</Text>
+            <Text>{project.slideType}</Text>
+            <Text>{project.name}</Text>
+          </VStack>
+          <ChevronRightIcon
+            color="#fff"
+            cursor="pointer"
+            marginTop="25px"
+            disabled={
+              currentCaseIndex + 1 === project?.cases.length ||
+              project?.cases[currentCaseIndex + 1].slides.length === 0
+            }
+            onClick={() => handleChangeClick(currentCaseIndex + 1)}
+            title="Next Slide"
+          />
+        </Flex>
+      </Box>
     </>
   );
 };
