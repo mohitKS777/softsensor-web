@@ -56,8 +56,6 @@ const TypeTools = ({ viewerId, typeToolsButtonHandler }) => {
         <Line viewerId={viewerId} />
         <Square viewerId={viewerId} />
         <Circle viewerId={viewerId} />
-      </HStack>
-      <HStack px={10} py={1}>
         <Draw viewerId={viewerId} />
         <TypeText viewerId={viewerId} />
         <RemoveObject viewerId={viewerId} />

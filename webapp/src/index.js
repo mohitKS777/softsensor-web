@@ -15,7 +15,7 @@ ReactDOM.render(
 //     audience={process.env.REACT_APP_AUTH0_AUDIENCE}
     domain="dev-nhdn0k34.us.auth0.com"
     clientId="29nMTRiTlCyikc6IcKpsunU1uyMDhpYp"
-    redirectUri="https://path.prr.ai/dashboard"
+    redirectUri="http://localhost:3000/dashboard"
     audience="https://path.prr.ai"
     // scope="read:users"
   >

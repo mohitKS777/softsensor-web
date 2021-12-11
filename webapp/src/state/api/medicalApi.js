@@ -3,11 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const medicalApiSlice = createApi({
   reducerPath: "medicalApi",
   baseQuery: fetchBaseQuery({
-<<<<<<< HEAD
     baseUrl: "https://ssl-portal-node-backend.client.zivost.com/api",
-=======
-    baseUrl: "https://ssl-portal-node-backend.client.zivost.com/api/",
->>>>>>> 075ab2e6e9f9f202cb7c1373b6aa1da46abf5594
     prepareHeaders: (headers, { getState }) => {
       const token = getState().authState.token;
       if (token) headers.set("authorization", `Bearer ${token}`);
@@ -22,14 +18,8 @@ const medicalApiSlice = createApi({
         method: "POST",
         body: body,
       }),
-<<<<<<< HEAD
     }),
     getUserOrganization: builder.query({
-=======
-      providesTags: ["projects", "invite"],
-    }),
-    getUserOrganzation: builder.query({
->>>>>>> 075ab2e6e9f9f202cb7c1373b6aa1da46abf5594
       query: (body) => {
         return {
           url: "get_user_organization",
@@ -130,7 +120,6 @@ const medicalApiSlice = createApi({
       }),
       providesTags: ["response"],
     }),
-<<<<<<< HEAD
     getUserInvitations: builder.query({
       query: (body) => ({
         url: "get_user_invitations",
@@ -169,20 +158,12 @@ const medicalApiSlice = createApi({
       }),
       providesTags: ["invite"],
     }),
-=======
->>>>>>> 075ab2e6e9f9f202cb7c1373b6aa1da46abf5594
   }),
 });
 
 export const {
-<<<<<<< HEAD
   useGetUserInfoQuery,
   useGetUserOrganizationQuery,
-=======
-  useTestApiQuery,
-  useGetUserInfoQuery,
-  useGetUserOrganzationQuery,
->>>>>>> 075ab2e6e9f9f202cb7c1373b6aa1da46abf5594
   useAddNewUserMutation,
   useCreateProjectMutation,
   useAddMultipleMembersToProjectMutation,
@@ -195,14 +176,11 @@ export const {
   useSaveQuestionnaireMutation,
   useUpdateLastTaskMutation,
   useGetQuestionnaireResponseQuery,
-<<<<<<< HEAD
   useGetUserInvitationsQuery,
   useSearchUserMutation,
   useAddMultipleMembersToProjectByEmailMutation,
   useGetUserOwnedProjectsQuery,
   useGetUserProjectsQuery,
-=======
->>>>>>> 075ab2e6e9f9f202cb7c1373b6aa1da46abf5594
 } = medicalApiSlice;
 
 export default medicalApiSlice;
