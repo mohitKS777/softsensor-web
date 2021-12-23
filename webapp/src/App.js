@@ -90,9 +90,6 @@ const App = () => {
             <Route path="/">
               <Login />
             </Route>
-            <Route path="/">
-              <Login />
-            </Route>
           </Switch>
         </SocketWrapper>
       </ChakraProvider>
