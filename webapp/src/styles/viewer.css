@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 @media all and (min-width: 2560px) {
   .typetools_toolbar_box {
     margin-left: 4em;
@@ -54,8 +53,6 @@
   }
 }
 
-=======
->>>>>>> 075ab2e6e9f9f202cb7c1373b6aa1da46abf5594
 @media all and (max-width: 1280px) {
   .sidebar_tools {
     transform: scale(0.8);
@@ -87,7 +84,6 @@
   padding: 1px 1px 1px 1px;
   transform: scale(1.5);
 }
-<<<<<<< HEAD
 .file_menu_option {
   width: 100%;
   text-align: center;
@@ -101,5 +97,3 @@
   color: white;
   transition: all 0.1s;
 }
-=======
->>>>>>> 075ab2e6e9f9f202cb7c1373b6aa1da46abf5594
