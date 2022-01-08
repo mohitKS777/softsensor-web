@@ -18,6 +18,7 @@ import DashboardRedirect from "./components/Dashboard/dashboardRedirect";
 import UserDetails from "./components/Authenticate/userDetails";
 import Recent from "./components/Dashboard/recent";
 import ViewerRedirect from "./components/Project/viewerRedirect";
+import Register from './components/Register/Register';
 
 const theme = extendTheme({
   colors: {
@@ -87,9 +88,13 @@ const App = () => {
             <Route path="/dashboard">
               <DashboardRedirect />
             </Route>
+            <Route path="/register">
+              <Register />
+            </Route>
             <Route path="/">
               <Login />
             </Route>
+            
           </Switch>
         </SocketWrapper>
       </ChakraProvider>

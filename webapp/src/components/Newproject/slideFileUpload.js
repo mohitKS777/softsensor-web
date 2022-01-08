@@ -93,19 +93,25 @@ const SlideFileUpload = () => {
   const handleFileError = () => {};
 
   return (
-    <Box maxW={700}>
+    <Box maxW={700} fontFamily="inter" >
       <VStack ml={4} spacing={8} maxW={600}>
         <FormControl>
-          <FormLabel>Select Slide</FormLabel>
+          <FormLabel 
+            color="#2E519E"
+            fontSize="14px"
+            >Select Slide</FormLabel>
           <Button
             w="90%"
             placeholder="Select Slides"
             variant="filled"
             borderColor="#3965C550"
             bgColor="#3965C520"
-            color="#3965C5"
+            color="#2E519E"
             disabled={projectDetails.projectType === "multiSlide"}
             onClick={onOpen}
+            fontSize="14px"
+            fontWeight="400"
+            fontFamily="inter"
           >
             Select Slides
           </Button>
@@ -116,7 +122,10 @@ const SlideFileUpload = () => {
           />
         </FormControl>
         <FormControl>
-          <FormLabel>Select CSV File</FormLabel>
+          <FormLabel  
+            color="#2E519E"
+            fontSize="14px"
+            >Select CSV File</FormLabel>
           <HStack>
             <CSVReader
               ref={inputRef}
@@ -128,6 +137,9 @@ const SlideFileUpload = () => {
                 dropArea: {
                   padding: 8,
                   width: "90%",
+                  fontFamily:"inter",
+                  fontSize:"14px",
+                  fontWeight:"400"
                 },
                 dropFile: {
                   width: 120,

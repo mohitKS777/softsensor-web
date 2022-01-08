@@ -12,10 +12,12 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { IoAdd } from "react-icons/io5";
+import { CgMoreO } from "react-icons/cg";
 import { HiOutlineDotsCircleHorizontal } from "react-icons/hi";
 import { Link as RouteLink } from "react-router-dom";
 
-const TeamInfo = ({ members, projectOwner }) => {
+const TeamInfo = ({ members, projectOwner,progress}) => {
+
   return (
     <Box
       color="#3965C5"
@@ -26,10 +28,10 @@ const TeamInfo = ({ members, projectOwner }) => {
       style={{ backgroundColor: "rgba(46,81,158,0.05)" }}
     >
       <HStack borderBottom="1px solid #3965C5" paddingBottom="5px">
-        <Text fontSize="lg">Team Information</Text>
+        <Text fontSize="18px" fontFamily="inter" fontWeight="400">Team Information</Text>
         <Spacer />
         <Icon as={IoAdd} marginRight={2} w={5} h={7} />
-        <Button size="sm" fontWeight="light" variant="unstyled">
+        <Button fontWeight="500" fontFamily="inter" fontSize="14px" variant="unstyled">
           Add New Member
         </Button>
       </HStack>
@@ -48,10 +50,10 @@ const TeamInfo = ({ members, projectOwner }) => {
           />
           <Flex direction="column" marginLeft="5px">
             <Flex direction="row">
-              <Text>
+              <Text fontSize="16px" fontFamily="inter" fontWeight="500">
                 {projectOwner.firstName + " " + projectOwner.lastName}
               </Text>
-              <Text fontSize="xs" ml="5px" mt="3px">
+              <Text fontSize="12px" fontFamily="inter" fontWeight="400" ml="5px" mt="3px">
                 (Project Manager)
               </Text>
             </Flex>
@@ -60,11 +62,11 @@ const TeamInfo = ({ members, projectOwner }) => {
             </Text>
           </Flex>
           <Spacer />
-          <IconButton
-            icon={<HiOutlineDotsCircleHorizontal />}
-            size="xs"
-            backgroundColor="#dddddd"
-            marginTop="7px"
+          <Icon
+            as={CgMoreO}
+            width="14px"
+            height="14px"
+            marginTop="14px"
           />
         </Flex>
         {members.map((member) => {
@@ -84,8 +86,8 @@ const TeamInfo = ({ members, projectOwner }) => {
                 />
                 <Flex direction="column" marginLeft="5px">
                   <Flex direction="row">
-                    <Text>{member.firstName + " " + member.lastName}</Text>
-                    <Text fontSize="xs" ml="5px" mt="3px">
+                    <Text fontSize="16px" fontFamily="inter" fontWeight="500">{member.firstName + " " + member.lastName}</Text>
+                    <Text fontSize="12px" fontFamily="inter" fontWeight="400" ml="5px" mt="3px">
                       (Reader)
                     </Text>
                   </Flex>
@@ -94,19 +96,23 @@ const TeamInfo = ({ members, projectOwner }) => {
                   </Text>
                 </Flex>
                 <Spacer />
-                <IconButton
-                  icon={<HiOutlineDotsCircleHorizontal />}
-                  size="xs"
-                  backgroundColor="#dddddd"
-                  marginTop="7px"
+                <Flex flexDirection="column" alignItems="center"  fontFamily="inter" mt="0px" fontWeight="500">
+                  {/* Reports submitted status should be added */}
+                  <Text fontSize="18px" display="flex" alignItems="center" >2<Text fontSize="12px" mt="3px">/7</Text></Text>
+
+                  <Text fontSize="12px">Report Submited</Text>
+                </Flex>
+                <Spacer />
+                <Icon
+                  as={CgMoreO}
+                  width="14px"
+                  height="14px"
+                  marginTop="14px"
                 />
               </Flex>
             </>
           );
         })}
-        <Button size="sm" fontWeight="light" variant="unstyled">
-          View More Details
-        </Button>
       </VStack>
     </Box>
   );

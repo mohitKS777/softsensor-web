@@ -1,0 +1,42 @@
+
+input[type="file"] {
+  position: relative;
+  opacity: 0;
+  left: 0;
+
+}
+.uploadText {
+  position: relative;
+  width: 100%;
+  /* width: 40vw; */
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #000;
+  border-radius: 5px;
+  margin: 5px 0px 0px 0px;
+}
+.textContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+/* @media (min-width:2000px) {
+  .uploadText {
+      height: 458px;
+      width: 50vw;
+  }
+} */
+@media (min-width:1400px) {
+  .uploadText {
+      height: 308px;
+      width: 100%;
+  }
+}
+@media (min-width:968px) {
+  .uploadText {
+      width: 45vw;
+  }
+}

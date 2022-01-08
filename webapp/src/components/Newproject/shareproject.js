@@ -30,6 +30,7 @@ import {
 
 import { AddIcon, ChevronDownIcon, LinkIcon } from "@chakra-ui/icons";
 import { AiOutlineUserAdd } from "react-icons/ai";
+import {BsChevronDown } from "react-icons/bs";
 import {
   useGetUserInfoQuery,
   useSearchUserMutation,
@@ -70,8 +71,8 @@ const Share = () => {
   return (
     <>
       <Box>
-        <Box className="questions_div">
-          <Text marginTop={-16} fontSize={15} color="#3965C6" marginLeft={2.5}>
+        <Box className="questions_div" fontFamily="inter">
+          <Text marginTop={-16} fontSize={14} color="#3965C6" marginLeft={2.5}>
             Share with readers
             <br />
             <InputGroup>
@@ -106,16 +107,20 @@ const Share = () => {
           <Box marginTop={50} marginLeft={-600}>
             <Menu>
               <MenuButton
-                icon={<LinkIcon />}
+                icon={<LinkIcon color="rgba(57, 101, 198, 0.65)" />}
                 as={Button}
-                rightIcon={<ChevronDownIcon />}
+                rightIcon={<BsChevronDown color= "#3965C6" w="14px"/>}
                 bg="white"
+                fontFamily="inter"
+                fontSize="14px"
+                color="rgba(57, 101, 198, 0.45)"
               >
                 <LinkIcon marginRight={3} />
                 Anyone with the link
               </MenuButton>
               <MenuList>
-                <MenuItem icon={<LinkIcon />}>Anyone with the link</MenuItem>
+                <MenuItem fontFamily="inter"
+                fontSize="14px" icon={<LinkIcon color="rgba(57, 101, 198, 0.65)"/>}>Anyone with the link</MenuItem>
                 {/* <MenuItem icon={<AddIcon />}>Robert Rogers</MenuItem>
                 <MenuItem icon={<AddIcon />}>Zoe Margut</MenuItem> */}
               </MenuList>
@@ -137,13 +142,13 @@ const Share = () => {
                 mt={3}
               />
               <VStack ml={2} align="flex-start" spacing={0} whiteSpace="nowrap">
-                <Text fontSize={16} color="#3965C6" pt={2}>
+                <Text fontSize={16} color="#3965C6" pt={2} fontWeight={500}>
                   {`${data?.user.firstName} ${data?.user.lastName} (You)`}
                 </Text>
-                <Text fontSize={12}>{data?.user.emailAddress}</Text>
+                <Text fontSize={12} color="#3965C6">{data?.user.emailAddress}</Text>
               </VStack>
               <Spacer />
-              <Text>Owner</Text>
+              <Text fontStyle="italic" color="rgba(57, 101, 198, 0.46)" fontSize={16} fontWeight={500}>Owner</Text>
             </HStack>
             <Divider mt={4} bgColor="black" border="none" h="0.1px" w={550} />
             {membersInfo.map((member) => {
@@ -163,13 +168,13 @@ const Share = () => {
                     spacing={0}
                     whiteSpace="nowrap"
                   >
-                    <Text fontSize={16} color="#3965C6" pt={2}>
+                    <Text fontSize={16} color="#3965C6" pt={2} fontWeight={500}>
                       {`${member.firstName} ${member.lastName}`}
                     </Text>
-                    <Text fontSize={12}>{member.email}</Text>
+                    <Text fontSize={12} color="#3965C6">{member.email}</Text>
                   </VStack>
                   <Spacer />
-                  <Text>Reader</Text>
+                  <Text fontStyle="italic" color="rgba(57, 101, 198, 0.46)" fontSize={16} fontWeight={500}>Reader</Text>
                 </HStack>
               );
             })}

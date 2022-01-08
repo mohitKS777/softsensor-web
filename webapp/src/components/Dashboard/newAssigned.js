@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import {
   Avatar,
   Box,
@@ -15,6 +15,7 @@ import {
   Tr,
   Th,
   Td,
+  Image
 } from "@chakra-ui/react";
 import { AiOutlineProject } from "react-icons/ai";
 import { BsList } from "react-icons/bs";
@@ -29,9 +30,12 @@ import moment from "moment";
 import ProjectLink from "../Project/projectLink";
 import Loading from "../Loading/loading";
 import "../../styles/dashboard.css";
+import projectIcon from '../../images/new-project-images/project-icon copy.svg';
+
 
 const NewAssigned = () => {
   const { user } = useAuth0();
+  const [buttonState,setButtonState] =useState(2)
   const { data: projects, isLoading } = useGetUserProjectsQuery({
     subClaim: user?.sub,
   });
@@ -45,6 +49,7 @@ const NewAssigned = () => {
       padding="20px"
       paddingBottom="50px"
       direction="column"
+      borderRadius="5px"
     >
       {isLoading ? (
         <Loading />
@@ -55,25 +60,36 @@ const NewAssigned = () => {
               className="new__assign__title"
               // fontSize="2xl"
               color="#3965C5"
-              fontWeight="bold"
+              fontWeight="500"
               borderColor="#3965C5"
               borderBottom="1px"
               paddingBottom="5px"
               marginLeft="15px"
               width="11.5em"
+              fontSize="20px"
+              fontFamily="inter"
             >
               New Assigned Projects
             </Text>
             <Spacer />
             <IconButton
-              icon={<IoGridOutline color="#3965C5" />}
-              size="xs"
-              border="1px solid #3965C5"
+              variant="outline"
+              onClick={()=>setButtonState(1)}
+              icon={<IoGridOutline  />}
+              size="18px"
+              p={0.5}
+              colorScheme={buttonState===1 ? "blue":"black"}
+              borderRadius="8px"
+              
             />
             <IconButton
-              icon={<BsList color="#3965C5" />}
-              size="xs"
-              border="1px solid #3965C5"
+            variant="outline"
+              onClick={()=>setButtonState(2)}
+              icon={<BsList/>}
+              size="18px"
+              p={0.5}
+              colorScheme={buttonState===2 ? "blue":"black"}
+              borderRadius="8px"
             />
           </HStack>
           <Box overflowX="auto">
@@ -85,11 +101,11 @@ const NewAssigned = () => {
             >
               <Thead>
                 <Tr margin="0px">
-                  <Th color="#8aaeff">File Name</Th>
-                  <Th color="#8aaeff">Assigned Date</Th>
-                  <Th color="#8aaeff">Project Owner</Th>
-                  <Th color="#8aaeff">Project Type</Th>
-                  <Th color="#8aaeff">No. of Slides</Th>
+                  <Th color="#8aaeff" fontSize="14px" fontFamily="inter" fontWeight="400" textTransform="none">File Name</Th>
+                  <Th color="#8aaeff" fontSize="14px" fontFamily="inter" fontWeight="400" textTransform="none">Assigned Date</Th>
+                  <Th color="#8aaeff" fontSize="14px" fontFamily="inter" fontWeight="400" textTransform="none">Project Owner</Th>
+                  <Th color="#8aaeff" fontSize="14px" fontFamily="inter" fontWeight="400" textTransform="none">Project Type</Th>
+                  <Th color="#8aaeff" fontSize="14px" fontFamily="inter" fontWeight="400" textTransform="none">No. of Slides</Th>
                 </Tr>
               </Thead>
               <Tbody>
@@ -100,25 +116,27 @@ const NewAssigned = () => {
                       borderBottom="1px solid #3965C5"
                       _hover={{ bg: "#bacfff" }}
                     >
-                      <Td color="#3965C5" fontWeight="bold">
-                        <Icon
+                      <Td color="#3965C5" fontWeight="500" fontFamily="inter" fontSize="16px" alignItems="center" display="flex">
+                        {/* <Image
+                        src={projectIcon}
                           as={AiOutlineProject}
-                          marginRight={1}
-                          w={5}
-                          h={4}
-                        />
+                          marginRight="14px"
+                          w="14px"
+                          h="14px"
+                        /> */}
+                  <Image src={projectIcon} width="15px" height="15px" marginRight="10px" />
                         <ProjectLink
                           projectName={project?.name}
                           projectId={project?._id}
                         />
                       </Td>
-                      <Td color="#8aaeff">
+                      <Td color="#8aaeff" fontFamily="inter" fontSize="14px">
                         On {moment(project?.assignedDate).format("DD MMM")}
                       </Td>
-                      <Td color="#8aaeff">
+                      <Td color="#8aaeff" fontFamily="inter" fontSize="14px">
                         {`${project?.owner.firstName}  ${project?.owner.lastName}`}
                       </Td>
-                      <Td color="#8aaeff">
+                      <Td color="#8aaeff" fontFamily="inter" fontSize="14px">
                         {project?.type === "singleSlide"
                           ? "Single Slide"
                           : "Multi Slide"}
@@ -137,8 +155,11 @@ const NewAssigned = () => {
                           }
                           customLabel="100 slides"
                           bgColor="#66a3ff"
+                          labelAlignment="30px"
                           labelSize="12px"
-                          labelAlignment="left"
+                          width="162px"
+                          height="24px"
+                          className="dashboard__project__progressbar"
                         />
                       </Td>
                     </Tr>

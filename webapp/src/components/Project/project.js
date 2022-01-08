@@ -50,6 +50,7 @@ import { useDispatch } from "react-redux";
 import useUserAuthentication from "../../hooks/useUserAuthentication";
 import "../../styles/dashboard.css";
 
+
 const Project = () => {
   const { user } = useAuth0();
   const location = useLocation();
@@ -85,7 +86,7 @@ const Project = () => {
           </Flex>
         ) : (
           <Box className="projects_page">
-            <Flex w="100%" direction="row" marginTop="10px">
+            <Flex w="100%" direction="row" marginTop="10px" fontFamily="inter" fontWeight="500">
               <Text color="#3965C5" borderBottom="1px solid #3965C5" m={5}>
                 Recently Viewed
               </Text>
@@ -113,8 +114,9 @@ const Project = () => {
             <Flex direction="column">
               <Flex>
                 <Text
-                  fontSize="3xl"
-                  fontWeight="bold"
+                  fontSize="32px"
+                  fontWeight="500"
+                  fontFamily="roboto"
                   color="#3965C5"
                   mx={9}
                   my={2}
@@ -123,17 +125,25 @@ const Project = () => {
                 </Text>
                 <Spacer />
                 <Button
-                  size="md"
-                  px={10}
+                  // size="md"
+                  // px={10}
+                  fontFamily="roboto"
+                  fontWeight="500"
+                  w="287px"
+                  h="40px"
                   border="1px solid blue"
                   color="#3965C5"
                 >
                   Project Details
                 </Button>
                 <Button
-                  size="md"
-                  px={10}
+                  // size="md"
+                  // px={10}
+                  fontFamily="roboto"
+                  fontWeight="500"
                   mx={4}
+                  w="287px"
+                  h="40px"
                   backgroundColor="#3965C5"
                   color="white"
                   _hover={{ bg: "#66a3ff" }}
@@ -141,12 +151,12 @@ const Project = () => {
                   View Reports
                 </Button>
               </Flex>
-              <HStack>
-                <Text color="#8aaeff" fontSize="sm" marginLeft={9}>
+              <HStack fontFamily="inter" fontWeight="500">
+                <Text color="#8aaeff"  marginLeft={9}>
                   {moment(project?.lastUpdated).format("DD MMM, YYYY")}
                   <Icon as={BsCircleFill} marginBottom={1} mx={2} w={1} h={1} />
                 </Text>
-                <Text color="#8aaeff" fontSize="sm" mx={0}>
+                <Text color="#8aaeff"  mx={0}>
                   {`Created by ${project?.owner.firstName} ${project?.owner.lastName}`}
                 </Text>
               </HStack>

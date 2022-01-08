@@ -1,6 +1,6 @@
 import React from "react";
 import { Flex, IconButton, Text, Spacer } from "@chakra-ui/react";
-import Search from "./search";
+import Search from "../Dashboard/search";
 import LogoutButton from "../Authenticate/logout";
 import {
   AiOutlineBell,
@@ -24,7 +24,6 @@ const Header = () => {
     >
       <Text fontFamily="roboto" fontSize="24px" mt={"5px"}>Welcome</Text>
       <Spacer />
-      <Search w={300} />
       <LogoutButton />
       {/* <IconButton icon={<BsSearch />} backgroundColor="#3965C5" size="lg" _hover={{bg:"#4070d6"}}/>
             <IconButton icon={<BsBell />} backgroundColor="#3965C5" size="lg" color="black" _hover={{bg:"#4070d6"}}/>

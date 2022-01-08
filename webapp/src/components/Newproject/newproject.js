@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button,MenuItem,Icon,Spacer,Image} from "@chakra-ui/react";
 import Projectdetails from "./projectdetails";
 import Selectslide from "./selectSlide";
 import CreateQuestionnaire from "./createQuestionnaire";
 import Share from "./shareproject";
 import { MdCardMembership } from "react-icons/md";
+import { BsShareFill } from "react-icons/bs";
+import { FaClipboardList} from "react-icons/fa";
+import { AiOutlineSelect } from "react-icons/ai";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import DashboardMenu from "../Dashboard/menu";
-import Header from "../Dashboard/header";
+import Header from "./header";
 import { resetNewProject } from "../../state/reducers/newProjectReducer";
 import { useAuth0 } from "@auth0/auth0-react";
 import {
@@ -19,6 +22,11 @@ import {
 import Loading from "../Loading/loading";
 import { getAccessToken, getUserId } from "../../hooks/utility";
 import useUserAuthentication from "../../hooks/useUserAuthentication";
+import Projectlist from "./projectlist";
+import projectIcon1 from '../../images/new-project-images/project.svg';
+import projectIcon2 from '../../images/new-project-images/selection.svg';
+import projectIcon3 from '../../images/new-project-images/questionnaire.svg';
+import projectIcon4 from '../../images/new-project-images/Share 1.svg';
 
 const Newproject = () => {
   const [activeOption, setActiveOption] = useState("projectDetails");
@@ -151,7 +159,7 @@ const Newproject = () => {
         backgroundColor="#eeeeee"
       >
         <Header />
-        <Box className="div_overlay">
+        <Box className="div_overlay" fontFamily="inter">
           <Box>
             <Button
               className={buttonStyleProjectDetails}
@@ -159,7 +167,10 @@ const Newproject = () => {
               onClick={(e) => handleActiveOptionProjectDetails(e)}
               background={buttonBackgroundProjectDetails}
               marginRight={3}
+              fontSize="14px"
+              fontWeight={400}
             >
+            <Image src={ projectIcon1}  marginRight="12px" w="14px" h="14px" />
               Project details
             </Button>
             <Button
@@ -167,8 +178,11 @@ const Newproject = () => {
               name="selectSlide"
               onClick={(e) => handleActiveOptionSelectSlide(e)}
               background={buttonBackgroundSelectSlide}
+              fontSize="14px"
+              fontWeight={400}
               marginRight={3}
             >
+            <Image src={ projectIcon2}  marginRight="12px" w="14px" h="14px" />
               Select Slides
             </Button>
             <Button
@@ -176,8 +190,11 @@ const Newproject = () => {
               name="questionnaire"
               onClick={(e) => handleActiveOptionQuestionnaire(e)}
               background={buttonBackgroundQuestionnaire}
+              fontWeight={400}
+              fontSize="14px"
               marginRight={3}
             >
+            <Image src={ projectIcon3}  marginRight="12px" w="14px" h="14px" />
               Questionnaire
             </Button>
             <Button
@@ -185,8 +202,11 @@ const Newproject = () => {
               name="Share"
               onClick={(e) => handleActiveOptionShare(e)}
               background={buttonBackgroundShare}
+              fontWeight={400}
+              fontSize="14px"
               marginRight={3}
             >
+            <Image src={ projectIcon4}  marginRight="12px" w="14px" h="14px" />
               Share
             </Button>
           </Box>
@@ -198,7 +218,7 @@ const Newproject = () => {
             {activeOption === "Share" && <Share />}
           </Box>
           <Box className="bottom_div">
-            <Button className="reset" width={127} onClick={handleReset}>
+            <Button className="reset" width={127} fontFamily="inter" fontSize="14px" fontWeight="500"onClick={handleReset}>
               Reset
             </Button>
             <Button
@@ -206,13 +226,19 @@ const Newproject = () => {
               bg="#0032a0"
               colorScheme="#0032a0"
               color="white"
-              width={127}
+              width={127} 
+              fontFamily="inter"
+              fontSize="14px"
+              fontWeight="500"
               marginLeft="-100px"
               onClick={() => setNextButton()}
             >
               {buttonText}
             </Button>
           </Box>
+        </Box>
+        <Box className="right_div" >
+        <Projectlist />
         </Box>
       </Box>
     </>
