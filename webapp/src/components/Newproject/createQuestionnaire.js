@@ -14,9 +14,9 @@ const CreateQuestionnaire = () => {
   );
 
   return (
-    <Box pos="absolute" left="40px" top="106px" color="#2E519E">
-      <Text>Slide Type</Text>
-      <Text my={4} fontSize="20px">
+    <Box pos="absolute" left="40px" top="106px" color="#2E519E" fontFamily="inter">
+      <Text fontSize="14px">Slide Type</Text>
+      <Text my={4} fontSize="20px" fontWeight="500">
         {projectDetails.slideType}
       </Text>
       <Questionnaire direction="row" questions={questions} />

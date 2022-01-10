@@ -51,20 +51,25 @@ const ProjectInvite = () => {
       backgroundColor="white"
       margin="20px"
       padding="20px"
+      paddingBottom="50px"
       direction="column"
+      borderRadius="5px"
     >
       <HStack borderBottom="1px solid #3965C5" marginLeft="15px">
         <Text
           className="last__reports__title"
           color="#3965C5"
-          fontWeight="100"
+          fontWeight="400"
           paddingBottom="10px"
           width="95%"
+          fontSize="20px"
+        fontFamily="inter"
         >
           Project Invitation
         </Text>
         <Spacer />
-        <Link fontSize="xs" color="#3965C5" w="50px" marginBottom="0px">
+        <Link fontSize="xs" color="#3965C5" w="50px" fontSize="12px"
+        fontFamily="inter" marginBottom="0px" borderBottom="1px solid #3965C5">
           View All
         </Link>
       </HStack>
@@ -82,17 +87,18 @@ const ProjectInvite = () => {
                   borderBottom="1px solid #3965C5"
                 >
                   <VStack>
-                    <Text width="100%" color="#3965C5" textAlign="left">
+                    <Text width="100%" color="#3965C5" textAlign="left" fontSize="16px" fontWeight="500"
+                      fontFamily="inter">
                       {invite.project?.name}
                     </Text>
                     <HStack width="100%">
-                      <Text color="#8aaeff" fontSize="xs">
+                      <Text color="#8aaeff" fontSize="14px" fontFamily="inter">
                         {invite.sender?.firstName +
                           " " +
                           invite.sender?.lastName}
                         <Icon as={BsCircleFill} w={1} h={1} ml={1} />
                       </Text>
-                      <Text color="#8aaeff" fontSize="xs">
+                      <Text color="#8aaeff" fontSize="14px" fontFamily="inter">
                         {moment(invite.createdAt).fromNow()}
                       </Text>
                     </HStack>
@@ -100,7 +106,8 @@ const ProjectInvite = () => {
                       width="100%"
                       color="#3965C5"
                       textAlign="left"
-                      fontSize="sm"
+                      fontSize="14px"
+                      fontFamily="inter"
                     >
                       Details <Icon as={MdKeyboardArrowRight} h={3} />
                     </Link>
@@ -109,8 +116,12 @@ const ProjectInvite = () => {
                   <VStack marginRight="1em">
                     <Button
                       size="sm"
-                      width="8em"
+                      width="127px"
+                      height="32px"
                       color="white"
+                      fontSize="14px"
+                      fontFamily="inter"
+                      fontWeight="500"
                       backgroundColor="#3965C5"
                       _hover={{ bg: "#66a3ff" }}
                       onClick={() => acceptInvite(invite)}
@@ -119,8 +130,12 @@ const ProjectInvite = () => {
                     </Button>
                     <Button
                       size="sm"
-                      width="8em"
+                      width="127px"
+                      height="32px"
                       color="#3965C5"
+                      fontSize="14px"
+                      fontFamily="inter"
+                      fontWeight="500"
                       backgroundColor="white"
                       border="1px solid #3965C5"
                       onClick={() => declineInvite(invite)}

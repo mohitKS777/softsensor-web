@@ -8,14 +8,17 @@ const LogoutButton = () => {
   return (
     <Button
       className="logout__btn"
-      backgroundColor="#3965C5"
-      size="sm"
-      border="1px solid white"
+      backgroundColor="#0032A0"
+      width="128px"
+      height="32px"
+      fontFamily="inter"
+      fontWeight="500"
+      fontSize="14px"
       marginTop="10px"
       _hover={{ bg: "#66a3ff" }}
       onClick={() => logout({ returnTo: window.location.origin + "/login" })}
     >
-      Log Out
+      Log out
     </Button>
   );
 };

@@ -43,12 +43,18 @@ const newProjectSlice = createSlice({
     },
     addSlides: (state, action) => {
       state.slides = action.payload;
-      console.log(state.slides);
+    },
+    resetCases: (state) => {
+      state.projectDetails["cases"] = [];
+      state.slides = [];
+      state.uploadedFile = "";
     },
     resetNewProject: (state) => {
       state.projectDetails = initialState.projectDetails;
       state.members = initialState.members;
       state.membersInfo = initialState.membersInfo;
+      state.slides = [];
+      state.uploadedFile = "";
       //   state.isAddQna = false;
       //   state.questionnaire = initialState.questionnaire;
     },
@@ -64,6 +70,7 @@ export const {
   updateFile,
   addMembersInfo,
   addSlides,
+  resetCases,
 } = newProjectSlice.actions;
 
 export default newProjectSlice.reducer;

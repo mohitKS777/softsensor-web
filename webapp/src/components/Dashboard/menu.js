@@ -14,20 +14,24 @@ import {
   MenuGroup,
   MenuItem,
   MenuList,
+  Spacer,
   Text,
 } from "@chakra-ui/react";
-import { BiTime } from "react-icons/bi";
-import { BsCircleFill } from "react-icons/bs";
-import { IoAdd } from "react-icons/io5";
+import { BiTime ,BiHelpCircle} from "react-icons/bi";
+import { BsCircleFill ,BsPlusLg} from "react-icons/bs";
+// import { IoAdd } from "react-icons/io5";
 import {
   AiOutlineFile,
   AiOutlineFolderOpen,
   AiOutlineProject,
 } from "react-icons/ai";
+import { VscHistory } from "react-icons/vsc";
+import { RiArrowRightSLine } from "react-icons/ri";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useGetUserInfoQuery } from "../../state/api/medicalApi";
 import { useDispatch } from "react-redux";
 import { getUserId } from "../../hooks/utility";
+import projectIcon from '../../images/new-project-images/project-icon.svg';
 
 const DashboardMenu = () => {
   const { user } = useAuth0();
@@ -62,25 +66,25 @@ const DashboardMenu = () => {
             alt="User"
           />
           <Flex marginTop="1em" direction="column" width="9em">
-            <Text color="white">
+            <Text color="white" className="menu__username">
               {userInfo?.user.firstName + " " + userInfo?.user.lastName}
             </Text>
-            <Text fontSize="xs">{userInfo?.user.emailAddress}</Text>
-            <Link fontSize="small" color="white" marginTop="10px">
-              Manage your Account
+            <Text  className="menu__email">{userInfo?.user.emailAddress}</Text>
+            <Link className="menu__managelink" color="white" marginTop="10px">
+              Manage your account
             </Link>
           </Flex>
         </Flex>
-        <MenuGroup>
+        <MenuGroup >
           <MenuDivider marginTop="1em" mx={2} />
           <Link
             as={RouteLink}
             to={`/${userId}/dashboard/recent`}
             _hover={{ textDecoration: "none" }}
           >
-            <MenuItem _hover={{ bg: "#66a3ff" }} fontSize="small" name="recent">
-              <Icon as={BiTime} marginRight={2} w={5} h={7} />
-              Recently Viewed
+            <MenuItem _hover={{ bg: "#66a3ff" }} name="recent" className="dashboard__menu__list">
+              <Icon as={VscHistory} marginRight={2} width="18px" h="18px" />
+              Recently viewed
             </MenuItem>
           </Link>
           <Link
@@ -90,10 +94,11 @@ const DashboardMenu = () => {
           >
             <MenuItem
               _hover={{ bg: "#66a3ff" }}
-              fontSize="small"
               name="projects"
+              className="dashboard__menu__list"
+              alignItems="center"
             >
-              <Icon as={AiOutlineProject} marginRight={2} w={5} h={7} />
+              <Image src={projectIcon} marginRight={2} width="20px" height="20px"   />
               Projects
             </MenuItem>
           </Link>
@@ -101,36 +106,43 @@ const DashboardMenu = () => {
             as={RouteLink}
             to={`/${userId}/dashboard/newProject`}
             _hover={{ textDecoration: "none" }}
+            
           >
             <MenuItem
               _hover={{ bg: "#66a3ff" }}
-              fontSize="small"
               name="newProject"
+              className="dashboard__menu__list"
+              
             >
+            
               <Icon as={AiOutlineFile} marginRight={2} w={5} h={7} />
-              New Projects
+              New project
+              <Spacer/>
+              <Icon as={RiArrowRightSLine} marginRight={2} w={5} h={4}  />
             </MenuItem>
           </Link>
 
-          <MenuItem _hover={{ bg: "#66a3ff" }} fontSize="small">
+          <MenuItem _hover={{ bg: "#66a3ff" }} className="dashboard__menu__list">
             <Icon as={AiOutlineFolderOpen} marginRight={2} w={5} h={7} />
             Open
+            <Spacer/>
+            <Icon as={RiArrowRightSLine} marginRight={2} w={5} h={4}/>
           </MenuItem>
           <MenuDivider m={2} />
-          <MenuItem _hover={{ bg: "#66a3ff" }} fontWeight="bold">
+          <MenuItem _hover={{ bg: "#66a3ff" }} className="dashboard__menu__list__username">
             <Icon as={BsCircleFill} marginRight={2} w={4} h={4} />
             {userInfo?.user.firstName + " " + userInfo?.user.lastName}
           </MenuItem>
-          <MenuItem _hover={{ bg: "#66a3ff" }} fontSize="small">
+          <MenuItem _hover={{ bg: "#66a3ff" }} className="dashboard__menu__list">
             Team Project
           </MenuItem>
           <MenuDivider m={2} />
-          <MenuItem _hover={{ bg: "#66a3ff" }} fontSize="small">
-            <Icon as={IoAdd} marginRight={2} w={5} h={7} />
-            Create New Team
+          <MenuItem _hover={{ bg: "#66a3ff" }} className="dashboard__menu__list">
+            <Icon as={BsPlusLg} marginRight={2} width="14px" height="14px" />
+            Create new team
           </MenuItem>
-          <MenuItem _hover={{ bg: "#66a3ff" }} fontSize="small">
-            <Icon as={BsCircleFill} marginRight={2} w={4} h={4} />
+          <MenuItem _hover={{ bg: "#66a3ff" }} className="dashboard__menu__list">
+            <Icon as={BiHelpCircle} marginRight={2} width="18px" height="18px"/>
             Help
           </MenuItem>
         </MenuGroup>

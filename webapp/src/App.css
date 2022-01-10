@@ -42,6 +42,8 @@ body {
     font-size: 2em;
     width: 2200px;
     margin-left: 4em;
+    font-weight: 500;
+    font-family: 'roboto';
   }
   .dashboard__menu {
     width: 20em;
@@ -55,9 +57,6 @@ body {
     height: 40em;
     margin-left: 10em;
     margin-right: 1em;
-  }
-  .recently__viewed__title {
-    font-size: 2em;
   }
   .recently__viewed__table {
     size: "md";
@@ -91,6 +90,37 @@ body {
   }
   .logout__btn {
     margin-left: 1em;
+    font-family: "inter";
+    font-weight: 500;
+  }
+  .menu__username {
+    font-size: 20px;
+    font-family:"inter";
+    font-weight: 600;
+  }
+  .menu__email {
+    font-size: 12px;
+    font-family:"inter";
+    font-weight: 400;
+  }
+  .menu__managelink {
+    font-size: 14px;
+    font-family: "inter";
+    font-weight: 500;
+  }
+  .dashboard__menu__list {
+    font-size: 16px;
+    font-family: "inter";
+    font-weight: 400;
+  }
+  .dashboard__menu__list__username {
+    font-size: 20px;
+    font-family: "inter";
+    font-weight: 600;
+  }
+  .dashboard__project__progressbar {
+    font-family: "inter";
+    font-weight: 500;
   }
 }
 
@@ -99,9 +129,11 @@ body {
     width: 100%;
   }
   .dashboard__header {
-    font-size: 2em;
+    font-size: 24px;
     width: 1700px;
     margin-left: 0;
+    font-weight: 500;
+    font-family: 'roboto';
   }
   .dashboard__menu {
     width: 10em;
@@ -113,9 +145,6 @@ body {
     width: 70em;
     height: 25em;
     margin-left: 1.5em;
-  }
-  .recently__viewed__title {
-    font-size: large;
   }
   .recently__viewed__table {
     size: "sm";
@@ -166,6 +195,35 @@ body {
   .tasks__completed {
     width: 56em;
   }
+  .menu__username {
+    font-size: 18px;
+    font-family:"inter";
+    font-weight: 600;
+  }
+  .menu__email {
+    font-size: 10px;
+    font-family:"inter";
+    font-weight: 400;
+  }
+  .menu__managelink {
+    font-size: 14px;
+    font-family: "inter";
+    font-weight: 500;
+  }
+  .dashboard__menu__list {
+    font-size: 14px;
+    font-family: "inter";
+    font-weight: 400;
+  }
+  .dashboard__menu__list__username {
+    font-size: 18px;
+    font-family: "inter";
+    font-weight: 600;
+  }
+  .dashboard__project__progressbar {
+    font-family: "inter";
+    font-weight: 500;
+  }
 }
 
 @media screen and (max-width: 1440px) {
@@ -173,9 +231,11 @@ body {
     width: 100%;
   }
   .dashboard__header {
-    font-size: 2em;
-    width: 38em;
+    font-size: 24px;
+    width: 1220px;
     margin-left: 0;
+    font-weight: 500;
+    font-family: 'roboto';
   }
   .dashboard__menu {
     width: 8em;
@@ -187,9 +247,6 @@ body {
     width: 50em;
     height: 25em;
     margin-left: 1.5em;
-  }
-  .recently__viewed__title {
-    font-size: large;
   }
   .recently__viewed__table {
     size: "sm";
@@ -231,13 +288,45 @@ body {
   .logout__btn {
     margin-left: 1em;
   }
+  .menu__username {
+    font-size: 18px;
+    font-family:"inter";
+    font-weight: 600;
+  }
+  .menu__email {
+    font-size: 10px;
+    font-family:"inter";
+    font-weight: 400;
+  }
+  .menu__managelink {
+    font-size: 14px;
+    font-family: "inter";
+    font-weight: 500;
+  }
+  .dashboard__menu__list {
+    font-size: 14px;
+    font-family: "inter";
+    font-weight: 400;
+  }
+  .dashboard__menu__list__username {
+    font-size: 18px;
+    font-family: "inter";
+    font-weight: 600;
+  }
+  .dashboard__project__progressbar {
+    font-family: "inter";
+    font-weight: 500;
+  }
 }
 
 @media screen and (max-width: 1280px) {
   .dashboard__header {
-    font-size: 2em;
+    font-size: 24px;
     width: 1080px;
     margin-left: 0;
+    font-weight: 500;
+    font-family: 'roboto';
+    width: 100%;
   }
   .dashboard__menu {
     width: 8em;
@@ -245,17 +334,15 @@ body {
   .recently__viewed {
     width: 32em;
     height: 17em;
+    /* max-height: 80%; */
     margin-left: 1.5em;
-  }
-  .recently__viewed__title {
-    font-size: large;
   }
   .recently__viewed__table {
     size: "sm";
   }
   .new__assign {
     width: 32em;
-    height: 12em;
+    height: 17em;
     margin-left: 1.5em;
   }
   .new__assign__title {
@@ -270,7 +357,7 @@ body {
   }
   .last__task {
     width: 14em;
-    height: 17em;
+    height: 25em;
   }
   .last__task__img {
     height: 7em;
@@ -289,5 +376,34 @@ body {
   }
   .logout__btn {
     margin-left: 1em;
+  }
+  .menu__username {
+    font-size: 18px;
+    font-family:"inter";
+    font-weight: 600;
+  }
+  .menu__email {
+    font-size: 10px;
+    font-family:"inter";
+    font-weight: 400;
+  }
+  .menu__managelink {
+    font-size: 14px;
+    font-family: "inter";
+    font-weight: 500;
+  }
+  .dashboard__menu__list {
+    font-size: 14px;
+    font-family: "inter";
+    font-weight: 400;
+  }
+  .dashboard__menu__list__username {
+    font-size: 18px;
+    font-family: "inter";
+    font-weight: 600;
+  }
+  .dashboard__project__progressbar {
+    font-family: "inter";
+    font-weight: 500;
   }
 }

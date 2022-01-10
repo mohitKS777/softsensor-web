@@ -22,7 +22,6 @@ const ZoomSlider = ({ viewerId }) => {
     dispatch(updateZoomValue({ id: viewerId, value: val }));
   };
 
-
   useEffect(() => {
     if (!viewer) return;
     viewer.addHandler("zoom", (e) => {
@@ -42,7 +41,6 @@ const ZoomSlider = ({ viewerId }) => {
         max={40}
         markers={6}
         stepSize={8}
-        fontColor="white"
         grabCursor={false}
         trackLength={100}
         trackShape="squared"

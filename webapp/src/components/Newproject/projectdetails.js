@@ -2,6 +2,7 @@ import { React, useState } from "react";
 import { Box, Button, Select, Input, Text, Textarea } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  resetCases,
   resetNewProject,
   updateProject,
 } from "../../state/reducers/newProjectReducer";
@@ -13,6 +14,7 @@ const Projectdetails = () => {
 
   const handleProjectDetails = (e) => {
     dispatch(updateProject({ name: e.target.name, value: e.target.value }));
+    if (e.target.name === "projectType") dispatch(resetCases());
   };
 
   return (
@@ -22,7 +24,7 @@ const Projectdetails = () => {
           <Text
             htmlFor="project_title"
             color="#2E519E"
-            fontSize={17}
+            fontSize="14px"
             paddingBottom={3}
           >
             Project Title
@@ -35,6 +37,7 @@ const Projectdetails = () => {
             width={590}
             borderRadius={5}
             bg="#0032a01a"
+            fontSize="16px"
             placeholder="Eg: Digital Pathology"
             onChange={(e) => handleProjectDetails(e)}
           ></Input>
@@ -42,7 +45,7 @@ const Projectdetails = () => {
             htmlFor="project_desc"
             paddingTop={6}
             color="#2E519E"
-            fontSize={17}
+            fontSize="14px"
             paddingBottom={3}
           >
             Project Description
@@ -54,6 +57,7 @@ const Projectdetails = () => {
             width={590}
             height={150}
             top="0"
+            fontSize="16px"
             bg="#0032a01a"
             resize={"none"}
             placeholder="Eg: Write a one- or two-paragraph explanation of what the project aims to accomplish"
@@ -63,8 +67,9 @@ const Projectdetails = () => {
             htmlFor="project_type"
             paddingTop={6}
             color="#2E519E"
-            fontSize={17}
+            // fontSize="16px"
             paddingBottom={3}
+            style={{ fontSize: "14px" }}
           >
             Project Type
           </Text>
@@ -74,7 +79,8 @@ const Projectdetails = () => {
             name="projectType"
             value={projectDetails.projectType}
             onChange={(e) => handleProjectDetails(e)}
-            width={540}
+            fontSize="16px"
+            width={590}
             bg="#0032a01a"
           >
             <option value="singleSlide">Single-Slide Project</option>
@@ -84,7 +90,7 @@ const Projectdetails = () => {
             htmlFor="slide_type"
             paddingTop={6}
             color="#2E519E"
-            fontSize={17}
+            fontSize="14px"
             paddingBottom={3}
           >
             Slide Type
@@ -93,12 +99,13 @@ const Projectdetails = () => {
             id="slide_type"
             name="slideType"
             value={projectDetails.slideType}
-            width={540}
+            width={590}
             bg="#0032a01a"
+            fontSize="16px"
             onChange={(e) => handleProjectDetails(e)}
           >
             <option value="H&E">H&E</option>
-            <option value="Trichrome">Trichrome</option>
+            <option value="trichrome">Trichrome</option>
           </Select>
         </Box>
       </Box>
