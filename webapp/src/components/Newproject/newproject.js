@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Button,MenuItem,Icon,Spacer,Image} from "@chakra-ui/react";
+import { Box, Button, MenuItem, Icon, Spacer, Image } from "@chakra-ui/react";
 import Projectdetails from "./projectdetails";
 import Selectslide from "./selectSlide";
 import CreateQuestionnaire from "./createQuestionnaire";
 import Share from "./shareproject";
 import { MdCardMembership } from "react-icons/md";
 import { BsShareFill } from "react-icons/bs";
-import { FaClipboardList} from "react-icons/fa";
+import { FaClipboardList } from "react-icons/fa";
 import { AiOutlineSelect } from "react-icons/ai";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import DashboardMenu from "../Dashboard/menu";
@@ -23,10 +23,10 @@ import Loading from "../Loading/loading";
 import { getAccessToken, getUserId } from "../../hooks/utility";
 import useUserAuthentication from "../../hooks/useUserAuthentication";
 import Projectlist from "./projectlist";
-import projectIcon1 from '../../images/new-project-images/project.svg';
-import projectIcon2 from '../../images/new-project-images/selection.svg';
-import projectIcon3 from '../../images/new-project-images/questionnaire.svg';
-import projectIcon4 from '../../images/new-project-images/Share 1.svg';
+import projectIcon1 from "../../images/new-project-images/project.svg";
+import projectIcon2 from "../../images/new-project-images/selection.svg";
+import projectIcon3 from "../../images/new-project-images/questionnaire.svg";
+import projectIcon4 from "../../images/new-project-images/Share 1.svg";
 
 const Newproject = () => {
   const [activeOption, setActiveOption] = useState("projectDetails");
@@ -80,7 +80,7 @@ const Newproject = () => {
     });
     dispatch(resetNewProject());
     history.push(`/${id}/dashboard/projects`);
-    // handleActiveOptionProjectDetails();
+    handleActiveOptionProjectDetails();
   };
 
   const handleActiveOptionProjectDetails = (e) => {
@@ -170,7 +170,7 @@ const Newproject = () => {
               fontSize="14px"
               fontWeight={400}
             >
-            <Image src={ projectIcon1}  marginRight="12px" w="14px" h="14px" />
+              <Image src={projectIcon1} marginRight="12px" w="14px" h="14px" />
               Project details
             </Button>
             <Button
@@ -182,7 +182,7 @@ const Newproject = () => {
               fontWeight={400}
               marginRight={3}
             >
-            <Image src={ projectIcon2}  marginRight="12px" w="14px" h="14px" />
+              <Image src={projectIcon2} marginRight="12px" w="14px" h="14px" />
               Select Slides
             </Button>
             <Button
@@ -194,7 +194,7 @@ const Newproject = () => {
               fontSize="14px"
               marginRight={3}
             >
-            <Image src={ projectIcon3}  marginRight="12px" w="14px" h="14px" />
+              <Image src={projectIcon3} marginRight="12px" w="14px" h="14px" />
               Questionnaire
             </Button>
             <Button
@@ -206,7 +206,7 @@ const Newproject = () => {
               fontSize="14px"
               marginRight={3}
             >
-            <Image src={ projectIcon4}  marginRight="12px" w="14px" h="14px" />
+              <Image src={projectIcon4} marginRight="12px" w="14px" h="14px" />
               Share
             </Button>
           </Box>
@@ -218,7 +218,14 @@ const Newproject = () => {
             {activeOption === "Share" && <Share />}
           </Box>
           <Box className="bottom_div">
-            <Button className="reset" width={127} fontFamily="inter" fontSize="14px" fontWeight="500"onClick={handleReset}>
+            <Button
+              className="reset"
+              width={127}
+              fontFamily="inter"
+              fontSize="14px"
+              fontWeight="500"
+              onClick={handleReset}
+            >
               Reset
             </Button>
             <Button
@@ -226,7 +233,7 @@ const Newproject = () => {
               bg="#0032a0"
               colorScheme="#0032a0"
               color="white"
-              width={127} 
+              width={127}
               fontFamily="inter"
               fontSize="14px"
               fontWeight="500"
@@ -237,8 +244,8 @@ const Newproject = () => {
             </Button>
           </Box>
         </Box>
-        <Box className="right_div" >
-        <Projectlist />
+        <Box className="right_div">
+          <Projectlist />
         </Box>
       </Box>
     </>

@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import {
   Avatar,
   Box,
@@ -15,7 +15,7 @@ import {
   Tr,
   Th,
   Td,
-  Image
+  Image,
 } from "@chakra-ui/react";
 import { AiOutlineProject } from "react-icons/ai";
 import { BsList } from "react-icons/bs";
@@ -30,12 +30,11 @@ import moment from "moment";
 import ProjectLink from "../Project/projectLink";
 import Loading from "../Loading/loading";
 import "../../styles/dashboard.css";
-import projectIcon from '../../images/new-project-images/project-icon copy.svg';
-
+import projectIcon from "../../images/new-project-images/project-icon copy.svg";
 
 const NewAssigned = () => {
   const { user } = useAuth0();
-  const [buttonState,setButtonState] =useState(2)
+  const [buttonState, setButtonState] = useState(2);
   const { data: projects, isLoading } = useGetUserProjectsQuery({
     subClaim: user?.sub,
   });
@@ -74,21 +73,20 @@ const NewAssigned = () => {
             <Spacer />
             <IconButton
               variant="outline"
-              onClick={()=>setButtonState(1)}
-              icon={<IoGridOutline  />}
+              onClick={() => setButtonState(1)}
+              icon={<IoGridOutline />}
               size="18px"
               p={0.5}
-              colorScheme={buttonState===1 ? "blue":"black"}
+              colorScheme={buttonState === 1 ? "blue" : "black"}
               borderRadius="8px"
-              
             />
             <IconButton
-            variant="outline"
-              onClick={()=>setButtonState(2)}
-              icon={<BsList/>}
+              variant="outline"
+              onClick={() => setButtonState(2)}
+              icon={<BsList />}
               size="18px"
               p={0.5}
-              colorScheme={buttonState===2 ? "blue":"black"}
+              colorScheme={buttonState === 2 ? "blue" : "black"}
               borderRadius="8px"
             />
           </HStack>
@@ -101,11 +99,51 @@ const NewAssigned = () => {
             >
               <Thead>
                 <Tr margin="0px">
-                  <Th color="#8aaeff" fontSize="14px" fontFamily="inter" fontWeight="400" textTransform="none">File Name</Th>
-                  <Th color="#8aaeff" fontSize="14px" fontFamily="inter" fontWeight="400" textTransform="none">Assigned Date</Th>
-                  <Th color="#8aaeff" fontSize="14px" fontFamily="inter" fontWeight="400" textTransform="none">Project Owner</Th>
-                  <Th color="#8aaeff" fontSize="14px" fontFamily="inter" fontWeight="400" textTransform="none">Project Type</Th>
-                  <Th color="#8aaeff" fontSize="14px" fontFamily="inter" fontWeight="400" textTransform="none">No. of Slides</Th>
+                  <Th
+                    color="#8aaeff"
+                    fontSize="14px"
+                    fontFamily="inter"
+                    fontWeight="400"
+                    textTransform="none"
+                  >
+                    File Name
+                  </Th>
+                  <Th
+                    color="#8aaeff"
+                    fontSize="14px"
+                    fontFamily="inter"
+                    fontWeight="400"
+                    textTransform="none"
+                  >
+                    Assigned Date
+                  </Th>
+                  <Th
+                    color="#8aaeff"
+                    fontSize="14px"
+                    fontFamily="inter"
+                    fontWeight="400"
+                    textTransform="none"
+                  >
+                    Project Owner
+                  </Th>
+                  <Th
+                    color="#8aaeff"
+                    fontSize="14px"
+                    fontFamily="inter"
+                    fontWeight="400"
+                    textTransform="none"
+                  >
+                    Project Type
+                  </Th>
+                  <Th
+                    color="#8aaeff"
+                    fontSize="14px"
+                    fontFamily="inter"
+                    fontWeight="400"
+                    textTransform="none"
+                  >
+                    No. of Slides
+                  </Th>
                 </Tr>
               </Thead>
               <Tbody>
@@ -116,7 +154,14 @@ const NewAssigned = () => {
                       borderBottom="1px solid #3965C5"
                       _hover={{ bg: "#bacfff" }}
                     >
-                      <Td color="#3965C5" fontWeight="500" fontFamily="inter" fontSize="16px" alignItems="center" display="flex">
+                      <Td
+                        color="#3965C5"
+                        fontWeight="500"
+                        fontFamily="inter"
+                        fontSize="16px"
+                        alignItems="center"
+                        display="flex"
+                      >
                         {/* <Image
                         src={projectIcon}
                           as={AiOutlineProject}
@@ -124,7 +169,12 @@ const NewAssigned = () => {
                           w="14px"
                           h="14px"
                         /> */}
-                  <Image src={projectIcon} width="15px" height="15px" marginRight="10px" />
+                        <Image
+                          src={projectIcon}
+                          width="15px"
+                          height="15px"
+                          marginRight="10px"
+                        />
                         <ProjectLink
                           projectName={project?.name}
                           projectId={project?._id}
@@ -150,10 +200,12 @@ const NewAssigned = () => {
                         </Td> */}
                       <Td>
                         <ProgressBar
-                          completed={
-                            project?.totalSlides ? project?.totalSlides : 100
+                          completed={100}
+                          customLabel={
+                            project.type === "singleSlide"
+                              ? `${project.cases.length} slides`
+                              : `${2 * project.cases.length} slides`
                           }
-                          customLabel="100 slides"
                           bgColor="#66a3ff"
                           labelAlignment="30px"
                           labelSize="12px"

@@ -11,7 +11,7 @@ import {
   Stack,
   Text,
   Spinner,
-  Box
+  Box,
 } from "@chakra-ui/react";
 import { BsCircleFill } from "react-icons/bs";
 import { useGetLastTaskQuery } from "../../state/api/medicalApi";
@@ -19,6 +19,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import moment from "moment";
 import { Link as RouteLink } from "react-router-dom";
 import Loading from "../Loading/loading";
+import { getSlideUrl } from "../../hooks/utility";
 
 const LastTask = () => {
   const { user } = useAuth0();
@@ -35,9 +36,7 @@ const LastTask = () => {
   useEffect(() => {
     if (!recentCaseWorkedOn) return;
     const slideUrl = recentCaseWorkedOn?.slides[0].awsImageBucketUrl;
-    setUrl(
-      slideUrl.substring(0, slideUrl.lastIndexOf(".")) + "_files/8/0_0.jpeg"
-    );
+    setUrl(getSlideUrl(slideUrl));
   }, [recentCaseWorkedOn]);
 
   return (
@@ -91,25 +90,34 @@ const LastTask = () => {
                     <Avatar name="Rakesh Gautam" size="sm" />
                     <Avatar name="Mila Maghudiya" size="sm" />
                 </Stack> */}
-               <Text color="#8aaeff" fontSize="14px"
-              fontFamily="inter">{`${recentCaseWorkedOn?.slides.length-1} slides remaining`}</Text> 
+            <Text color="#8aaeff" fontSize="14px" fontFamily="inter">{`${
+              recentCaseWorkedOn?.slides.length - 1
+            } slides remaining`}</Text>
           </HStack>
-          <HStack >
-            <Box >
-          <Text color="#8aaeff" fontSize="14px" margin="0px 0px 8px 15px"
-              fontFamily="inter" >
-            {recentCaseWorkedOn?.name}
-            <Icon as={BsCircleFill} mx={1} w={1} h={1} />{" "}
-            {moment(recentCaseWorkedOn?.createdAt).format("MMM DD, YYYY")}
-          </Text>
-          <Text color="#8aaeff" fontSize="14px"
-              fontFamily="inter" marginLeft="15px">
-            {`Created by ${
-              recentCaseWorkedOn?.caseOwner.firstName +
-              recentCaseWorkedOn?.caseOwner.lastName
-            }`}
-          </Text>
-          </Box>
+          <HStack>
+            <Box>
+              <Text
+                color="#8aaeff"
+                fontSize="14px"
+                margin="0px 0px 8px 15px"
+                fontFamily="inter"
+              >
+                {recentCaseWorkedOn?.name}
+                <Icon as={BsCircleFill} mx={1} w={1} h={1} />
+                {moment(recentCaseWorkedOn?.createdAt).format("MMM DD, YYYY")}
+              </Text>
+              <Text
+                color="#8aaeff"
+                fontSize="14px"
+                fontFamily="inter"
+                marginLeft="15px"
+              >
+                {`Created by ${
+                  recentCaseWorkedOn?.caseOwner.firstName +
+                  recentCaseWorkedOn?.caseOwner.lastName
+                }`}
+              </Text>
+            </Box>
             <Spacer />
             <Link
               as={RouteLink}
@@ -136,7 +144,7 @@ const LastTask = () => {
                 Continue
               </Button>
             </Link>
-            </HStack>
+          </HStack>
         </>
       )}
     </Flex>

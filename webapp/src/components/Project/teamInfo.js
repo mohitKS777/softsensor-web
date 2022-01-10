@@ -15,27 +15,45 @@ import { IoAdd } from "react-icons/io5";
 import { CgMoreO } from "react-icons/cg";
 import { HiOutlineDotsCircleHorizontal } from "react-icons/hi";
 import { Link as RouteLink } from "react-router-dom";
+import { useGetUserInfoQuery } from "../../state/api/medicalApi";
+import { useAuth0 } from "@auth0/auth0-react";
 
-const TeamInfo = ({ members, projectOwner,progress}) => {
+const TeamInfo = ({ members, projectOwner, projectProgress, totalTasks }) => {
+  const { user } = useAuth0();
+  const { data: userInfo } = useGetUserInfoQuery({
+    subClaim: user?.sub,
+  });
+  const userCompletedCase = {};
+  projectProgress?.map((userProgress) => {
+    userCompletedCase[userProgress?.user._id] = userProgress.casesCompletedNum;
+  });
 
   return (
     <Box
       color="#3965C5"
-      width="30%"
+      width="42%"
+      h="100%"
       borderRadius="10px"
       padding="10px"
       marginRight="15px"
       style={{ backgroundColor: "rgba(46,81,158,0.05)" }}
     >
       <HStack borderBottom="1px solid #3965C5" paddingBottom="5px">
-        <Text fontSize="18px" fontFamily="inter" fontWeight="400">Team Information</Text>
+        <Text fontSize="18px" fontFamily="inter" fontWeight="400">
+          Team Information
+        </Text>
         <Spacer />
         <Icon as={IoAdd} marginRight={2} w={5} h={7} />
-        <Button fontWeight="500" fontFamily="inter" fontSize="14px" variant="unstyled">
+        <Button
+          fontWeight="500"
+          fontFamily="inter"
+          fontSize="14px"
+          variant="unstyled"
+        >
           Add New Member
         </Button>
       </HStack>
-      <VStack>
+      <VStack pb={4}>
         <Flex
           key={projectOwner._id}
           paddingTop="6px"
@@ -53,7 +71,13 @@ const TeamInfo = ({ members, projectOwner,progress}) => {
               <Text fontSize="16px" fontFamily="inter" fontWeight="500">
                 {projectOwner.firstName + " " + projectOwner.lastName}
               </Text>
-              <Text fontSize="12px" fontFamily="inter" fontWeight="400" ml="5px" mt="3px">
+              <Text
+                fontSize="12px"
+                fontFamily="inter"
+                fontWeight="400"
+                ml="5px"
+                mt="3px"
+              >
                 (Project Manager)
               </Text>
             </Flex>
@@ -62,10 +86,26 @@ const TeamInfo = ({ members, projectOwner,progress}) => {
             </Text>
           </Flex>
           <Spacer />
-          <Icon
-            as={CgMoreO}
-            width="14px"
-            height="14px"
+          {userInfo?.user._id === projectOwner?._id ? (
+            <>
+              <VStack spacing={0}>
+                <HStack spacing={0}>
+                  <Text fontWeight="bold" fontSize="lg">
+                    {userCompletedCase[projectOwner?._id]
+                      ? userCompletedCase[projectOwner?._id]
+                      : 0}
+                  </Text>
+                  <Text fontSize="sm">/{totalTasks}</Text>
+                </HStack>
+                <Text fontSize="xs">Report Submitted</Text>
+              </VStack>
+              <Spacer />
+            </>
+          ) : null}
+          <IconButton
+            icon={<CgMoreO />}
+            size="md"
+            background="none"
             marginTop="14px"
           />
         </Flex>
@@ -86,8 +126,16 @@ const TeamInfo = ({ members, projectOwner,progress}) => {
                 />
                 <Flex direction="column" marginLeft="5px">
                   <Flex direction="row">
-                    <Text fontSize="16px" fontFamily="inter" fontWeight="500">{member.firstName + " " + member.lastName}</Text>
-                    <Text fontSize="12px" fontFamily="inter" fontWeight="400" ml="5px" mt="3px">
+                    <Text fontSize="16px" fontFamily="inter" fontWeight="500">
+                      {member.firstName + " " + member.lastName}
+                    </Text>
+                    <Text
+                      fontSize="12px"
+                      fontFamily="inter"
+                      fontWeight="400"
+                      ml="5px"
+                      mt="3px"
+                    >
                       (Reader)
                     </Text>
                   </Flex>
@@ -96,17 +144,26 @@ const TeamInfo = ({ members, projectOwner,progress}) => {
                   </Text>
                 </Flex>
                 <Spacer />
-                <Flex flexDirection="column" alignItems="center"  fontFamily="inter" mt="0px" fontWeight="500">
-                  {/* Reports submitted status should be added */}
-                  <Text fontSize="18px" display="flex" alignItems="center" >2<Text fontSize="12px" mt="3px">/7</Text></Text>
-
-                  <Text fontSize="12px">Report Submited</Text>
-                </Flex>
-                <Spacer />
-                <Icon
-                  as={CgMoreO}
-                  width="14px"
-                  height="14px"
+                {userInfo?.user._id === projectOwner?._id ? (
+                  <>
+                    <VStack spacing={0}>
+                      <HStack spacing={0}>
+                        <Text fontWeight="bold" fontSize="lg">
+                          {userCompletedCase[member._id]
+                            ? userCompletedCase[member._id]
+                            : 0}
+                        </Text>
+                        <Text fontSize="sm">/{totalTasks}</Text>
+                      </HStack>
+                      <Text fontSize="xs">Report Submitted</Text>
+                    </VStack>
+                    <Spacer />
+                  </>
+                ) : null}
+                <IconButton
+                  icon={<CgMoreO />}
+                  size="md"
+                  background="none"
                   marginTop="14px"
                 />
               </Flex>

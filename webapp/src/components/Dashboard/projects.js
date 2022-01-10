@@ -36,7 +36,7 @@ import Loading from "../Loading/loading";
 
 const Projects = () => {
   const { user } = useAuth0();
-  const [buttonState,setButtonState] =useState(2)
+  const [buttonState, setButtonState] = useState(2);
   const { data } = useGetUserInfoQuery({
     subClaim: user?.sub,
   });
@@ -78,36 +78,71 @@ const Projects = () => {
             <Spacer />
             <IconButton
               variant="outline"
-              onClick={()=>setButtonState(1)}
-              icon={<IoGridOutline  />}
+              onClick={() => setButtonState(1)}
+              icon={<IoGridOutline />}
               size="18px"
               p={0.5}
-              colorScheme={buttonState===1 ? "blue":"black"}
+              colorScheme={buttonState === 1 ? "blue" : "black"}
               borderRadius="8px"
-              
             />
             <IconButton
-            variant="outline"
-              onClick={()=>setButtonState(2)}
-              icon={<BsList/>}
+              variant="outline"
+              onClick={() => setButtonState(2)}
+              icon={<BsList />}
               size="18px"
               p={0.5}
-              colorScheme={buttonState===2 ? "blue":"black"}
+              colorScheme={buttonState === 2 ? "blue" : "black"}
               borderRadius="8px"
             />
           </HStack>
           <Box overflowX="auto">
-            <Table
-              variant="unstyled"
-              marginTop="0px"
-            >
+            <Table variant="unstyled" marginTop="0px">
               <Thead>
                 <Tr>
-                  <Th color="#8aaeff" fontSize="14px" fontFamily="inter" fontWeight="400" textTransform="none">File Name</Th>
-                  <Th color="#8aaeff" fontSize="14px" fontFamily="inter" fontWeight="400" textTransform="none" >Last Viewed</Th>
-                  <Th color="#8aaeff" fontSize="14px" fontFamily="inter" fontWeight="400" textTransform="none">Project Owner</Th>
-                  <Th color="#8aaeff" fontSize="14px" fontFamily="inter" fontWeight="400" textTransform="none" >Project Type</Th>
-                  <Th color="#8aaeff" isNumeric fontSize="14px" fontFamily="inter" fontWeight="400" textTransform="none">
+                  <Th
+                    color="#8aaeff"
+                    fontSize="14px"
+                    fontFamily="inter"
+                    fontWeight="400"
+                    textTransform="none"
+                  >
+                    File Name
+                  </Th>
+                  <Th
+                    color="#8aaeff"
+                    fontSize="14px"
+                    fontFamily="inter"
+                    fontWeight="400"
+                    textTransform="none"
+                  >
+                    Last Viewed
+                  </Th>
+                  <Th
+                    color="#8aaeff"
+                    fontSize="14px"
+                    fontFamily="inter"
+                    fontWeight="400"
+                    textTransform="none"
+                  >
+                    Project Owner
+                  </Th>
+                  <Th
+                    color="#8aaeff"
+                    fontSize="14px"
+                    fontFamily="inter"
+                    fontWeight="400"
+                    textTransform="none"
+                  >
+                    Project Type
+                  </Th>
+                  <Th
+                    color="#8aaeff"
+                    isNumeric
+                    fontSize="14px"
+                    fontFamily="inter"
+                    fontWeight="400"
+                    textTransform="none"
+                  >
                     Progress
                   </Th>
                 </Tr>
@@ -124,15 +159,26 @@ const Projects = () => {
                       _hover={{ bg: "#bacfff" }}
                       key={project._id}
                     >
-                      <Td color="#3965C5" fontWeight="500" fontFamily="inter" fontSize="16px" alignItems="center" display="flex">
-                        <Icon as={VscHistory} marginRight="14px" width="14px" height="14px" />
-                        <ProjectLink 
+                      <Td
+                        color="#3965C5"
+                        fontWeight="500"
+                        fontFamily="inter"
+                        fontSize="16px"
+                        alignItems="center"
+                        display="flex"
+                      >
+                        <Icon
+                          as={VscHistory}
+                          marginRight="14px"
+                          width="14px"
+                          height="14px"
+                        />
+                        <ProjectLink
                           projectName={project.name}
                           projectId={project._id}
                         />
                       </Td>
                       <Td color="#8aaeff" fontFamily="inter" fontSize="14px">
-                        {" "}
                         {moment(project.lastUpdated).fromNow()}
                       </Td>
                       <Td color="#8aaeff" fontSize="14px" fontFamily="inter">
@@ -157,9 +203,15 @@ const Projects = () => {
                             </Td> */}
                       <Td>
                         <ProgressBar
-                          // className="dashboard__progressbar"
-                          completed={80}
-                          customLabel="40/50 Completed"
+                          // className="dashboard_progressbar"
+                          completed={project.totalResponses}
+                          maxCompleted={
+                            project.cases.length * (project.members.length + 1)
+                          }
+                          customLabel={`${project.totalResponses}/${
+                            project.cases.length * (project.members.length + 1)
+                          }`}
+                          isLabelVisible={project.totalResponses > 0}
                           bgColor="darkblue"
                           baseBgColor="#66a3ff"
                           labelSize="12px"

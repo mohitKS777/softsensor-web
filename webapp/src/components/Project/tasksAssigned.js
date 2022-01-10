@@ -18,7 +18,7 @@ import {
   Tr,
   Th,
   Td,
-  Image
+  Image,
 } from "@chakra-ui/react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import ProgressBar from "@ramonak/react-progress-bar";
@@ -30,10 +30,10 @@ import _ from "lodash";
 import { isCaseViewable } from "../../hooks/utility";
 import "../../styles/projectDetails.css";
 import { MdArrowDownward } from "react-icons/md";
-import projectIcon from '../../images/new-project-images/project-icon copy.svg';
+import projectIcon from "../../images/new-project-images/project-icon copy.svg";
 
 const TasksAssigned = ({
-  ownerId,
+  owner,
   members,
   progress,
   tasks,
@@ -42,10 +42,6 @@ const TasksAssigned = ({
 }) => {
   const { user } = useAuth0();
   const id = user?.sub.substring(user?.sub.indexOf("|") + 1);
-  const slidesPerCase = {
-    singleSlide: 1,
-    multiSlide: 2,
-  };
   const taskProgresss = {};
   progress?.map((task) => {
     task.casesCompleted.map((c) => {
@@ -54,13 +50,39 @@ const TasksAssigned = ({
     });
   });
   return (
-    <Box className="tasks__assigned" width="100%" marginInlineEnd="50px">
+    <Box className="tasks__assigned" marginInlineEnd="50px">
       <Table variant="unstyled" marginTop="20px" mx={5} size="sm">
         <Thead mb="20px">
-          <Tr m="20px" textAlign="center"  >
-            <Th color="#8aaeff" fontWeight={"normal"} fontSize="14px" fontFamily="inter">File Name</Th>
-            <Th color="#8aaeff" fontWeight={"normal"} fontSize="14px" fontFamily="inter">Task Assigned <Icon as={MdArrowDownward} mb="-3px"  w="16px" h="16px"/></Th>
-            {ownerId === user?.sub ? <Th color="#8aaeff" fontWeight={"normal"} fontSize="14px" fontFamily="inter">Status</Th> : <></>}
+          <Tr m="20px" textAlign="center">
+            <Th
+              color="#8aaeff"
+              fontWeight={"normal"}
+              fontSize="14px"
+              fontFamily="inter"
+            >
+              File Name
+            </Th>
+            <Th
+              color="#8aaeff"
+              fontWeight={"normal"}
+              fontSize="14px"
+              fontFamily="inter"
+            >
+              Task Assigned{" "}
+              <Icon as={MdArrowDownward} mb="-3px" w="16px" h="16px" />
+            </Th>
+            {owner?.subClaim === user?.sub ? (
+              <Th
+                color="#8aaeff"
+                fontWeight={"normal"}
+                fontSize="14px"
+                fontFamily="inter"
+              >
+                Status
+              </Th>
+            ) : (
+              <></>
+            )}
             <Th isNumeric />
           </Tr>
         </Thead>
@@ -81,15 +103,26 @@ const TasksAssigned = ({
                     : "red.100"
                 }
               >
-                <Td color="#3965C5" fontWeight="bold" display="flex" h="48px" alignItems="center">
+                <Td
+                  color="#3965C5"
+                  fontWeight="bold"
+                  display="flex"
+                  h="48px"
+                  alignItems="center"
+                >
                   {/* <Icon as={AiOutlineProject} marginRight={1} w={5} h={4} /> */}
-                  <Image src={projectIcon} width="15px" height="15px" marginRight="10px" />
-                 
+                  <Image
+                    src={projectIcon}
+                    width="15px"
+                    height="15px"
+                    marginRight="10px"
+                  />
+
                   {isCaseViewable(projectType, task?.slides.length) ? (
                     <Link
-                    fontFamily= "Inter"
-                    fontWeight= "500"
-                    fontSize="16px"
+                      fontFamily="Inter"
+                      fontWeight="500"
+                      fontSize="16px"
                       as={RouteLink}
                       to={{
                         pathname: `/${id}/project/${task?.projectId}/slideRedirect`,
@@ -102,46 +135,25 @@ const TasksAssigned = ({
                       {task?.name}
                     </Link>
                   ) : (
-                    <Text display="inline-block" fontFamily= "Inter" fontSize="16px"
-                    fontWeight= "500">{task?.name}</Text>
+                    <Text
+                      display="inline-block"
+                      fontFamily="Inter"
+                      fontSize="16px"
+                      fontWeight="500"
+                    >
+                      {task?.name}
+                    </Text>
                   )}
                 </Td>
-                <Td color="#8aaeff" fontFamily= "Inter"
-                    fontWeight= "400" fontSize="14px">
+                <Td
+                  color="#8aaeff"
+                  fontFamily="Inter"
+                  fontWeight="400"
+                  fontSize="14px"
+                >
                   {moment(task?.createdAt).format("DD MMM, YYYY")}
                 </Td>
-                {ownerId === user?.sub ? (
-                  /*  <Td justifyContent="center">
-                    <Stack direction="row" style={{ width: "120px" }}>
-                      <CircularProgressbar
-                        value="75"
-                        text="75%"
-                        styles={buildStyles({
-                          textSize: "30px",
-                          pathColor: "#fe740dp",
-                          textColor: "#fe740d",
-                        })}
-                      />
-                      <CircularProgressbar
-                        value="85"
-                        text="85%"
-                        styles={buildStyles({
-                          textSize: "30px",
-                          pathColor: "#67818d",
-                          textColor: "#67818d",
-                        })}
-                      />
-                      <CircularProgressbar
-                        value="50"
-                        text="50%"
-                        styles={buildStyles({
-                          textSize: "30px",
-                          pathColor: "#9efadb",
-                          textColor: "#9efadb",
-                        })}
-                      />
-                    </Stack>
-                  </Td>*/
+                {owner?.subClaim === user?.sub ? (
                   <Td>
                     <ProgressBar
                       // width="150px"
@@ -150,13 +162,13 @@ const TasksAssigned = ({
                           ? taskProgresss[task?.id]
                           : 0
                       }
-                      maxCompleted={members.length}
+                      maxCompleted={members.length + 1}
                       customLabel={
                         _.has(taskProgresss, task?._id)
-                          ? taskProgresss[task?._id] === members.length
+                          ? taskProgresss[task?._id] === members.length + 1
                             ? "Completed"
                             : `${taskProgresss[task?._id]} / ${
-                                members.length
+                                members.length + 1
                               } Submitted`
                           : " "
                       }
@@ -167,43 +179,29 @@ const TasksAssigned = ({
                       width="162px"
                       height="24px"
                       className="dashboard__project__progressbar"
-
                     />
                   </Td>
-                ) : (
-                  <> </>
-                )}
-                {/* <Td>
-                  <Text
-                    color="#3965C5"
-                    py="5px"
-                    backgroundColor="#dddddd"
-                    borderRadius="30px"
-                    textAlign="center"
-                  >
-                    Ongoing
-                  </Text>
-                </Td>  */}
-                {ownerId === user?.sub ? (
+                ) : null}
+                {owner?.subClaim === user?.sub ? (
                   <Td isNumeric>
                     <Stack direction="row" justify="end">
+                      <Avatar
+                        name={`${owner?.firstName} ${owner?.lastName}`}
+                        size="sm"
+                      />
                       {members?.map((member) => (
                         <Avatar
                           key={member._id}
                           name={`${member.firstName} ${member.lastName}`}
                           size="sm"
-                          
-                  // border color should be changed with respect to status of project
-                         
-                          border= '2px solid #232F3E'
-                          
+                          // border color should be changed with respect to status of project
+
+                          border="2px solid #232F3E"
                         />
                       ))}
                     </Stack>
                   </Td>
-                ) : (
-                  <></>
-                )}
+                ) : null}
               </Tr>
             );
           })}

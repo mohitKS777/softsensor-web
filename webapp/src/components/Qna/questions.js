@@ -40,10 +40,12 @@ export const trichromeQuestions = [
   {
     questionText: "Biopsy Length",
     questionType: "text",
+    choices: [],
   },
   {
     questionText: "Number of portal tracts",
     questionType: "text",
+    choices: [],
   },
   {
     questionText: "NASH CRN",
@@ -62,5 +64,5 @@ export const trichromeQuestions = [
 
 export const questions = {
   "H&E": heQuestions,
-  Trichrome: trichromeQuestions,
+  trichrome: trichromeQuestions,
 };

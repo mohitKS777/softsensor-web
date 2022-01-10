@@ -2,6 +2,7 @@ import { React, useState } from "react";
 import { Box, Button, Select, Input, Text, Textarea } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  resetCases,
   resetNewProject,
   updateProject,
 } from "../../state/reducers/newProjectReducer";
@@ -13,6 +14,7 @@ const Projectdetails = () => {
 
   const handleProjectDetails = (e) => {
     dispatch(updateProject({ name: e.target.name, value: e.target.value }));
+    if (e.target.name === "projectType") dispatch(resetCases());
   };
 
   return (
@@ -67,7 +69,7 @@ const Projectdetails = () => {
             color="#2E519E"
             // fontSize="16px"
             paddingBottom={3}
-            style={{fontSize:"14px"}}
+            style={{ fontSize: "14px" }}
           >
             Project Type
           </Text>
@@ -103,7 +105,7 @@ const Projectdetails = () => {
             onChange={(e) => handleProjectDetails(e)}
           >
             <option value="H&E">H&E</option>
-            <option value="Trichrome">Trichrome</option>
+            <option value="trichrome">Trichrome</option>
           </Select>
         </Box>
       </Box>
