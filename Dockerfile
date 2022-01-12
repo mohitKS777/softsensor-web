@@ -33,7 +33,7 @@ COPY ./webapp/package.json ./
 ## COPY ./webapp/yarn.lock .
 ##RUN yarn install
 RUN yarn cache clean
-RUN yarn 
+RUN yarn install --network-concurrency 1
 COPY ./webapp ./
 RUN yarn run build
 
