@@ -207,7 +207,7 @@ const NewAssigned = () => {
                               : `${2 * project.cases.length} slides`
                           }
                           bgColor="#66a3ff"
-                          labelAlignment="30px"
+                          labelAlignment="center"
                           labelSize="12px"
                           width="162px"
                           height="24px"

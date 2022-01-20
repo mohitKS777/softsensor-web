@@ -14,7 +14,10 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { BsCircleFill } from "react-icons/bs";
-import { useGetLastTaskQuery } from "../../state/api/medicalApi";
+import {
+  useGetLastTaskQuery,
+  useGetProjectInfoQuery,
+} from "../../state/api/medicalApi";
 import { useAuth0 } from "@auth0/auth0-react";
 import moment from "moment";
 import { Link as RouteLink } from "react-router-dom";
@@ -29,6 +32,10 @@ const LastTask = () => {
     isLoading,
   } = useGetLastTaskQuery({
     subClaim: user?.sub,
+  });
+  const { data: project } = useGetProjectInfoQuery({
+    subClaim: user?.sub,
+    projectId: recentCaseWorkedOn?.projectId._id,
   });
   const id = user?.sub.substring(user?.sub.indexOf("|") + 1);
   const [url, setUrl] = useState("");
@@ -125,7 +132,7 @@ const LastTask = () => {
                 pathname: `/${id}/project/${recentCaseWorkedOn?.projectId}/slideRedirect`,
                 state: {
                   caseId: recentCaseWorkedOn?._id,
-                  questionnaire: recentCaseWorkedOn?.questionnaire,
+                  questionnaire: project?.questionnaire,
                 },
               }}
               _hover={{ textDecoration: "none" }}
@@ -140,6 +147,7 @@ const LastTask = () => {
                 w="120px"
                 h="32px"
                 _hover={{ bg: "#66a3ff" }}
+                isDisabled={!project}
               >
                 Continue
               </Button>

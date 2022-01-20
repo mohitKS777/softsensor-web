@@ -1,27 +1,27 @@
 export const heQuestions = [
   {
     questionText: "Biopsy adequacy",
-    questionType: "checkbox",
+    questionType: "radio",
     choices: ["Yes", "No"],
   },
   {
     questionText: "If No, indicate Why?",
-    questionType: "checkbox",
+    questionType: "radio",
     choices: ["Not in Focus", "Faded/Poor Stain", "Other"],
   },
   {
     questionText: "Steatosis",
-    questionType: "checkbox",
+    questionType: "radio",
     choices: ["<5%", "5 - 33%", "34 - 66%", ">66%"],
   },
   {
     questionText: "Lobular inflammation",
-    questionType: "checkbox",
+    questionType: "radio",
     choices: ["None", "< 2 / 20x mag", "2-4 / 20x mag", "4/ 20x mag"],
   },
   {
     questionText: "Hepatocellular ballooning",
-    questionType: "checkbox",
+    questionType: "radio",
     choices: ["None", "Few", "Many"],
   },
 ];
@@ -29,12 +29,12 @@ export const heQuestions = [
 export const trichromeQuestions = [
   {
     questionText: "Biopsy adequacy",
-    questionType: "checkbox",
+    questionType: "radio",
     choices: ["Yes", "No"],
   },
   {
     questionText: "If No, indicate Why?",
-    questionType: "checkbox",
+    questionType: "radio",
     choices: ["Not in Focus", "Faded/Poor Stain", "Other"],
   },
   {
@@ -49,7 +49,7 @@ export const trichromeQuestions = [
   },
   {
     questionText: "NASH CRN",
-    questionType: "checkbox",
+    questionType: "radio",
     choices: [
       "None",
       "Mid, Zone 3, Perisinusoidal",

@@ -9,7 +9,9 @@ const slideQnaSlice = createSlice({
   reducers: {
     updateResponse: (state, action) => {
       state.response[action.payload.id] = action.payload.value;
-      state.qna[action.payload.id] = action.payload.choiceText;
+      if (action.payload.choiceText)
+        state.qna[action.payload.id] = action.payload.choiceText;
+      else state.qna[action.payload.id] = action.payload.value;
     },
     resetResponse: (state) => {
       state.response = {};

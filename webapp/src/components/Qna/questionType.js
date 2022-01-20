@@ -13,7 +13,7 @@ const QuestionType = ({ question, direction, response }) => {
     );
   };
 
-  if (question?.questionType === "checkbox")
+  if (question?.questionType === "radio")
     return (
       <RadioType
         question={question}

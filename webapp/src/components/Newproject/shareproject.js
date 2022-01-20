@@ -30,7 +30,7 @@ import {
 
 import { AddIcon, ChevronDownIcon, LinkIcon } from "@chakra-ui/icons";
 import { AiOutlineUserAdd } from "react-icons/ai";
-import {BsChevronDown } from "react-icons/bs";
+import { BsChevronDown } from "react-icons/bs";
 import {
   useGetUserInfoQuery,
   useSearchUserMutation,
@@ -44,28 +44,32 @@ const Share = () => {
     subClaim: user?.sub,
   });
   const [value, setValue] = useState("");
-  const [isInvalidUser, setIsInvalidUser] = useState(false);
+  const [isInvalidUser, setIsInvalidUser] = useState("");
   const { membersInfo } = useSelector((state) => state.newProjectState);
   const [searchUser] = useSearchUserMutation();
   const dispatch = useDispatch();
 
   const handleInput = (e) => {
     setValue(e.target.value);
-    if (isInvalidUser) setIsInvalidUser(false);
+    if (isInvalidUser) setIsInvalidUser("");
   };
   const handleAddMember = async () => {
     if (!value || value === data?.user.emailAddress) {
-      setIsInvalidUser(true);
+      setIsInvalidUser("User already added");
+      setValue("");
       return;
     }
     const info = await searchUser({
       subClaim: user?.sub,
       searchObject: { emailAddress: value },
     });
-    if (info.data.length > 0)
-      dispatch(addMembers({ email: value, info: info.data[0] }));
-    setValue("");
-    setIsInvalidUser(info.data.length === 0);
+    if (info.data.length > 0) {
+      console.log(membersInfo);
+      if (membersInfo.some((user) => user.email === value))
+        setIsInvalidUser("User already added");
+      else dispatch(addMembers({ email: value, info: info.data[0] }));
+      setValue("");
+    } else setIsInvalidUser("Not a valid user");
   };
 
   return (
@@ -99,7 +103,7 @@ const Share = () => {
             </InputGroup>
             {isInvalidUser && (
               <Text mt={2} ml={2} fontSize={16}>
-                Not a valid user
+                {isInvalidUser}
               </Text>
             )}
           </Text>
@@ -109,7 +113,7 @@ const Share = () => {
               <MenuButton
                 icon={<LinkIcon color="rgba(57, 101, 198, 0.65)" />}
                 as={Button}
-                rightIcon={<BsChevronDown color= "#3965C6" w="14px"/>}
+                rightIcon={<BsChevronDown color="#3965C6" w="14px" />}
                 bg="white"
                 fontFamily="inter"
                 fontSize="14px"
@@ -119,8 +123,13 @@ const Share = () => {
                 Anyone with the link
               </MenuButton>
               <MenuList>
-                <MenuItem fontFamily="inter"
-                fontSize="14px" icon={<LinkIcon color="rgba(57, 101, 198, 0.65)"/>}>Anyone with the link</MenuItem>
+                <MenuItem
+                  fontFamily="inter"
+                  fontSize="14px"
+                  icon={<LinkIcon color="rgba(57, 101, 198, 0.65)" />}
+                >
+                  Anyone with the link
+                </MenuItem>
                 {/* <MenuItem icon={<AddIcon />}>Robert Rogers</MenuItem>
                 <MenuItem icon={<AddIcon />}>Zoe Margut</MenuItem> */}
               </MenuList>
@@ -145,10 +154,19 @@ const Share = () => {
                 <Text fontSize={16} color="#3965C6" pt={2} fontWeight={500}>
                   {`${data?.user.firstName} ${data?.user.lastName} (You)`}
                 </Text>
-                <Text fontSize={12} color="#3965C6">{data?.user.emailAddress}</Text>
+                <Text fontSize={12} color="#3965C6">
+                  {data?.user.emailAddress}
+                </Text>
               </VStack>
               <Spacer />
-              <Text fontStyle="italic" color="rgba(57, 101, 198, 0.46)" fontSize={16} fontWeight={500}>Owner</Text>
+              <Text
+                fontStyle="italic"
+                color="rgba(57, 101, 198, 0.46)"
+                fontSize={16}
+                fontWeight={500}
+              >
+                Owner
+              </Text>
             </HStack>
             <Divider mt={4} bgColor="black" border="none" h="0.1px" w={550} />
             {membersInfo.map((member) => {
@@ -171,10 +189,19 @@ const Share = () => {
                     <Text fontSize={16} color="#3965C6" pt={2} fontWeight={500}>
                       {`${member.firstName} ${member.lastName}`}
                     </Text>
-                    <Text fontSize={12} color="#3965C6">{member.email}</Text>
+                    <Text fontSize={12} color="#3965C6">
+                      {member.email}
+                    </Text>
                   </VStack>
                   <Spacer />
-                  <Text fontStyle="italic" color="rgba(57, 101, 198, 0.46)" fontSize={16} fontWeight={500}>Reader</Text>
+                  <Text
+                    fontStyle="italic"
+                    color="rgba(57, 101, 198, 0.46)"
+                    fontSize={16}
+                    fontWeight={500}
+                  >
+                    Reader
+                  </Text>
                 </HStack>
               );
             })}

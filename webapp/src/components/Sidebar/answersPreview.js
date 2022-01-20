@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   AlertDialog,
   AlertDialogBody,
@@ -31,7 +31,7 @@ import {
   resetResponse,
 } from "../../state/reducers/slideQnaReducer";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserId, isCaseViewable } from "../../hooks/utility";
+import { getSlideUrl, getUserId, isCaseViewable } from "../../hooks/utility";
 import _ from "lodash";
 
 const AnswersPreview = ({ questionnaire }) => {
@@ -49,9 +49,7 @@ const AnswersPreview = ({ questionnaire }) => {
     projectId: location.state.projectId,
   });
   const [saveQuestionnaire] = useSaveQuestionnaireMutation();
-  const url =
-    location?.state.tile.substring(0, location?.state.tile.lastIndexOf(".")) +
-    "_files/8/0_0.jpeg";
+  const url = getSlideUrl(location?.state.tile);
 
   const finalSubmit = async () => {
     await saveQuestionnaire({
@@ -88,9 +86,13 @@ const AnswersPreview = ({ questionnaire }) => {
         },
       });
     }
-    dispatch(resetResponse());
-    onClose();
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetResponse());
+    };
+  }, []);
 
   return (
     <>

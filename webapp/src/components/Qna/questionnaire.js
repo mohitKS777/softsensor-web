@@ -11,7 +11,9 @@ const Questionnaire = ({ direction, questions, response, ...restProps }) => {
           direction={direction}
           spacing={4}
         >
-          <Text>{`Q${index + 1}. ${question.questionText}`}</Text>
+          <Text whiteSpace="nowrap">{`Q${index + 1}. ${
+            question.questionText
+          }`}</Text>
           <Box>
             <QuestionType
               question={question}

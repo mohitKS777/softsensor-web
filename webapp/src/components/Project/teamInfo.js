@@ -111,63 +111,61 @@ const TeamInfo = ({ members, projectOwner, projectProgress, totalTasks }) => {
         </Flex>
         {members.map((member) => {
           return (
-            <>
-              <Flex
-                key={member._id}
-                paddingTop="6px"
-                borderBottom="1px solid #3965C5"
-                width="100%"
-                padding="5px"
-              >
-                <Avatar
-                  name={member.firstName + " " + member.lastName}
-                  size="sm"
-                  marginTop="2px"
-                />
-                <Flex direction="column" marginLeft="5px">
-                  <Flex direction="row">
-                    <Text fontSize="16px" fontFamily="inter" fontWeight="500">
-                      {member.firstName + " " + member.lastName}
-                    </Text>
-                    <Text
-                      fontSize="12px"
-                      fontFamily="inter"
-                      fontWeight="400"
-                      ml="5px"
-                      mt="3px"
-                    >
-                      (Reader)
-                    </Text>
-                  </Flex>
-                  <Text fontSize="xs" color="#8aaeff">
-                    {member.emailAddress}
+            <Flex
+              key={member._id}
+              paddingTop="6px"
+              borderBottom="1px solid #3965C5"
+              width="100%"
+              padding="5px"
+            >
+              <Avatar
+                name={member.firstName + " " + member.lastName}
+                size="sm"
+                marginTop="2px"
+              />
+              <Flex direction="column" marginLeft="5px">
+                <Flex direction="row">
+                  <Text fontSize="16px" fontFamily="inter" fontWeight="500">
+                    {member.firstName + " " + member.lastName}
+                  </Text>
+                  <Text
+                    fontSize="12px"
+                    fontFamily="inter"
+                    fontWeight="400"
+                    ml="5px"
+                    mt="3px"
+                  >
+                    (Reader)
                   </Text>
                 </Flex>
-                <Spacer />
-                {userInfo?.user._id === projectOwner?._id ? (
-                  <>
-                    <VStack spacing={0}>
-                      <HStack spacing={0}>
-                        <Text fontWeight="bold" fontSize="lg">
-                          {userCompletedCase[member._id]
-                            ? userCompletedCase[member._id]
-                            : 0}
-                        </Text>
-                        <Text fontSize="sm">/{totalTasks}</Text>
-                      </HStack>
-                      <Text fontSize="xs">Report Submitted</Text>
-                    </VStack>
-                    <Spacer />
-                  </>
-                ) : null}
-                <IconButton
-                  icon={<CgMoreO />}
-                  size="md"
-                  background="none"
-                  marginTop="14px"
-                />
+                <Text fontSize="xs" color="#8aaeff">
+                  {member.emailAddress}
+                </Text>
               </Flex>
-            </>
+              <Spacer />
+              {userInfo?.user._id === projectOwner?._id ? (
+                <>
+                  <VStack spacing={0}>
+                    <HStack spacing={0}>
+                      <Text fontWeight="bold" fontSize="lg">
+                        {userCompletedCase[member._id]
+                          ? userCompletedCase[member._id]
+                          : 0}
+                      </Text>
+                      <Text fontSize="sm">/{totalTasks}</Text>
+                    </HStack>
+                    <Text fontSize="xs">Report Submitted</Text>
+                  </VStack>
+                  <Spacer />
+                </>
+              ) : null}
+              <IconButton
+                icon={<CgMoreO />}
+                size="md"
+                background="none"
+                marginTop="14px"
+              />
+            </Flex>
           );
         })}
       </VStack>
